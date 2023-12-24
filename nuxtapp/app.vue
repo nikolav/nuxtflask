@@ -24,14 +24,14 @@ useHead({
 /* defalut page/layout transition */
 .BLUR-enter-active,
 .BLUR-leave-active {
-  transition: all 0.2s;
+  transition: all 0.122s;
 }
 
 /* place outgoing page behind, full-width, to prevent content jump @mode.in-out */
 .BLUR-leave-active {
-  position: absolute;
+  /* position: absolute;
   z-index: -1;
-  width: 100%;
+  width: 100%; */
 }
 
 .BLUR-enter-from,

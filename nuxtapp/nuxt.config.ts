@@ -4,7 +4,11 @@ export default defineNuxtConfig({
   // # client-side output
   // # use .generate command to produce html in .output/public
   // # specify routes for nitro to prerender @nitro.prerender.routes<path[]>
+
+  // #universal rendering
   // ssr: true,
+
+  // #client-side only rendering
   ssr: false,
   //
   runtimeConfig: {
@@ -15,8 +19,26 @@ export default defineNuxtConfig({
       // apiBase: '/api'
     },
   },
-  // imports: {},
+  imports: {
+    // #disable auto-imports; use explicit imports from #imports
+    // autoImport: false
+    //
+    // #enable the auto-import of the `useI18n` composable from the `vue-i18n` package
+    // presets: [
+    //   {
+    //     from: "vue-i18n",
+    //     imports: ["useI18n"],
+    //   },
+    // ],
+  },
+  // #https://nuxt.com/docs/guide/concepts/rendering#:~:text=defineNuxtConfig(%7B-,routeRules,-%3A%20%7B
+  // routeRules: {},
   app: {
+    //
+    // #run app from public subfolder `/app/122--nuxtapp/`
+    baseURL: "/app/122--nuxtapp/",
+    buildAssetsDir: "/app/122--nuxtapp/_nuxt/",
+    //
     head: {
       charset: "utf-8",
       viewport:
@@ -52,9 +74,9 @@ export default defineNuxtConfig({
       ],
     },
     // transition pages
-    pageTransition: { name: "BLUR", mode: "in-out" },
+    pageTransition: { name: "BLUR", mode: "out-in" },
     // transition layouts
-    layoutTransition: { name: "BLUR", mode: "in-out" },
+    layoutTransition: { name: "BLUR", mode: "out-in" },
   },
   css: ["@/assets/styles/main.scss"],
 });
