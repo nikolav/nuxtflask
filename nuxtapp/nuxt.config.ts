@@ -1,3 +1,6 @@
+import { BASE_DIR } from "./config";
+import { stripSlashesEnd } from "./utils";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: false },
@@ -36,8 +39,8 @@ export default defineNuxtConfig({
   app: {
     //
     // #run app from public subfolder `/app/122--nuxtapp/`
-    baseURL: "/app/122--nuxtapp/",
-    buildAssetsDir: "/app/122--nuxtapp/_nuxt/",
+    baseURL: BASE_DIR,
+    buildAssetsDir: `${stripSlashesEnd(BASE_DIR)}/_nuxt/`,
     //
     head: {
       charset: "utf-8",
