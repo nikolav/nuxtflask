@@ -15,6 +15,7 @@ export default defineNuxtConfig({
       // apiBase: '/api'
     },
   },
+  // imports: {},
   app: {
     head: {
       charset: "utf-8",

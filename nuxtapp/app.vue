@@ -10,7 +10,8 @@ useHead({
   <main id="app-main">
     <ul>
       <li><NuxtLink to="/">home</NuxtLink></li>
-      <li><NuxtLink to="/about">about</NuxtLink></li>
+      <li><NuxtLink to="about">about</NuxtLink></li>
+      <li><NuxtLink to="demo">demo</NuxtLink></li>
     </ul>
     <NuxtLayout>
       <NuxtPage />
