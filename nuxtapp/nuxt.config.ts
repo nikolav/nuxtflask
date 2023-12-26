@@ -81,5 +81,5 @@ export default defineNuxtConfig({
     // transition layouts
     layoutTransition: { name: "BLUR", mode: "out-in" },
   },
-  css: ["@/assets/styles/main.scss"],
+  css: ["~/assets/styles/main.scss"],
 });
