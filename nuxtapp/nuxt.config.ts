@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   // #client-side only rendering; no prerender
   // ssr: false,
   //
-  modules: ["@vueuse/nuxt"],
+  modules: ["@vueuse/nuxt", "@pinia/nuxt"],
   runtimeConfig: {
     // The private keys which are only available server-side
     // apiSecret: '123',

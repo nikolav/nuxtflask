@@ -8,14 +8,14 @@ onUnmounted(() => {
 });
 
 const route$ = useRoute();
-const curr$ = computed(() => route$.fullPath);
+const fullPath$ = computed(() => route$.fullPath);
 // eos
 </script>
 
 <template>
   <main id="app-main">
     <pre>
-      {{ JSON.stringify({ curr$ }, null, 2) }}
+      {{ JSON.stringify({ fullPath$ }, null, 2) }}
     </pre>
     <ul>
       <li><NuxtLink to="/">home</NuxtLink></li>
