@@ -11,8 +11,8 @@ export default defineNuxtConfig({
   // #universal rendering
   // ssr: true,
 
-  // #client-side only rendering
-  ssr: false,
+  // #client-side only rendering; no prerender
+  // ssr: false,
   //
   runtimeConfig: {
     // The private keys which are only available server-side
@@ -82,4 +82,26 @@ export default defineNuxtConfig({
     layoutTransition: { name: "BLUR", mode: "out-in" },
   },
   css: ["~/assets/styles/main.scss"],
+  //
+  // #hybrid-rendering
+  // #https://nuxt.com/docs/getting-started/server#hybrid-rendering
+  // routeRules: {
+  //   // Generated at build time for SEO purpose
+  //   "/": { prerender: true },
+  //   // Cached for 1 hour
+  //   "/api/*": { cache: { maxAge: 60 * 60 } },
+  //   // Redirection to avoid 404
+  //   "/old-page": {
+  //     redirect: { to: "/new-page", statusCode: 302 },
+  //   },
+  //   // ...
+  // },
+  //
+  // #Selective Pre-rendering @nitro
+  // nitro: {
+  //   prerender: {
+  //     routes: ["/user/1", "/user/2"],
+  //     ignore: ["/dynamic"],
+  //   },
+  // },
 });
