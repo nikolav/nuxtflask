@@ -3,11 +3,20 @@ useHead({
   titleTemplate: (ttl) => `[${ttl}]`,
 });
 
+onUnmounted(() => {
+  useAppMounted().value = false;
+});
+
+const route$ = useRoute();
+const curr$ = computed(() => route$.fullPath);
 // eos
 </script>
 
 <template>
   <main id="app-main">
+    <pre>
+      {{ JSON.stringify({ curr$ }, null, 2) }}
+    </pre>
     <ul>
       <li><NuxtLink to="/">home</NuxtLink></li>
       <li><NuxtLink to="about">about</NuxtLink></li>
