@@ -20,6 +20,8 @@ export default defineNuxtConfig({
     // #https://color-mode.nuxtjs.org/
     "@nuxtjs/color-mode",
     "@nuxtjs/tailwindcss",
+    // #https://google-fonts.nuxtjs.org/
+    "@nuxtjs/google-fonts",
   ],
   runtimeConfig: {
     // The private keys which are only available server-side
@@ -133,5 +135,14 @@ export default defineNuxtConfig({
     // classPrefix: "",
     classSuffix: "",
     // storageKey: "nuxt-color-mode",
+  },
+  // #https://google-fonts.nuxtjs.org
+  googleFonts: {
+    families: {
+      "Roboto+Mono": true,
+      "Open+Sans": true,
+    },
+    useStylesheet: true,
+    download: false,
   },
 });

@@ -8,6 +8,10 @@
 
 useHead({
   titleTemplate: (ttl) => `[${ttl}]`,
+  bodyAttrs: {
+    class:
+      "**dark:bg-slate-900 **dark:text-white/80 **dark:selection:bg-white/20",
+  },
 });
 
 onUnmounted(() => {
@@ -21,7 +25,7 @@ const fullPath$ = computed(() => route$.fullPath);
 </script>
 
 <template>
-  <main id="app-main" class="text-indigo-800">
+  <main id="app-main" class="**text-indigo-800">
     <pre>
       {{ JSON.stringify({ fullPath$ }, null, 2) }}
     </pre>
