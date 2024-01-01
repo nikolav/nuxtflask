@@ -14,7 +14,13 @@ export default defineNuxtConfig({
   // #client-side only rendering; no prerender
   // ssr: false,
   //
-  modules: ["@vueuse/nuxt", "@pinia/nuxt"],
+  modules: [
+    "@vueuse/nuxt",
+    "@pinia/nuxt",
+    // #https://color-mode.nuxtjs.org/
+    "@nuxtjs/color-mode",
+    "@nuxtjs/tailwindcss",
+  ],
   runtimeConfig: {
     // The private keys which are only available server-side
     // apiSecret: '123',
@@ -105,4 +111,27 @@ export default defineNuxtConfig({
   //     ignore: ["/dynamic"],
   //   },
   // },
+  //
+  // @tw
+  tailwindcss: {
+    cssPath: "~/assets/tailwind.css",
+    configPath: "~/config/tailwind.config.ts",
+    //
+    // # Import fully resolved config
+    // # import tailwindConfig from '#tailwind-config'
+    exposeConfig: true,
+    // config: {},
+    // injectPosition: 0,
+    viewer: false,
+  },
+  colorMode: {
+    // preference: "system", // default value of $colorMode.preference
+    // fallback: "light", // fallback value if not system preference found
+    // hid: "nuxt-color-mode-script",
+    // globalName: "__NUXT_COLOR_MODE__",
+    // componentName: "ColorScheme",
+    // classPrefix: "",
+    classSuffix: "",
+    // storageKey: "nuxt-color-mode",
+  },
 });

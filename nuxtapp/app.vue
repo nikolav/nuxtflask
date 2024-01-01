@@ -1,4 +1,11 @@
 <script setup lang="ts">
+//
+// # force the color mode at the page level (only parent)
+// # by setting the colorMode property, nuxt3 only
+// definePageMeta({
+//   colorMode: "light",
+// });
+
 useHead({
   titleTemplate: (ttl) => `[${ttl}]`,
 });
@@ -9,11 +16,12 @@ onUnmounted(() => {
 
 const route$ = useRoute();
 const fullPath$ = computed(() => route$.fullPath);
+
 // eos
 </script>
 
 <template>
-  <main id="app-main">
+  <main id="app-main" class="text-indigo-800">
     <pre>
       {{ JSON.stringify({ fullPath$ }, null, 2) }}
     </pre>
