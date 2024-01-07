@@ -8,4 +8,5 @@ export { default as transform } from "lodash/transform";
 export { default as unset } from "lodash/unset";
 // @misc.
 export { stripSlashesEnd, has, idGen } from "nikolav-utils";
+export { tree } from "nikolav-treets";
 export { default as False } from "./fn-false";

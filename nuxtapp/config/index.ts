@@ -1,5 +1,5 @@
-// export const PRODUCTION$ = false;
-export const PRODUCTION$ = true;
+export const PRODUCTION$ = false;
+// export const PRODUCTION$ = true;
 
 export const BASE_DIR__DEVELOPMENT = "/";
 export const BASE_DIR__PRODUCTION = "/app/122--nuxtapp/";

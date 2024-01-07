@@ -1,6 +1,10 @@
 import type { Config } from "tailwindcss";
+// import plugin from "tailwindcss/plugin";
+import tailwindcssTypography from "@tailwindcss/typography";
 // import defaultTheme from "tailwindcss/defaultTheme";
 
+// # full config
+// # https://github.com/tailwindlabs/tailwindcss/blob/master/stubs/config.full.js
 export default <Partial<Config>>{
   content: [
     "../components/**/*.{vue,js,ts}",
@@ -23,32 +27,45 @@ export default <Partial<Config>>{
   darkMode: "class",
   theme: {
     extend: {
-      // colors: {
-      //   primary: "#4682b3"
-      // },
+      // #https://tailwindcss.com/docs/customizing-colors
+      colors: {
+        // primary: "colors.indigo",
+        // secondary: "colors.yellow",
+        // neutral: "colors.gray",
+        current: "currentColor",
+        transparent: "transparent",
+      },
       // fontFamily: {
       //   sans: ["Poppins", "sans-serif"],
       // },
       screens: {
         // 'sm': '640px',
         // 'md': '768px',
-        // lg: "968px",
+        // lg: "1024px",
         // 'xl': '1280px',
         // '2xl': '1536px',
-        tall: { raw: "(min-height: 792px)" },
+        tablet: "640px",
+        laptop: "1024px",
+        desktop: "1280px",
+        tall: { raw: "(min-height: 802px)" },
       },
     },
   },
+  // generate classes
   safelist: [
     // "safelisted",
     // {
     //   pattern: /bg-(red|green|blue)-(100|200|300)/,
     // },
   ],
-  // plugins: [
-  //   require("@tailwindcss/typography"),
-  //   require("@tailwindcss/forms"),
-  //   require("@tailwindcss/aspect-ratio"),
-  //   require("@tailwindcss/line-clamp"),
-  // ],
+  // discard classes
+  blocklist: [],
+  plugins: [
+    //   require("@tailwindcss/typography"),
+    tailwindcssTypography,
+    //   require("@tailwindcss/forms"),
+    //   require("@tailwindcss/aspect-ratio"),
+    //   require("@tailwindcss/line-clamp"),
+  ],
+  // presets: [],
 };

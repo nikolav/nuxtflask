@@ -1,26 +1,18 @@
 <script setup lang="ts">
-const toggleActive = useToggleFlag();
-const { store$: main$$, put, drop } = useStoreMain();
+useHead({
+  title: "--demo",
+});
 
-const updateKeyA = () => {
-  put({
-    "a.a1": Math.random(),
-    "users.nikolav.user:name": `nikolav@${Date.now()}`,
-  });
-};
+const flags = useStoreFlags();
+
+// #eos
 </script>
 
 <template>
   <section id="page-demo">
-    <pre>
-      {{ JSON.stringify(main$$, null, 2) }}
-    </pre>
-    <Title>--demo</Title>
-    <h1>@demo [{{ toggleActive.isActive.value }}]</h1>
-    <button @click="toggleActive.on">on</button> |
-    <button @click="toggleActive.off">off</button> |
-    <button @click="updateKeyA">put</button> |
-    <button @click="drop('a.a1')">drop</button>
+    <button @click="flags.toggle('A1')" class="p-2 bg-sky-600 rounded shadow">
+      flag:toggle:A1 [{{ flags.flag("A1") }}]
+    </button>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat autem
       ab corporis!
