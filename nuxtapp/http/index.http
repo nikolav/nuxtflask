@@ -4,3 +4,18 @@ http://localhost:3001/app/122--nuxtapp/api/status
 
 ###
 
+POST http://127.0.0.1:5000/A1a
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 1221
+}
+
+###
+
+http://127.0.0.1:5000/A
+Accept: application/json
+
+###
+

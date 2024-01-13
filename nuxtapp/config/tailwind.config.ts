@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 // import plugin from "tailwindcss/plugin";
 import tailwindcssTypography from "@tailwindcss/typography";
+import tailwindcssAspectRatio from "@tailwindcss/aspect-ratio";
 // import defaultTheme from "tailwindcss/defaultTheme";
 
 // # full config
@@ -51,6 +52,11 @@ export default <Partial<Config>>{
       },
     },
   },
+  // 
+  corePlugins: {
+    // #disable the aspectRatio core plugin to avoid conflicts with the native aspect-ratio utilities
+    aspectRatio: false,
+  },
   // generate classes
   safelist: [
     // "safelisted",
@@ -63,9 +69,11 @@ export default <Partial<Config>>{
   plugins: [
     //   require("@tailwindcss/typography"),
     tailwindcssTypography,
-    //   require("@tailwindcss/forms"),
-    //   require("@tailwindcss/aspect-ratio"),
-    //   require("@tailwindcss/line-clamp"),
+    // require("@tailwindcss/aspect-ratio"),
+    // @https://github.com/tailwindlabs/tailwindcss-aspect-ratio?tab=readme-ov-file#usage
+    tailwindcssAspectRatio,
+    // require("@tailwindcss/line-clamp"),
+    // require("@tailwindcss/forms"),
   ],
   // presets: [],
 };
