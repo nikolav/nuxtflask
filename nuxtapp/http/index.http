@@ -4,18 +4,45 @@ http://localhost:3001/app/122--nuxtapp/api/status
 
 ###
 
-POST http://127.0.0.1:5000/A1a
+POST http://127.0.0.1:5000/a
 Accept: application/json
 Content-Type: application/json
 
 {
-  "id": 1221
+  "value": "@122333"
 }
 
 ###
 
-http://127.0.0.1:5000/A
+http://127.0.0.1:5000/a
 Accept: application/json
 
 ###
 
+http://127.0.0.1:5000/docs/users
+Accept: application/json
+
+###
+
+POST http://127.0.0.1:5000/docs/orders@122
+Accept: application/json
+Content-Type: application/json
+
+{
+  "data": {
+    "articles": [[1, 1], [22, 1]],
+    "coupon_code": "TsLU"
+  }
+}
+
+###
+
+DELETE http://127.0.0.1:5000/docs/orders@122
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 26
+}
+
+###

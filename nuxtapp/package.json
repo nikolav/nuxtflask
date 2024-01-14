@@ -22,6 +22,7 @@
     "@tsconfig/node20": "^20.1.2",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.10.6",
+    "@types/socket.io-client": "^3.0.0",
     "nuxt": "^3.8.2",
     "sass": "^1.69.5",
     "serve": "^14.2.1",
@@ -36,6 +37,7 @@
     "@vueuse/nuxt": "^10.7.1",
     "lodash": "^4.17.21",
     "nikolav-treets": "^1.2.43",
-    "nikolav-utils": "^1.4.1"
+    "nikolav-utils": "^1.4.1",
+    "socket.io-client": "^4.7.4"
   }
 }
