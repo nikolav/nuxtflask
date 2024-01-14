@@ -19,25 +19,24 @@ Accept: application/json
 
 ###
 
-http://127.0.0.1:5000/docs/comments
+http://127.0.0.1:5000/docs/@vars
 Accept: application/json
 
 ###
 
-POST http://127.0.0.1:5000/docs/comments@foo
+POST http://127.0.0.1:5000/docs/@vars
 Accept: application/json
 Content-Type: application/json
 
 {
   "data": {
-    "user": "user.2",
-    "comment": "foo"
+    "admin:email": "admin@nikolav.rs"
   }
 }
 
 ###
 
-DELETE http://127.0.0.1:5000/docs/comments@foo
+DELETE http://127.0.0.1:5000/docs/@vars
 Accept: application/json
 Content-Type: application/json
 
