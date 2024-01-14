@@ -1,33 +1,37 @@
 <script setup lang="ts">
 import { idGen } from "@/utils";
+import type { IDocDataUsers } from "@/types";
 
 useHead({
   title: "--demo",
 });
 
-const { $socket } = useNuxtApp();
+const {
+  docs: users,
+  put: usersUpsert,
+  rm: usersRemove,
+} = useApiDocs<IDocDataUsers>("users");
 
-useIOEvent("app:io", (...ioargs: any[]) => {
-  console.log({
-    ioargs,
-  });
+const choice = (ls: any[]) => ls[Math.floor(ls.length * Math.random())];
+const usersRemoveRandom = async () => 0 < users.value.length ? await usersRemove(choice(users.value)) : null;
+const usersAddRandom = async () => await usersUpsert({ 
+  data: { 
+    email: `user.${idGen()}@email.com`,
+    password: idGen(),
+  } 
 });
-const ioEmitMsg = () => {
-  console.log({ $socket });
-  $socket?.emit("msg", idGen());
-};
 
 // #eos
 </script>
 
 <template>
-  <section id="page-demo">
-    <button @click="ioEmitMsg" class="p-2 bg-sky-600 rounded shadow">
-      io:emit:msg
-    </button>
+    <section id="page-demo">
+     <button @click="usersAddRandom" class="p-2 bg-sky-600 rounded shadow">users:add</button>
+     <button @click="usersRemoveRandom" class="p-2 bg-red-600 rounded shadow">users:rm</button>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat autem
-      ab corporis!
+      <pre>
+        {{ JSON.stringify({ users }, null, 2) }}
+      </pre>
     </p>
   </section>
 </template>

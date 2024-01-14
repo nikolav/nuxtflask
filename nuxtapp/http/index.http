@@ -19,30 +19,30 @@ Accept: application/json
 
 ###
 
-http://127.0.0.1:5000/docs/users
+http://127.0.0.1:5000/docs/comments
 Accept: application/json
 
 ###
 
-POST http://127.0.0.1:5000/docs/orders@122
+POST http://127.0.0.1:5000/docs/comments@foo
 Accept: application/json
 Content-Type: application/json
 
 {
   "data": {
-    "articles": [[1, 1], [22, 1]],
-    "coupon_code": "TsLU"
+    "user": "user.2",
+    "comment": "foo"
   }
 }
 
 ###
 
-DELETE http://127.0.0.1:5000/docs/orders@122
+DELETE http://127.0.0.1:5000/docs/comments@foo
 Accept: application/json
 Content-Type: application/json
 
 {
-  "id": 26
+  "id": 68
 }
 
 ###
