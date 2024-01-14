@@ -26,6 +26,7 @@ chmod +x /usr/local/bin/docker-compose
 # allow app @ports
 ufw allow OpenSSH
 ufw allow 5544
+ufw allow 8081
 ufw enable
 
 # shortcuts

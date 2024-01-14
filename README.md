@@ -1,6 +1,7 @@
 # deploy setup
 
 ## pre.git-push
+  - set `__production = True`:1  `__DATABASE_URI_production`:5 @/flaskapi/env.py
   - set host @/scp-config.sh, lines 2-5
 
 ## deploy

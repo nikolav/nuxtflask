@@ -16,18 +16,18 @@ services:
   #     - pg
   #     - api
   
-  # api:
-  #   container_name: api
-  #   build: ./api
-  #   ports:
-  #     - 8081:3001
-  #   volumes:
-  #     - ./api:/home/app
-  #   depends_on:
-  #     - pg
-  #     - redis
-  #   env_file:
-  #     - ./api/.env
+  flaskapi:
+    container_name: flaskapi
+    build: ./flaskapi
+    ports:
+      - 8081:5000
+    volumes:
+      - ./api:/home/app
+    depends_on:
+      - pg
+      # - redis
+    env_file:
+      - ./flaskapi/.env
 
   pg:
     container_name: pg

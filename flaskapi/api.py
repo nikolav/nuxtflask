@@ -13,6 +13,8 @@ from flask_sqlalchemy import SQLAlchemy
 # https://github.com/miguelgrinberg/flask-socketio/issues/40#issuecomment-48268526
 from flask_socketio import SocketIO
 
+from .env import DATABASE_URI
+
 
 IO_CORS_ALLOW_ORIGINS = (
   'http://localhost:3000',
@@ -22,8 +24,7 @@ IOEVENT_DOCS_CHANGE = 'change:docs'
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'HLrc4OfZ5euFmr2tXsT3g2rI0UyABOyGmrYvib7gfluQ'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://app:app@70.34.223.252:5544/app'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://app:app@45.76.82.58:5544/app'
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 cors = CORS(app)
