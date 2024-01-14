@@ -7,7 +7,13 @@ export const useApiDocs = <TDocData>(tagName: string) => {
   } = useAppConfig();
   const ioEventDocsChange = `${IOEVENT_DOCS_CHANGE}:${tagName}`;
   const docsUrl = `${URL_DOCS}/${tagName}`;
-  const toggleProcessing = useToggleFlag();
+
+  const crudToggleProcessing = useToggleFlag();
+  const crudProcessingError$ = ref<any>(null);
+  const crudProcessingStart = () => {
+    crudProcessingError$.value = null;
+    crudToggleProcessing.on();
+  };
 
   const {
     error,
@@ -20,6 +26,9 @@ export const useApiDocs = <TDocData>(tagName: string) => {
     default: () => [],
   });
   const reload = async () => await refresh();
+  const processing$ = computed(
+    () => pending.value && crudToggleProcessing.isActive.value
+  );
 
   useIOEvent(ioEventDocsChange, reload);
 
@@ -27,9 +36,9 @@ export const useApiDocs = <TDocData>(tagName: string) => {
   const put = async (doc: IDoc<TDocData>) => {
     let res: OrNull<IDoc<TDocData>> = null;
 
-    if (toggleProcessing.isActive.value) return;
+    if (processing$.value) return;
 
-    toggleProcessing.on();
+    crudProcessingStart();
 
     try {
       res = await $fetch(docsUrl, {
@@ -37,9 +46,9 @@ export const useApiDocs = <TDocData>(tagName: string) => {
         body: doc,
       });
     } catch (err) {
-      throw err;
+      crudProcessingError$.value = err;
     } finally {
-      toggleProcessing.off();
+      crudToggleProcessing.off();
     }
 
     return res;
@@ -48,9 +57,10 @@ export const useApiDocs = <TDocData>(tagName: string) => {
   // # delete docs
   const rm = async (doc: IDoc<TDocData>) => {
     let res: OrNull<IDoc<TDocData>> = null;
-    if (toggleProcessing.isActive.value) return;
 
-    toggleProcessing.on();
+    if (processing$.value) return;
+
+    crudProcessingStart();
 
     try {
       res = await $fetch(docsUrl, {
@@ -60,9 +70,9 @@ export const useApiDocs = <TDocData>(tagName: string) => {
         },
       });
     } catch (err) {
-      throw err;
+      crudProcessingError$.value = err;
     } finally {
-      toggleProcessing.off();
+      crudToggleProcessing.off();
     }
 
     return res;
@@ -70,8 +80,9 @@ export const useApiDocs = <TDocData>(tagName: string) => {
   //
   return {
     error,
+    crudError: crudProcessingError$,
     pending,
-    processing: toggleProcessing.isActive,
+    processing: processing$,
     reload,
     put,
     rm,

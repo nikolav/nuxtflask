@@ -7,6 +7,7 @@ useHead({
 });
 
 const {
+  error, crudError, pending, processing,
   docs: users,
   put: usersUpsert,
   rm: usersRemove,
@@ -28,6 +29,11 @@ const usersAddRandom = async () => await usersUpsert({
     <section id="page-demo">
      <button @click="usersAddRandom" class="p-2 bg-sky-600 rounded shadow">users:add</button>
      <button @click="usersRemoveRandom" class="p-2 bg-red-600 rounded shadow">users:rm</button>
+     <pre>pending: [{{ pending }}]</pre>
+     <pre>processing: [{{ processing }}]</pre>
+     <pre>error: [{{ error }}]</pre>
+     <pre>crudError: [{{ crudError }}]</pre>
+    <hr class="border-sky-600 border-4"/>
     <p>
       <pre>
         {{ JSON.stringify({ users }, null, 2) }}
