@@ -22,8 +22,8 @@ services:
     restart: always
     ports:
       - 8081:5000
-    volumes:
-      - ./flaskapi:/home/app
+    # volumes:
+    #   - ./flaskapi:/home/app
     depends_on:
       - pg
       # - redis
