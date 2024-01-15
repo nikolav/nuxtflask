@@ -4,7 +4,7 @@ http://localhost:3001/app/122--nuxtapp/api/status
 
 ###
 
-POST http://127.0.0.1:5000/a
+POST http://199.247.16.115:8081/a
 Accept: application/json
 Content-Type: application/json
 
@@ -14,29 +14,29 @@ Content-Type: application/json
 
 ###
 
-http://127.0.0.1:5000/a
+http://199.247.16.115:8081/a
 Accept: application/json
 
 ###
 
-http://127.0.0.1:5000/docs/@vars
+http://199.247.16.115:8081/docs/@vars
 Accept: application/json
 
 ###
 
-POST http://127.0.0.1:5000/docs/@vars
+POST http://199.247.16.115:8081/docs/@vars
 Accept: application/json
 Content-Type: application/json
 
 {
   "data": {
-    "admin:email": "admin@nikolav.rs"
+    "app:version": "0.0.0.0"
   }
 }
 
 ###
 
-DELETE http://127.0.0.1:5000/docs/@vars
+DELETE http://199.247.16.115:8081/docs/@vars
 Accept: application/json
 Content-Type: application/json
 

@@ -22,7 +22,7 @@ services:
     ports:
       - 8081:5000
     volumes:
-      - ./api:/home/app
+      - ./flaskapi:/home/app
     depends_on:
       - pg
       # - redis

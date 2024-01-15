@@ -13,7 +13,7 @@ from flask_sqlalchemy import SQLAlchemy
 # https://github.com/miguelgrinberg/flask-socketio/issues/40#issuecomment-48268526
 from flask_socketio import SocketIO
 
-from .env import DATABASE_URI
+from env import DATABASE_URI
 
 
 IO_CORS_ALLOW_ORIGINS = (
@@ -158,4 +158,7 @@ if __name__ == '__main__':
   with app.app_context():
     db.create_all()
   # app.run(debug = True)
-  io.run(app, debug = True)
+  io.run(app, 
+         debug = True,
+         host = '0.0.0.0',
+         allow_unsafe_werkzeug = True)
