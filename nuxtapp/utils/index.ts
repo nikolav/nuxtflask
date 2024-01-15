@@ -9,6 +9,7 @@ export { default as set } from "lodash/set";
 export { default as transform } from "lodash/transform";
 export { default as unset } from "lodash/unset";
 // @misc.
-export { stripSlashesEnd, has, idGen } from "nikolav-utils";
+export { has, idGen } from "nikolav-utils";
+export { stripSlashesEnd } from "./strip-slashes-end";
 export { tree } from "nikolav-treets";
 export { default as False } from "./fn-false";
