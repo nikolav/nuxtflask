@@ -339,3 +339,4 @@ scp-config.sh
 flaskapi/env.py
 index.http
 flaskapi/demo.py
+heroku-config-deploy.sh
