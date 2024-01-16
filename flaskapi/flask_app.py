@@ -19,8 +19,8 @@ PRODUCTION = os.getenv('PRODUCTION')
 DATABASE_URI = os.getenv('DATABASE_URI_production') if PRODUCTION else os.getenv('DATABASE_URI_dev')
 
 IO_CORS_ALLOW_ORIGINS = (
-  os.getenv('CORS_ALLOW_ORIGIN_dev'),
-  os.getenv('CORS_ALLOW_ORIGIN_production'),
+  os.getenv('IOCORS_ALLOW_ORIGIN_dev'),
+  os.getenv('IOCORS_ALLOW_ORIGIN_dev'),
 );
 
 
