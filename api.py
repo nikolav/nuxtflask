@@ -18,6 +18,7 @@ if __name__ == '__main__':
 
   # auto assigned heroku app port
   _port = os.getenv('PORT')
+  
   io.run(app, 
          debug = True,
          host = '0.0.0.0',
