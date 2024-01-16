@@ -16,6 +16,6 @@ if __name__ == '__main__':
   # app.run(debug = True)
   io.run(app, 
          debug = True,
-         host = '0.0.0.0',
-         port = 5000,
+        #  host = '0.0.0.0',
+        #  port = 5000,
          allow_unsafe_werkzeug = True)
