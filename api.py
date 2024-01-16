@@ -18,10 +18,8 @@ if __name__ == '__main__':
 
   # auto assigned heroku app port
   _port = os.getenv('PORT')
-  print(f'__PORT__: {_port}')
-
   io.run(app, 
          debug = True,
-        #  host = '0.0.0.0',
+         host = '0.0.0.0',
          port = _port if None != _port else 5000,
          allow_unsafe_werkzeug = True)
