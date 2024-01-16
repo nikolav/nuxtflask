@@ -27,7 +27,7 @@ export const useApiDocs = <TDocData>(tagName: string) => {
   });
   const reload = async () => await refresh();
   const processing$ = computed(
-    () => pending.value && crudToggleProcessing.isActive.value
+    () => pending.value || crudToggleProcessing.isActive.value
   );
 
   useIOEvent(ioEventDocsChange, reload);

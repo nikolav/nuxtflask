@@ -5,6 +5,7 @@ export default defineAppConfig({
   ADMIN_EMAIL: "admin@nikolav.rs",
   //
   KEY_APP_MOUNTED: "Zkcmk4BnXHU",
+  KEY_APP_PROCESSING: "FlaelfhZddK",
   //
   stores: {
     main: {
