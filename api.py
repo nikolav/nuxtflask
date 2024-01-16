@@ -22,6 +22,6 @@ if __name__ == '__main__':
 
   io.run(app, 
          debug = True,
-         host = '0.0.0.0',
+        #  host = '0.0.0.0',
          port = _port if None != _port else 5000,
          allow_unsafe_werkzeug = True)
