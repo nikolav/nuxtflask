@@ -341,3 +341,4 @@ index.http
 flaskapi/demo.py
 heroku-config-deploy.sh
 client.http
+heroku-config-set.sh
