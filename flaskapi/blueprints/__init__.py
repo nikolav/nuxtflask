@@ -9,7 +9,7 @@ TAG_VARS = '@vars'
 
 bp_home = Blueprint('home', __name__, url_prefix = '/')
 
-@bp_home.route('/', methods = ['GET'])
+@bp_home.route('/', methods = ('GET',))
 def status_ok():
   
   admin_email = ''
