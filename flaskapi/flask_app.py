@@ -18,7 +18,7 @@ PRODUCTION = os.getenv('PRODUCTION')
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'HLrc4OfZ5euFmr2tXsT3g2rI0UyABOyGmrYvib7gfluQ'
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 DATABASE_URI = os.getenv('DATABASE_URI_production') if PRODUCTION else os.getenv('DATABASE_URI_dev')
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
