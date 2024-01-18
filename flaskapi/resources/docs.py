@@ -1,4 +1,3 @@
-
 import os
 import json
 from datetime import datetime
@@ -6,13 +5,14 @@ from datetime import datetime
 from flask import request
 from flask_restful import Resource
 
-from . import db, io
+from . import db
+from . import io
 from models.docs import Docs
 from models.tags import Tags
 from utils.doc_json_date import docJsonDates as docPlain
 
-IOEVENT_DOCS_CHANGE = os.getenv('IOEVENT_DOCS_CHANGE')
 
+IOEVENT_DOCS_CHANGE = os.getenv('IOEVENT_DOCS_CHANGE')
 
 class DocsResource(Resource):
 

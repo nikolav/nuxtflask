@@ -1,1 +1,2 @@
-from flask_app import db, io
+from flask_app import db
+from flask_app import io

@@ -1,6 +1,9 @@
 from datetime import datetime
 
-from . import docsTable, ln_docs_tags, db
+from . import docsTable
+from . import ln_docs_tags
+from . import db
+
 
 class Docs(db.Model):
   __tablename__ = docsTable

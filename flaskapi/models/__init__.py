@@ -2,6 +2,7 @@ import os
 
 from flask_app import db
 
+
 tblSuffix       = os.getenv('TABLE_NAME_SUFFIX')
 lnTableDocsTags = f'ln_docs_tags{tblSuffix}'
 docsTable       = f'docs{tblSuffix}'

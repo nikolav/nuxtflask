@@ -1,4 +1,6 @@
-from . import tagsTable, db
+from . import tagsTable
+from . import db
+
 
 class Tags(db.Model):
   __tablename__ = tagsTable
