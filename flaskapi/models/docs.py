@@ -14,3 +14,4 @@ class Docs(db.Model):
 
   # virtual
   tags = db.relationship('Tags', secondary = ln_docs_tags, backref = 'docs')
+  

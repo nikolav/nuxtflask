@@ -5,8 +5,9 @@ from flask_app import api
 from flask_app import db
 from flask_app import io
 
-from resources.docs import DocsResource
-from blueprints import bp_home
+from resources.docs       import DocsResource
+from blueprints           import bp_home
+from blueprints.auth      import bp_auth
 from middleware.authorize import authorize
 
 
@@ -15,6 +16,7 @@ api.add_resource(DocsResource, '/docs/<string:tag_name>')
 
 
 # mount blueprints
+app.register_blueprint(bp_auth)
 app.register_blueprint(bp_home)
 
 

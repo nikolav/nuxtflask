@@ -7,14 +7,14 @@ from flask import abort
 import jwt
 
 from models.docs import Docs
-from config import paths_skip_authorization
+from config import PATHS_SKIP_AUTHORIZATION
 
 
 def authorize():
   # @before_request
 
   # pass open routes
-  if any(re.match(p, request.path) for p in paths_skip_authorization):
+  if any(re.match(p, request.path) for p in PATHS_SKIP_AUTHORIZATION):
     return
   
   # @auth
