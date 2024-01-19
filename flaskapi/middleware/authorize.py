@@ -1,13 +1,13 @@
-import os
 import re
 
 from flask import request
-from flask import make_response
 from flask import abort
-import jwt
+from flask import make_response
 
-from models.docs import Docs
-from config import PATHS_SKIP_AUTHORIZATION
+from models.docs    import Docs
+from utils.jwtToken import jwtTokenDecode
+from utils.jwtToken import tokenFromRequest
+from config         import PATHS_SKIP_AUTHORIZATION
 
 
 def authorize():
@@ -20,9 +20,8 @@ def authorize():
   # @auth
   try:
 
-    # get token from auth header
-    token   = re.match(r'^Basic (.+)$', request.headers['Authorization']).groups()[0]
-    payload = jwt.decode(token, os.getenv('JWT_SECRET_ACCESS_TOKEN'), algorithms = ('HS256',))
+    # get token/payload from auth header
+    payload = jwtTokenDecode(tokenFromRequest())
     
     # pass if authorized
     if Docs.query.filter(Docs.id == payload['id']).count():
@@ -32,4 +31,4 @@ def authorize():
     pass
 
   # abort.401 otherwise
-  return abort(make_response([], 401))
+  return abort(make_response('', 401))
