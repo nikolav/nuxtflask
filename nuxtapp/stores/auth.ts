@@ -88,7 +88,7 @@ export const useStoreApiAuth = defineStore("auth", () => {
     (authEndpoint: string = URL_AUTH_login) =>
     async (credentials: IAuthCreds) => {
       let token: OrNoValue<string> = "";
-
+      if (token$.value) return;
       processingStart();
       try {
         token = get(
