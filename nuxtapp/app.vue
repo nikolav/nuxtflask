@@ -6,11 +6,13 @@
 //   colorMode: "light",
 // });
 
+const auth = useStoreApiAuth();
+provide("auth:api", auth);
+
 useHead({
   titleTemplate: (ttl) => `[${ttl}]`,
   bodyAttrs: {
-    class:
-      "**dark:bg-slate-900 **dark:text-white/80 **dark:selection:bg-white/20",
+    class: "**dark:bg-slate-900 **dark:text-white/80 **dark:selection:bg-white/20",
   },
 });
 

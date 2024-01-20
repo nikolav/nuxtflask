@@ -3,6 +3,8 @@ import json
 from flask import Blueprint
 from flask import request
 from flask import g
+from flask_cors import CORS
+# from flask_cors import cross_origin
 # from flask import make_response
 # from flask import abort
 
@@ -16,8 +18,10 @@ from utils.jwtToken import setInvalid as tokenSetInvalid
 from config         import TAG_USERS
 
 
-bp_auth = Blueprint('register', __name__, url_prefix = '/auth')
+bp_auth      = Blueprint('register', __name__, url_prefix = '/auth')
+cors_bp_auth = CORS(bp_auth)
 
+# @cross_origin
 @bp_auth.route('/register', methods = ('POST',))
 def auth_register():
   # data: { email: string; password: string }
@@ -62,6 +66,7 @@ def auth_register():
   return {}, 403
   
   
+# @cross_origin
 @bp_auth.route('/login', methods = ('POST',))
 def auth_login():
   data = request.get_json()
@@ -89,15 +94,33 @@ def auth_login():
 
     else:
       if token:
-        return { 'token': token }
+        return { 'token': token }, 200
 
   return {}, 401
 
 
+# @cross_origin
 @bp_auth.route('/logout', methods = ('POST',))
 def auth_logout():
-  if g.access_token:
-    tokenSetInvalid(g.access_token)
-  return {}
-
+  try:
+    tokenSetInvalid(g.get('access_token'))
+  except Exception as err:
+    raise err
+  # except:
+  #   pass
+  else:
+    return {}, 200
+  
+# @cross_origin
+@bp_auth.route('/who', methods = ('GET',))
+def auth_who():
+  try:
+    # send user data
+    return { 'email': g.get('user_data')['email'] }, 200
+  except Exception as err:
+    raise err
+    # pass
+  
+  # throw 404.not-found
+  # return '', 400
 

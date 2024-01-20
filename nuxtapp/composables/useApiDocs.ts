@@ -80,8 +80,8 @@ export const useApiDocs = <TDocData>(tagName: string) => {
   //
   return {
     error,
-    crudError: crudProcessingError$,
     pending,
+    crudError: crudProcessingError$,
     processing: processing$,
     reload,
     put,

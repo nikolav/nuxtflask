@@ -1,5 +1,7 @@
 import { type TStoreMain } from "@/types";
 import { type TStoreFlags } from "@/types";
+import { assign } from "@/utils";
+
 export default defineAppConfig({
   //
   ADMIN_EMAIL: "admin@nikolav.rs",
@@ -15,6 +17,17 @@ export default defineAppConfig({
     },
     flags: {
       initial: <TStoreFlags>{},
+    },
+    auth: {
+      KEY_ACCESS_TOKEN: ":sEe5xYuTL4q",
+      initial: () => "",
+      authHeaders: (token: string, additional?: Record<string, any>) =>
+        assign(
+          {
+            Authorization: `Bearer ${token}`,
+          },
+          additional || {}
+        ),
     },
   },
   //

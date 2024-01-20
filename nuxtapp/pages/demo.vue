@@ -1,42 +1,42 @@
 <script setup lang="ts">
 import { idGen } from "@/utils";
-import type { IDocDataUsers } from "@/types";
+// import { useStoreApiAuth } from '@/stores';
 
 useHead({
   title: "--demo",
 });
 
-const {
-  error, crudError, pending, processing,
-  docs: users,
-  put: usersUpsert,
-  rm: usersRemove,
-} = useApiDocs<IDocDataUsers>("users");
 
-const choice = (ls: any[]) => ls[Math.floor(ls.length * Math.random())];
-const usersRemoveRandom = async () => 0 < users.value.length ? await usersRemove(choice(users.value)) : null;
-const usersAddRandom = async () => await usersUpsert({ 
-  data: { 
-    email: `user.${idGen()}@email.com`,
-    password: idGen(),
-  } 
-});
+const auth = inject("auth:api");
+// const token$ = computed(() => auth.token$);
+
+const noop = () => {};
+const credsAdmin = {
+  "email": "admin@nikolav.rs",
+  "password": "122",
+};
+const credsRand = () => {
+  const ID = idGen();
+  return {
+    "email": `user:${ID}@email.com`,
+    "password": ID
+  }
+};
+const loginAdmin   = async () => await auth.login(credsAdmin);
+const registerUser = async () => await auth.register(credsRand())
 
 // #eos
 </script>
 
 <template>
     <section id="page-demo">
-     <button @click="usersAddRandom" class="p-2 bg-sky-600 rounded shadow">users:add</button>
-     <button @click="usersRemoveRandom" class="p-2 bg-red-600 rounded shadow">users:rm</button>
-     <pre>pending: [{{ pending }}]</pre>
-     <pre>processing: [{{ processing }}]</pre>
-     <pre>error: [{{ error }}]</pre>
-     <pre>crudError: [{{ crudError }}]</pre>
+      <button class="p-2 bg-sky-600 rounded text-white/80" @click="loginAdmin">login</button>
+      <button class="p-2 bg-sky-600 rounded text-white/80" @click="auth.logout">logout</button>
+      <button class="p-2 bg-sky-600 rounded text-white/80" @click="registerUser">register</button>
     <hr class="border-sky-600 border-4"/>
     <p>
       <pre>
-        {{ JSON.stringify({ users }, null, 2) }}
+        {{ JSON.stringify({ token$: auth.token$, user$: auth.user$ }, null, 2) }}
       </pre>
     </p>
   </section>

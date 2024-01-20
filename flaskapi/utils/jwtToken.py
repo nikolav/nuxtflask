@@ -19,12 +19,12 @@ def __with_created_at(payload):
 
 
 def tokenFromRequest():
-  t     = None
+  t     = ''
   token = ''
   try:
-    t = re.match(r'^Basic (.+)$', request.headers['Authorization']).groups()[0]
-  except:
-    pass
+    t = re.match(r'^Bearer (.+)$', request.headers.get('Authorization')).groups()[0]
+  except Exception as err:
+    raise err
   else:
     if t:
       token = t
@@ -73,13 +73,14 @@ def valid(token):
 
 
 def setInvalid(token):
-  tag = Tags.query.filter(Tags.tag == TAG_TOKEN_VALID).first()
-  if tag:
-    for doc in tag.docs:
-      if token in json.loads(doc.data):
-        db.session.delete(doc)
-        db.session.commit()
-        break
+  if token:
+    tag = Tags.query.filter(Tags.tag == TAG_TOKEN_VALID).first()
+    if tag:
+      for doc in tag.docs:
+        if token in json.loads(doc.data):
+          db.session.delete(doc)
+          db.session.commit()
+          break
 
 
 def clearExpiredAll():

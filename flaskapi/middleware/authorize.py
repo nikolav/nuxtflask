@@ -1,4 +1,5 @@
 import re
+import json
 
 from flask import request
 from flask import abort
@@ -16,16 +17,24 @@ from config         import PATHS_SKIP_AUTHORIZATION
 def authorize():
   # @before_request
 
+  docUser = None
+    
   # pass open routes
   if any(re.match(p, request.path) for p in PATHS_SKIP_AUTHORIZATION):
     return
   
+  # ensure all CORS preflight OPTIONS requests 
+  # are answered with a successful HTTP status code (2xx)
+  # and do not redirect
+  if 'OPTIONS' == request.method.upper():
+    return
+
   # @auth
   try:
-
     # get token/payload from auth header
     token   = tokenFromRequest()
     payload = jwtTokenDecode(token)
+
     
     # abort.401 if token expired
     if tokenExpired(payload):
@@ -37,11 +46,19 @@ def authorize():
       raise Exception
     
     # pass if authorized
-    if Docs.query.filter(Docs.id == payload['id']).count():
-      # access token valid/not-expired here
-      # store @g for registered user
-      g.access_token = token
+    docUser = Docs.query.get(payload['id'])
+    if docUser:
+      g.access_token         = token
+      g.access_token_payload = payload
+      g.user_data            = json.loads(docUser.data)
       return
+    # # pass if authorized
+    # if Docs.query.filter(Docs.id == payload['id']).count():
+    #   # access token valid/not-expired here
+    #   # store @g for registered user
+    #   g.access_token         = token
+    #   g.access_token_payload = payload
+    #   return
   
   # except Exception as err:
   #   raise err
