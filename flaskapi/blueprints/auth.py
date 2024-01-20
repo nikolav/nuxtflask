@@ -1,8 +1,8 @@
 import json
 
-from flask import Blueprint
-from flask import request
-from flask import g
+from flask      import Blueprint
+from flask      import request
+from flask      import g
 from flask_cors import CORS
 # from flask_cors import cross_origin
 # from flask import make_response

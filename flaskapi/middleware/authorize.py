@@ -45,20 +45,13 @@ def authorize():
     if not tokenValid(token):
       raise Exception
     
-    # pass if authorized
+    # pass if authorized, user exists in db
     docUser = Docs.query.get(payload['id'])
     if docUser:
       g.access_token         = token
       g.access_token_payload = payload
       g.user_data            = json.loads(docUser.data)
       return
-    # # pass if authorized
-    # if Docs.query.filter(Docs.id == payload['id']).count():
-    #   # access token valid/not-expired here
-    #   # store @g for registered user
-    #   g.access_token         = token
-    #   g.access_token_payload = payload
-    #   return
   
   # except Exception as err:
   #   raise err
