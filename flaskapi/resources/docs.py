@@ -10,6 +10,7 @@ from . import io
 from models.docs import Docs
 from models.tags import Tags
 from utils.doc_json_date import docJsonDates as docPlain
+from middleware.wrappers.timelog import timelog
 
 
 IOEVENT_DOCS_CHANGE = os.getenv('IOEVENT_DOCS_CHANGE')
@@ -27,6 +28,7 @@ class DocsResource(Resource):
     docUpdate = None
     tag       = Tags.query.filter(Tags.tag == tag_name).first()
     ioevent   = IOEVENT_DOCS_CHANGE
+    sNewData  = ''
 
     if None == tag:
       tag = Tags(tag = tag_name)
@@ -38,23 +40,21 @@ class DocsResource(Resource):
           docUpdate = d
           break
     
+    sNewData = json.dumps(data['data'])
+
     if None != docUpdate:
 
-      oldData              = docUpdate.data
-      docUpdate.data       = json.dumps(data['data'])
+      sOldData             = docUpdate.data
+      docUpdate.data       = sNewData
       docUpdate.updated_at = datetime.utcnow()
 
-      if docUpdate.data == oldData:
+      if sNewData == sOldData:
         ioevent = None
       
       doc = docUpdate
 
     else:
-      
-      doc = Docs(
-        id   = ID, 
-        data = json.dumps(data['data'])
-      )
+      doc = Docs(id = ID, data = sNewData)
       tag.docs.append(doc)
       
     try:
@@ -93,3 +93,4 @@ class DocsResource(Resource):
             break
     
     return docPlain(doc) if None != doc else None
+

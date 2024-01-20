@@ -3,13 +3,14 @@ import json
 from flask import Blueprint
 
 from models.tags import Tags
+from middleware.wrappers.timelog import timelog
+from config import TAG_VARS
 
-
-TAG_VARS = '@vars'
 
 bp_home = Blueprint('home', __name__, url_prefix = '/')
 
 @bp_home.route('/', methods = ('GET',))
+@timelog
 def status_ok():
   
   admin_email = ''

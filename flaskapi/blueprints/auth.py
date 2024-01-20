@@ -2,6 +2,7 @@ import json
 
 from flask import Blueprint
 from flask import request
+from flask import g
 # from flask import make_response
 # from flask import abort
 
@@ -10,7 +11,8 @@ from models.tags    import Tags
 from models.docs    import Docs
 from utils.pw       import hash  as hashPassword
 from utils.pw       import check as checkPassword
-from utils.jwtToken import jwtToken
+from utils.jwtToken import issueToken
+from utils.jwtToken import setInvalid as tokenSetInvalid
 from config         import TAG_USERS
 
 
@@ -38,17 +40,16 @@ def auth_register():
           raise Exception
       
       # register
-      docNewUser = Docs(
-        data = json.dumps({ 
-          'email'    : email, 
-          'password' : hashPassword(password)
-        })
-      )
+      dataNewUser = json.dumps({ 
+        'email'    : email, 
+        'password' : hashPassword(password)
+      })
+      docNewUser = Docs(data = dataNewUser)
       tag.docs.append(docNewUser)
       db.session.commit()
 
       # new user added, get access-token
-      token = jwtToken({ 'id': docNewUser.id })
+      token = issueToken({ 'id': docNewUser.id })
       
     # except Exception as err:
     #   raise err
@@ -58,7 +59,7 @@ def auth_register():
       # user registered, send token, 201
       return { 'token': token }, 201
   
-  return dict(), 403
+  return {}, 403
   
   
 @bp_auth.route('/login', methods = ('POST',))
@@ -79,19 +80,24 @@ def auth_login():
         if email == d['email'] and checkPassword(password, d['password']):
           docUser = doc
           break
-        
+
       if docUser:
-        token = jwtToken({ 'id': docUser.id })
+        token = issueToken({ 'id': docUser.id })
         
     except:
       pass
+
     else:
       if token:
         return { 'token': token }
 
-  return dict(), 401
+  return {}, 401
 
 
 @bp_auth.route('/logout', methods = ('POST',))
 def auth_logout():
-  pass
+  if g.access_token:
+    tokenSetInvalid(g.access_token)
+  return {}
+
+
