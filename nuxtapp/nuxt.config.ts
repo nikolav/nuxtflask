@@ -90,7 +90,16 @@ export default defineNuxtConfig({
     // transition layouts
     layoutTransition: { name: "BLUR", mode: "out-in" },
   },
-  css: ["~/assets/styles/main.scss"],
+  css: [
+    // default
+    "~/assets/styles/main.scss",
+    
+    // ui styles
+    // @todo/vuetify,
+
+    // plugin styles
+    "@fancyapps/ui/dist/fancybox/fancybox.css",
+  ],
   //
   // #hybrid-rendering
   // #https://nuxt.com/docs/getting-started/server#hybrid-rendering

@@ -29,12 +29,13 @@ const fullPath$ = computed(() => route$.fullPath);
 <template>
   <main id="app-main" class="**text-indigo-800">
     <pre>
-      {{ JSON.stringify({ fullPath$ }, null, 2) }}
+      {{ JSON.stringify({ token: auth?.token$, fullPath$ }, null, 2) }}
     </pre>
     <ul>
       <li><NuxtLink to="/">home</NuxtLink></li>
       <li><NuxtLink to="about">about</NuxtLink></li>
       <li><NuxtLink to="demo">demo</NuxtLink></li>
+      <li><NuxtLink to="demo-auth">auth</NuxtLink></li>
     </ul>
     <NuxtLayout>
       <NuxtPage />

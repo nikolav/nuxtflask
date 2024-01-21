@@ -1,0 +1,18 @@
+[
+  {
+    "src": "/gallery/sample/Hydrangeas.jpg",
+    "caption": "hydrangeas"
+  },
+  {
+    "src": "/gallery/sample/Koala.jpg",
+    "caption": "koala"
+  },
+  {
+    "src": "/gallery/sample/Lighthouse.jpg",
+    "caption": "lighthouse"
+  },
+  {
+    "src": "/gallery/sample/Penguins.jpg",
+    "caption": "penguins"
+  }
+]
