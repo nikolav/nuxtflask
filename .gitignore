@@ -342,3 +342,7 @@ flaskapi/demo.py
 heroku-config-deploy.sh
 client.http
 heroku-config-set.sh
+
+flaskapi/templates/*
+!flaskapi/templates/base.html
+!flaskapi/templates/demo.html

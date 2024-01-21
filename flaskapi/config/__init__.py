@@ -1,8 +1,16 @@
 
 PATHS_SKIP_AUTHORIZATION = (
+
   r'^/$',
   r'^/auth/register$',
   r'^/auth/login$',
+
+  # allow static content
+  r'^/demo$',
+  r'^/wpscripts/.*$',
+  r'^/wpimages/.*$',
+  r'^/favicon.ico$',
+  
 )
 
 TAG_USERS        = '@users'
