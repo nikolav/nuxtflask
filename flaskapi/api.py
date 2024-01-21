@@ -24,15 +24,9 @@ app.register_blueprint(bp_auth)
 app.register_blueprint(bp_home)
 
 
-# static, documentation
-@app.route('/demo')
-def page_demo():
-  return render_template('index.html', time = datetime.now())
-
-@app.route('/<path:path>')
-def page_demo_resource(path):
-  return send_from_directory('templates', path)
-
+# init graphql endpoint
+# handle POST /graphql
+import config.graphql.init
 
 
 # request authorization middleware
@@ -41,15 +35,29 @@ def before_request_authorize():
   return authorize()
 
 
+# io status check
 @io.on('connect')
 def io_connected():
   print('io:connection')
+
+
+# mount static documentation
+@app.route('/demo')
+def page_demo():
+  return render_template('index.html', time = datetime.now())
+
+# ..and resources
+@app.route('/<path:path>')
+def page_demo_resource(path):
+  return send_from_directory('templates', path)
+
 
 
 if __name__ == '__main__':
   
   with app.app_context():
     # @app/init
+
     db.create_all()
     import config.init_tables
     
@@ -59,4 +67,3 @@ if __name__ == '__main__':
         host  = '0.0.0.0',
         port  = _port if None != _port else 5000,
         allow_unsafe_werkzeug = True)
-

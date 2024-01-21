@@ -5,7 +5,8 @@ PATHS_SKIP_AUTHORIZATION = (
   r'^/auth/register$',
   r'^/auth/login$',
 
-  # allow static content
+  # allow static resources
+  # @static-generator/SerifWebPlus
   r'^/demo$',
   r'^/wpscripts/.*$',
   r'^/wpimages/.*$',

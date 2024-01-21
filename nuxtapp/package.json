@@ -40,6 +40,7 @@
     "lodash": "^4.17.21",
     "nikolav-treets": "^1.2.43",
     "nikolav-utils": "^1.4.1",
-    "socket.io-client": "^4.7.4"
+    "socket.io-client": "^4.7.4",
+    "vue3-popper": "^1.5.0"
   }
 }
