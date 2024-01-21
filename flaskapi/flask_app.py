@@ -26,7 +26,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 talisman = Talisman(app,
                     force_https = False)
-cors     = CORS(app)
+cors     = CORS(app, 
+                supports_credentials = True)
 api      = Api(app)
 db       = SQLAlchemy(app)
 

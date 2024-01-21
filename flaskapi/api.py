@@ -29,7 +29,7 @@ app.register_blueprint(bp_home)
 import config.graphql.init
 
 
-# request authorization middleware
+# authorization middleware
 @app.before_request
 def before_request_authorize():
   return authorize()
@@ -38,7 +38,7 @@ def before_request_authorize():
 # io status check
 @io.on('connect')
 def io_connected():
-  print('io:connection')
+  print('@io/connection')
 
 
 # mount static documentation

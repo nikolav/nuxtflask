@@ -1,22 +1,27 @@
 <script setup lang="ts">
-import { idGen } from "@/utils";
-// import { useStoreApiAuth } from '@/stores';
-import sampleGallery from "@/assets/sample-gallery.json";
+// import { idGen } from "@/utils";
+import { Q_vars } from "@/graphql";
 
 useHead({
   title: "--demo",
 });
 
-// lightbox
-const lightbox = () => useNuxtApp().$lightbox.open(sampleGallery);
+
+const { result } = useQuery<{ vars: { name: string; value: string }[] }>(Q_vars);
 
 // #eos
 </script>
 
 <template>
     <section id="page-demo">
-      <button class="p-2 bg-sky-600 rounded text-white/80" @click="lightbox">gallery</button>
-      <hr class="border-2 border-sky-600 my-2" />
+      <h1>
+        @demo
+      </h1>
+      <p>
+        <pre>
+          {{ JSON.stringify({ result }, null, 2) }}
+        </pre>
+      </p>
       <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime temporibus officiis illum.</p>
   </section>
 </template>

@@ -1,4 +1,4 @@
-import { BASE_DIR } from "./config";
+import { BASE_DIR, ENDPOINT_GRAPHQL } from "./config";
 import { stripSlashesEnd } from "./utils";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -22,6 +22,8 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     // #https://google-fonts.nuxtjs.org/
     "@nuxtjs/google-fonts",
+    // https://apollo.nuxtjs.org/getting-started/quick-start
+    "@nuxtjs/apollo",
   ],
   runtimeConfig: {
     // The private keys which are only available server-side
@@ -93,7 +95,7 @@ export default defineNuxtConfig({
   css: [
     // default
     "~/assets/styles/main.scss",
-    
+
     // ui styles
     // @todo/vuetify,
 
@@ -145,6 +147,7 @@ export default defineNuxtConfig({
     classSuffix: "",
     // storageKey: "nuxt-color-mode",
   },
+  
   // #https://google-fonts.nuxtjs.org
   googleFonts: {
     families: {
@@ -153,5 +156,25 @@ export default defineNuxtConfig({
     },
     useStylesheet: true,
     download: false,
+  },
+
+  // https://apollo.nuxtjs.org/getting-started/configuration#configuration
+  // https://apollo.nuxtjs.org/getting-started/configuration#clients
+  apollo: {
+    autoImports: true,
+    authType: "Bearer",
+    authHeader: "Authorization",
+    tokenStorage: "cookie",
+    proxyCookies: true,
+    clients: {
+      default: {
+        httpEndpoint: ENDPOINT_GRAPHQL,
+        httpLinkOptions: {
+          // Enable sending cookies over cross-origin requests
+          credentials: "include",
+        },
+        tokenName: "@apollo/token:McW3G38G4ic",
+      },
+    },
   },
 });

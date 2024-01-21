@@ -58,7 +58,20 @@ export const useStoreApiAuth = defineStore("auth", () => {
     }
     toggleProcessing.off();
   };
+
+  // apply auth token to Apollo client
+  // ..if GraphQL API expects authentication to be passed via a HTTP header
+  const {
+    // https://apollo.nuxtjs.org/getting-started/auth-helpers#onlogin
+    onLogin: onLoginApollo,
+    // https://apollo.nuxtjs.org/getting-started/auth-helpers#onlogout-reference
+    onLogout: onLogoutApollo,
+  } = useApollo();
+
   // @token/change
+  //   refresh auth data
+  //   apply apollo auth
+  //   persist locally
   watch(token$, async (token) => {
     let data;
     if (token) {
@@ -69,7 +82,11 @@ export const useStoreApiAuth = defineStore("auth", () => {
         error$.value = error;
       } finally {
         if (data?.email) {
+          // cache auth data
           user$.value = <TAuthUser>data;
+          // pass auth token to apollo
+          // await onLoginApollo(token, undefined, true);
+          await onLoginApollo(token);
         }
       }
     } else {
@@ -124,9 +141,13 @@ export const useStoreApiAuth = defineStore("auth", () => {
       await $fetch<IAuthLogoutResponse>(URL_AUTH_logout, {
         method: "POST",
         headers: authHeaders(token),
-        onResponse: ({ response }) => {
+        onResponse: async ({ response }) => {
           if (response.ok) {
+            // logout success, token invalid
             token$.value = "";
+            // signal logout to apollo
+            // await onLogoutApollo(undefined, true);
+            await onLogoutApollo();
           }
         },
       });
