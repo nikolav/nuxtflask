@@ -2,15 +2,14 @@ import os
 import json
 from datetime import datetime
 
-from flask import request
+from flask         import request
 from flask_restful import Resource
 
-from . import db
-from . import io
+from flask_app   import db
+from flask_app   import io
 from models.docs import Docs
 from models.tags import Tags
 from utils.doc_json_date import docJsonDates as docPlain
-from middleware.wrappers.timelog import timelog
 
 
 IOEVENT_DOCS_CHANGE = os.getenv('IOEVENT_DOCS_CHANGE')
@@ -23,18 +22,20 @@ class DocsResource(Resource):
   
   def post(self, tag_name):
     data      = request.get_json()
-    ID        = data.get('id', None)
+    ID        = data.get('id')
     doc       = None
     docUpdate = None
-    tag       = Tags.query.filter(Tags.tag == tag_name).first()
     ioevent   = IOEVENT_DOCS_CHANGE
     sNewData  = ''
 
-    if None == tag:
+
+    tag = Tags.query.filter(Tags.tag == tag_name).first()
+    
+    if not tag:
       tag = Tags(tag = tag_name)
       db.session.add(tag)
     
-    if None != ID:
+    if ID:
       for d in tag.docs:
         if ID == d.id:
           docUpdate = d
@@ -42,11 +43,13 @@ class DocsResource(Resource):
     
     sNewData = json.dumps(data['data'])
 
-    if None != docUpdate:
+    if docUpdate:
 
-      sOldData             = docUpdate.data
-      docUpdate.data       = sNewData
-      docUpdate.updated_at = datetime.utcnow()
+      sOldData       = docUpdate.data
+      docUpdate.data = sNewData
+
+      if sNewData != sOldData:
+        docUpdate.updated_at = datetime.utcnow()
 
       if sNewData == sOldData:
         ioevent = None
@@ -64,20 +67,20 @@ class DocsResource(Resource):
     else:
       # change:docs:orders@122, doc{}
       # ! io_send(f'{ioevent}:{tag.tag}')
-      if None != ioevent:
+      if ioevent:
         io.emit(f'{ioevent}:{tag.tag}')
     
     return docPlain(doc)
   
   def delete(self, tag_name):
     data = request.get_json()
-    ID   = data.get('id', None)
+    ID   = data.get('id')
     doc  = None
     tag  = None
     
-    if None != ID:
+    if ID:
       tag = Tags.query.filter(Tags.tag == tag_name).first()
-      if None != tag:
+      if tag:
         for d in tag.docs:
           if ID == d.id:
             try:
@@ -88,7 +91,7 @@ class DocsResource(Resource):
               raise err
             else:
               doc = d
-              io.emit(f'{IOEVENT_DOCS_CHANGE}:{tag.tag}')
+              io.emit(f'{IOEVENT_DOCS_CHANGE}:{tag.tag}')            
             
             break
     

@@ -34,14 +34,14 @@ def io_connected():
 if __name__ == '__main__':
   
   with app.app_context():
+    # @app/init
     db.create_all()
     import config.init_tables
     
-
   _port = os.getenv('PORT')
   io.run(app, 
-         debug = True,
-         host = '0.0.0.0',
-         port = _port if None != _port else 5000,
-         allow_unsafe_werkzeug = True)
+        debug = True,
+        host  = '0.0.0.0',
+        port  = _port if None != _port else 5000,
+        allow_unsafe_werkzeug = True)
 

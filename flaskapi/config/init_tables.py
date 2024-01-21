@@ -14,24 +14,23 @@ try:
   db.session.commit()
 except:
   pass
-finally:
-  pass
+
 
 try:
 
-  tag = Tags.query.filter(Tags.tag == TAG_VARS).first()
+  t_vars = Tags.query.filter(Tags.tag == TAG_VARS).first()
   
-  if tag:  
-
-    if all(not 'admin:email' in doc.data for doc in tag.docs):
-      tag.docs.append(Docs(data = json.dumps({ 'admin:email': "admin@nikolav.rs" })))
+  if t_vars:  
     
-    if all(not 'app:name' in doc.data for doc in tag.docs):
-      tag.docs.append(Docs(data = json.dumps({ 'app:name': "app:nuxtflask" })))
+    vars_data = (json.loads(doc.data) for doc in t_vars.docs)
+    
+    if all(not 'app:name' in node for node in vars_data):
+      t_vars.docs.append(Docs(data = json.dumps({ 'app:name': "app:nuxtflask" })))
+
+    if all(not 'admin:email' in node for node in vars_data):
+      t_vars.docs.append(Docs(data = json.dumps({ 'admin:email': "admin@nikolav.rs" })))
   
   db.session.commit()
     
 except:
-  pass
-finally:
   pass
