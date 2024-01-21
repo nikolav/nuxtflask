@@ -50,6 +50,9 @@ def encode(jsonPayload):
   
 
 def issueToken(jsonPayload):
+  # generate token
+  # store under '@token/valid' tag
+  
   token = encode(jsonPayload)
   tag   = Tags.query.filter(Tags.tag == TAG_TOKEN_VALID).first()
 

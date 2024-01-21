@@ -18,8 +18,12 @@ from utils.jwtToken import setInvalid as tokenSetInvalid
 from config         import TAG_USERS
 
 
-bp_auth      = Blueprint('register', __name__, url_prefix = '/auth')
+# router config
+bp_auth = Blueprint('register', __name__, url_prefix = '/auth')
+
+# cors blueprints as wel for cross-domain requests
 cors_bp_auth = CORS(bp_auth)
+
 
 # @cross_origin
 @bp_auth.route('/register', methods = ('POST',))

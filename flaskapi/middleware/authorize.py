@@ -48,9 +48,13 @@ def authorize():
     # pass if authorized, user exists in db
     docUser = Docs.query.get(payload['id'])
     if docUser:
+      
+      # cache auth-data
       g.access_token         = token
       g.access_token_payload = payload
       g.user_data            = json.loads(docUser.data)
+      
+      # run next
       return
   
   # except Exception as err:
@@ -58,5 +62,5 @@ def authorize():
   except:
     pass
 
-  # abort.401 otherwise
+  # 401/unauthorized otherwise
   return abort(make_response('', 401))

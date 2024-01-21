@@ -32,6 +32,6 @@ def status_ok():
         break
     
   return {
-    'admin:email' : admin_email,
     'app:name'    : app_name,
+    'admin:email' : admin_email,
   }
