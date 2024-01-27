@@ -19,7 +19,7 @@ def status_ok():
   admin_email = ''
   app_name    = ''
   
-  tag = Tags.query.filter(Tags.tag == TAG_VARS).first()
+  tag = Tags.by_name(TAG_VARS)
   # tag = db.session.scalars(
   #   select(Tags)
   #     .where(Tags.tag == TAG_VARS)

@@ -6,6 +6,7 @@ from flask import abort
 from flask import make_response
 from flask import g
 
+from flask_app      import db
 from models.docs    import Docs
 from utils.jwtToken import tokenFromRequest
 from utils.jwtToken import decode     as jwtTokenDecode
@@ -46,7 +47,7 @@ def authorize():
       raise Exception
     
     # pass if authorized, user exists in db
-    docUser = Docs.query.get(payload['id'])
+    docUser = db.session.get(Docs, payload['id'])
     if docUser:
       
       # cache auth-data

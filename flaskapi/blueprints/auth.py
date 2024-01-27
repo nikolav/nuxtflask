@@ -40,7 +40,7 @@ def auth_register():
   # require email and password
   if email and password:
     try:
-      tag = Tags.query.filter(Tags.tag == TAG_USERS).first()
+      tag = Tags.by_name(TAG_USERS)
       # skip if already registered
       for doc in tag.docs:
         d = json.loads(doc.data)
@@ -83,7 +83,7 @@ def auth_login():
   
   if email and password:
     try:
-      tag = Tags.query.filter(Tags.tag == TAG_USERS).first()
+      tag = Tags.by_name(TAG_USERS)
       for doc in tag.docs:
         d = json.loads(doc.data)
         if email == d['email'] and checkPassword(password, d['password']):

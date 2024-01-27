@@ -54,7 +54,7 @@ def issueToken(jsonPayload):
   # store under '@token/valid' tag
   
   token = encode(jsonPayload)
-  tag   = Tags.query.filter(Tags.tag == TAG_TOKEN_VALID).first()
+  tag   = Tags.by_name(TAG_TOKEN_VALID)
 
   # add valid tokens '@token/valid' list
   
@@ -71,13 +71,13 @@ def issueToken(jsonPayload):
   
 
 def valid(token):
-  tag = Tags.query.filter(Tags.tag == TAG_TOKEN_VALID).first()
+  tag = Tags.by_name(TAG_TOKEN_VALID)
   return any(token in json.loads(doc.data) for doc in tag.docs) if tag else False
 
 
 def setInvalid(token):
   if token:
-    tag = Tags.query.filter(Tags.tag == TAG_TOKEN_VALID).first()
+    tag = Tags.by_name(TAG_TOKEN_VALID)
     if tag:
       for doc in tag.docs:
         if token in json.loads(doc.data):
@@ -87,7 +87,7 @@ def setInvalid(token):
 
 
 def clearExpiredAll():
-  tag = Tags.query.filter(Tags.tag == TAG_TOKEN_VALID).first()
+  tag = Tags.by_name(TAG_TOKEN_VALID)
   if tag:
     for doc in tag.docs:
       for token in json.loads(doc.data):
