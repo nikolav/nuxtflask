@@ -12,16 +12,16 @@ from utils.jwtToken import tokenFromRequest
 from utils.jwtToken import decode  as jwtTokenDecode
 from utils.jwtToken import expired as tokenExpired
 from utils.jwtToken import valid   as tokenValid
-from config         import PATHS_SKIP_AUTHORIZATION
+from config         import PATHS_SKIP_AUTH
 
 
-def authorize():
+def authenticate():
   # @before_request
 
   docUser = None
 
   # pass open routes
-  if any(re.match(p, request.path) for p in PATHS_SKIP_AUTHORIZATION):
+  if any(re.match(p, request.path) for p in PATHS_SKIP_AUTH):
     return
   
   # ensure all CORS preflight OPTIONS requests 
@@ -46,7 +46,7 @@ def authorize():
     if not tokenValid(token):
       raise Exception
     
-    # pass if authorized, user exists in db
+    # pass if authenticated, user exists in db
     docUser = db.session.get(Docs, payload['id'])
     if docUser:
       # cache auth-data
@@ -62,5 +62,5 @@ def authorize():
   except:
     pass
 
-  # 401/unauthorized otherwise
+  # 401/unauthenticated otherwise
   return abort(make_response('', 401))

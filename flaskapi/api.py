@@ -9,11 +9,11 @@ from flask_app import api
 from flask_app import db
 from flask_app import io
 
-from resources.docs       import DocsResource
-from blueprints           import bp_home
-from blueprints.auth      import bp_auth
-from middleware.authorize import authorize
-
+from resources.docs          import DocsResource
+from blueprints              import bp_home
+from blueprints.auth         import bp_auth
+from middleware.authenticate import authenticate
+from middleware.authguard    import authguard
 
 # mount resources
 api.add_resource(DocsResource, '/docs/<string:tag_name>')
@@ -41,10 +41,10 @@ def page_demo_resource(path):
   return send_from_directory('templates', path)
 
 
-# authorization middleware
+# authentication middleware
 @app.before_request
-def before_request_authorize():
-  return authorize()
+def before_request_authenticate():
+  return authenticate()
 
 
 # io status check

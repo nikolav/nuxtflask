@@ -1,5 +1,5 @@
 
-PATHS_SKIP_AUTHORIZATION = (
+PATHS_SKIP_AUTH = (
 
   r'^/$',
   r'^/auth/register$',

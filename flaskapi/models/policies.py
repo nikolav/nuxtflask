@@ -28,6 +28,19 @@ class Policy(db.Model):
   
   @staticmethod
   def has_policies(docUser, *policies):
-    tp = [p.policy for p in docUser.policies]
-    return all(p in tp for p in policies)
+    
+    if docUser:
+      tp = [p.policy for p in docUser.policies]
+      # if os.getenv('POLICY_ALL') in tp:
+      #   return True
+      return all(p in tp for p in policies)
+      
+    return False
+  
+  @staticmethod
+  def by_name(policy_name):
+    return db.session.scalar(
+      db.select(Policy)
+        .where(Policy.policy == policy_name)
+    )
   
