@@ -1,6 +1,6 @@
 import os
 import json
-from datetime import datetime
+# from datetime import datetime
 
 from flask         import request
 from flask_restful import Resource
@@ -17,8 +17,7 @@ IOEVENT_DOCS_CHANGE = os.getenv('IOEVENT_DOCS_CHANGE')
 class DocsResource(Resource):
 
   def get(self, tag_name):
-    tag = Tags.query.filter(Tags.tag == tag_name).first()
-    return [ docPlain(doc) for doc in tag.docs ] if None != tag else []
+    return [ docPlain(doc) for doc in Docs.tagged(tag_name) ]
   
   def post(self, tag_name):
     data      = request.get_json()
@@ -29,7 +28,7 @@ class DocsResource(Resource):
     sNewData  = ''
 
 
-    tag = Tags.query.filter(Tags.tag == tag_name).first()
+    tag = Tags.by_name(tag_name)
     
     if not tag:
       tag = Tags(tag = tag_name)
@@ -48,8 +47,8 @@ class DocsResource(Resource):
       sOldData       = docUpdate.data
       docUpdate.data = sNewData
 
-      if sNewData != sOldData:
-        docUpdate.updated_at = datetime.utcnow()
+      # if sNewData != sOldData:
+      #   docUpdate.updated_at = datetime.utcnow()
 
       if sNewData == sOldData:
         ioevent = None
@@ -79,7 +78,7 @@ class DocsResource(Resource):
     tag  = None
     
     if ID:
-      tag = Tags.query.filter(Tags.tag == tag_name).first()
+      tag = Tags.by_name(tag_name)
       if tag:
         for d in tag.docs:
           if ID == d.id:
@@ -96,4 +95,3 @@ class DocsResource(Resource):
             break
     
     return docPlain(doc) if None != doc else None
-

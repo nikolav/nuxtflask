@@ -2,4 +2,4 @@ from config.graphql.init import query
 
 @query.field('status')
 def status(obj, info):
-  return { 'status': 'ok' }
+  return 'ok'

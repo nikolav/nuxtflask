@@ -12,32 +12,25 @@ from flask_socketio import SocketIO
 
 load_dotenv()
 
-PRODUCTION = os.getenv('PRODUCTION')
-
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
-
+PRODUCTION   = os.getenv('PRODUCTION')
 DATABASE_URI = os.getenv('DATABASE_URI_production') if PRODUCTION else os.getenv('DATABASE_URI_dev')
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
-
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-
-talisman = Talisman(app,
-                    force_https = False)
-cors     = CORS(app, 
-                supports_credentials = True)
-api      = Api(app)
-db       = SQLAlchemy(app)
-
 IO_CORS_ALLOW_ORIGINS = (
   os.getenv('IOCORS_ALLOW_ORIGIN_dev'),
   os.getenv('IOCORS_ALLOW_ORIGIN_dev_1'),
   os.getenv('IOCORS_ALLOW_ORIGIN_production'),
   os.getenv('IOCORS_ALLOW_ORIGIN_nikolavrs'),
 );
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ECHO'] = not PRODUCTION
+
+talisman = Talisman(app, force_https = False)
+cors     = CORS(app, supports_credentials = True)
+api      = Api(app)
+db       = SQLAlchemy(app)
 io = SocketIO(app, 
-              cors_allowed_origins      = IO_CORS_ALLOW_ORIGINS, 
-              cors_supports_credentials = True
-            )
+              cors_allowed_origins = IO_CORS_ALLOW_ORIGINS, 
+              cors_supports_credentials = True)

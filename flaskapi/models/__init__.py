@@ -10,6 +10,6 @@ tagsTable       = f'tags{tblSuffix}'
 
 ln_docs_tags = db.Table(
   lnTableDocsTags,
-  db.Column('doc_id', db.BigInteger, db.ForeignKey(f'{docsTable}.id'), primary_key = True),
-  db.Column('tag_id', db.BigInteger, db.ForeignKey(f'{tagsTable}.id'), primary_key = True),
+  db.Column('doc_id', db.Integer, db.ForeignKey(f'{docsTable}.id'), primary_key = True),
+  db.Column('tag_id', db.Integer, db.ForeignKey(f'{tagsTable}.id'), primary_key = True),
 )

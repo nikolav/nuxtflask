@@ -2,10 +2,6 @@ schema {
   query: Query
 }
 
-type StatusCheck {
-  status: String!
-}
-
 type Var {
   id: ID!
   name: String!
@@ -13,6 +9,6 @@ type Var {
 }
 
 type Query {
-  status: StatusCheck!
+  status: String!
   vars: [Var!]!
 }

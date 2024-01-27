@@ -1,4 +1,5 @@
 import { BASE_DIR, ENDPOINT_GRAPHQL } from "./config";
+// import { stripSlashesEnd } from "./utils";
 import { stripSlashesEnd } from "./utils";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -12,7 +13,7 @@ export default defineNuxtConfig({
   // ssr: true,
 
   // #client-side only rendering; no prerender
-  // ssr: false,
+  ssr: false,
   //
   modules: [
     "@vueuse/nuxt",

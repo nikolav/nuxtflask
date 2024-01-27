@@ -2,10 +2,12 @@ import json
 
 from flask import Blueprint
 # from flask_cors import cross_origin
+from sqlalchemy import select
 
 from config                      import TAG_VARS
 from models.tags                 import Tags
 from middleware.wrappers.timelog import timelog
+from flask_app import db
 
 
 bp_home = Blueprint('home', __name__, url_prefix = '/')
@@ -18,6 +20,12 @@ def status_ok():
   app_name    = ''
   
   tag = Tags.query.filter(Tags.tag == TAG_VARS).first()
+  # tag = db.session.scalars(
+  #   select(Tags)
+  #     .where(Tags.tag == TAG_VARS)
+  #     .limit(1)
+  # )
+
   if tag:
     for d in tag.docs:
       data = json.loads(d.data)

@@ -8,7 +8,7 @@ from config      import TAG_VARS
 @query.field('vars')
 def resolve_vars(obj, info):
   res = []
-  tag = Tags.query.filter(Tags.tag == TAG_VARS).first()
+  tag = Tags.by_name(TAG_VARS)
   if tag:
     for doc in tag.docs:
       d = json.loads(doc.data)

@@ -20,12 +20,13 @@ api.add_resource(DocsResource, '/docs/<string:tag_name>')
 
 
 # mount blueprints
+# /auth
 app.register_blueprint(bp_auth)
+# /
 app.register_blueprint(bp_home)
 
 
-# init graphql endpoint
-# handle POST /graphql
+# init graphql endpoint, POST /graphql
 import config.graphql.init
 
 

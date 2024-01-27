@@ -1,13 +1,13 @@
 import os
 
-from flask     import jsonify
-from flask     import request
+from flask import jsonify
+from flask import request
 
 from ariadne import graphql_sync
 from ariadne import load_schema_from_path
 from ariadne import make_executable_schema
-# from ariadne import ObjectType
 from ariadne import QueryType
+# from ariadne import ObjectType
 
 from flask_app import app
 
