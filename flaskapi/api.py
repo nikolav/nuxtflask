@@ -30,6 +30,17 @@ app.register_blueprint(bp_home)
 import config.graphql.init
 
 
+# mount static documentation
+@app.route('/demo')
+def page_demo():
+  return render_template('index.html', time = datetime.now())
+
+# ..and resources
+@app.route('/<path:path>')
+def page_demo_resource(path):
+  return send_from_directory('templates', path)
+
+
 # authorization middleware
 @app.before_request
 def before_request_authorize():
@@ -42,24 +53,20 @@ def io_connected():
   print('@io/connection')
 
 
-# mount static documentation
-@app.route('/demo')
-def page_demo():
-  return render_template('index.html', time = datetime.now())
-
-# ..and resources
-@app.route('/<path:path>')
-def page_demo_resource(path):
-  return send_from_directory('templates', path)
-
-
-
 if __name__ == '__main__':
   
   with app.app_context():
     # @app/init
 
+    # load models
+    from models.tags     import Tags
+    from models.docs     import Docs
+    from models.policies import Policy
+    
+    # create schema
     db.create_all()
+
+    # init db
     import config.init_tables
     
   _port = os.getenv('PORT')

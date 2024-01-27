@@ -14,7 +14,7 @@ from config      import TAG_TOKEN_VALID
 
 
 def __with_created_at(payload):
-  payload[KEY_TOKEN_CREATED_AT] = str(datetime.now())
+  payload[KEY_TOKEN_CREATED_AT] = str(datetime.utcnow())
   return payload
 
 
@@ -38,7 +38,7 @@ def decode(sToken):
 
 def expired(token):
   jsonTokenPayload = token if isinstance(token, dict) else decode(token)
-  ddif = datetime.now() - datetime.fromisoformat(jsonTokenPayload[KEY_TOKEN_CREATED_AT])
+  ddif = datetime.utcnow() - datetime.fromisoformat(jsonTokenPayload[KEY_TOKEN_CREATED_AT])
   return int(os.getenv('JWT_EXPIRE_SECONDS')) < ddif.total_seconds()
   
 

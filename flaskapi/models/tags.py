@@ -22,9 +22,10 @@ class Tags(db.Model):
   docs: Mapped[List['Docs']] = relationship('Docs', secondary = ln_docs_tags, back_populates = 'tags')
 
   # magic
-  def __repr__(self) -> str:
+  def __repr__(self):
     return f'Tags(id={self.id!r}, data={self.tag!r})'
   
+  @staticmethod
   def by_name(tag_name):
     return db.session.scalar(
       db.select(Tags)

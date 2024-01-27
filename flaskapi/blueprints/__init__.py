@@ -20,11 +20,6 @@ def status_ok():
   app_name    = ''
   
   tag = Tags.by_name(TAG_VARS)
-  # tag = db.session.scalars(
-  #   select(Tags)
-  #     .where(Tags.tag == TAG_VARS)
-  #     .limit(1)
-  # )
 
   if tag:
     for d in tag.docs:

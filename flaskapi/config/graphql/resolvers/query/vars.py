@@ -2,16 +2,14 @@ import json
 
 from config.graphql.init import query
 
-from models.tags import Tags
+from models.docs import Docs
 from config      import TAG_VARS
 
 @query.field('vars')
 def resolve_vars(obj, info):
   res = []
-  tag = Tags.by_name(TAG_VARS)
-  if tag:
-    for doc in tag.docs:
-      d = json.loads(doc.data)
-      for name, value in d.items():
-        res.append({ 'id': doc.id, 'name': name, 'value': value })
+  for doc in Docs.tagged(TAG_VARS):
+    d = json.loads(doc.data)
+    for name, value in d.items():
+      res.append({ 'id': doc.id, 'name': name, 'value': value })
   return res

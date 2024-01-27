@@ -19,7 +19,7 @@ from config         import TAG_USERS
 
 
 # router config
-bp_auth = Blueprint('register', __name__, url_prefix = '/auth')
+bp_auth = Blueprint('auth', __name__, url_prefix = '/auth')
 
 # cors blueprints as wel for cross-domain requests
 cors_bp_auth = CORS(bp_auth)

@@ -9,9 +9,9 @@ from flask import g
 from flask_app      import db
 from models.docs    import Docs
 from utils.jwtToken import tokenFromRequest
-from utils.jwtToken import decode     as jwtTokenDecode
-from utils.jwtToken import expired    as tokenExpired
-from utils.jwtToken import valid      as tokenValid
+from utils.jwtToken import decode  as jwtTokenDecode
+from utils.jwtToken import expired as tokenExpired
+from utils.jwtToken import valid   as tokenValid
 from config         import PATHS_SKIP_AUTHORIZATION
 
 
@@ -19,7 +19,7 @@ def authorize():
   # @before_request
 
   docUser = None
-    
+
   # pass open routes
   if any(re.match(p, request.path) for p in PATHS_SKIP_AUTHORIZATION):
     return
@@ -49,13 +49,11 @@ def authorize():
     # pass if authorized, user exists in db
     docUser = db.session.get(Docs, payload['id'])
     if docUser:
-      
       # cache auth-data
       g.access_token         = token
       g.access_token_payload = payload
       g.user_data            = json.loads(docUser.data)
       g.user                 = docUser
-      
       # run next
       return
   

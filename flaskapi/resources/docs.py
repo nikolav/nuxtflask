@@ -1,6 +1,5 @@
 import os
 import json
-# from datetime import datetime
 
 from flask         import request
 from flask_restful import Resource
@@ -46,9 +45,6 @@ class DocsResource(Resource):
 
       sOldData       = docUpdate.data
       docUpdate.data = sNewData
-
-      # if sNewData != sOldData:
-      #   docUpdate.updated_at = datetime.utcnow()
 
       if sNewData == sOldData:
         ioevent = None
