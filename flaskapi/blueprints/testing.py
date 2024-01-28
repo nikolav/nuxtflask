@@ -18,6 +18,8 @@ from models.docs     import Docs
 # from config         import TAG_USERS
 
 bp_testing = Blueprint('testing', __name__, url_prefix = '/test')
+
+# cors blueprints as wel for cross-domain requests
 cors_bp_testing = CORS(bp_testing)
 
 @bp_testing.route('/', methods = ('GET',))

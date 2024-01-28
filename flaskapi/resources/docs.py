@@ -90,4 +90,4 @@ class DocsResource(Resource):
             
             break
     
-    return docPlain(doc) if None != doc else None
+    return docPlain(doc) if doc else None

@@ -7,6 +7,8 @@ from middleware.wrappers.timelog import timelog
 
 
 bp_home = Blueprint('home', __name__, url_prefix = '/')
+
+# cors blueprints as wel for cross-domain requests
 cors_bp_home = CORS(bp_home)
 
 @bp_home.route('/', methods = ('GET',))

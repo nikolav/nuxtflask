@@ -65,7 +65,6 @@ def auth_register():
   return {}, 403
   
   
-# @cross_origin
 @bp_auth.route('/login', methods = ('POST',))
 def auth_login():
   data = request.get_json()
@@ -96,7 +95,6 @@ def auth_login():
   return {}, 401
 
 
-# @cross_origin
 @bp_auth.route('/logout', methods = ('POST',))
 def auth_logout():
   try:
@@ -108,7 +106,6 @@ def auth_logout():
   else:
     return {}, 200
   
-# @cross_origin
 @bp_auth.route('/who', methods = ('GET',))
 def auth_who():
   try:
@@ -118,6 +115,3 @@ def auth_who():
     raise err
     # pass
   
-  # throw 404.not-found
-  # return '', 400
-

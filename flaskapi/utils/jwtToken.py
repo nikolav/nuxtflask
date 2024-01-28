@@ -76,13 +76,11 @@ def valid(token):
 
 def setInvalid(token):
   if token:
-    tag = Tags.by_name(TAG_TOKEN_VALID)
-    if tag:
-      for doc in tag.docs:
-        if token in doc.data:
-          db.session.delete(doc)
-          db.session.commit()
-          break
+    for doc in Docs.tagged(TAG_TOKEN_VALID):
+      if token in doc.data:
+        db.session.delete(doc)
+        db.session.commit()
+        break
 
 
 def clearExpiredAll():
