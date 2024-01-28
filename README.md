@@ -1,9 +1,10 @@
 # deploy setup
 
 ## pre.git-push
-  - set `PRODUCTION=1`:1, `*_production` urls, @/flaskapi/.env
-  - set `PRODUCTION$ = true`:2, `API_URL_production`:12, @/nuxtapp/config/vars.env.ts
-  - set host @/scp-config.sh, lines 2-5
+  - set `PRODUCTION=1`, `*_production` urls, @/flaskapi/.env, lines: 3, 10, 29
+  - set `PRODUCTION$ = true`, `*_production` paths, @/nuxtapp/config/vars.env.ts, lines: 4, 9
+  - for static generation (nuxtConfig.ssr = false), set `BASE_DIR = /app/path`, @/nuxtapp/.env, lines: 2
+  - set `NUXTAPP_HOST=..` @/scp-config.sh, lines: 2
 
 ## deploy
   - @host: mkdir -p /root/app; cd /root/app; git clone _repository_

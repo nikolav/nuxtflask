@@ -1,6 +1,8 @@
-import { BASE_DIR, ENDPOINT_GRAPHQL } from "./config";
-// import { stripSlashesEnd } from "./utils";
+import { ENDPOINT_GRAPHQL } from "./config";
 import { stripSlashesEnd } from "./utils";
+
+
+const BASE_DIR = process.env.BASE_DIR;
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -9,11 +11,10 @@ export default defineNuxtConfig({
   // # use .generate command to produce html in .output/public
   // # specify routes for nitro to prerender @nitro.prerender.routes<path[]>
 
-  // #universal rendering
-  // ssr: true,
-
-  // #client-side only rendering; no prerender
-  ssr: false,
+  // # universal rendering
+  //   ssr: true,
+  // # client-side only rendering; no prerender
+  // ssr: false,
   //
   modules: [
     "@vueuse/nuxt",
@@ -50,7 +51,6 @@ export default defineNuxtConfig({
   // routeRules: {},
   app: {
     //
-    // #run app from public subfolder `/app/122--nuxtapp/`
     baseURL: BASE_DIR,
     buildAssetsDir: `${stripSlashesEnd(BASE_DIR)}/_nuxt/`,
     //
@@ -148,7 +148,7 @@ export default defineNuxtConfig({
     classSuffix: "",
     // storageKey: "nuxt-color-mode",
   },
-  
+
   // #https://google-fonts.nuxtjs.org
   googleFonts: {
     families: {
