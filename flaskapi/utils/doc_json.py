@@ -1,1 +1,5 @@
-docJson = lambda d: dict(id = d.id, data = d.data)
+from schemas.serialization import SchemaSerializeDocJson
+
+
+_schema = SchemaSerializeDocJson()
+docJson = lambda d: _schema.dump(d)

@@ -1,5 +1,4 @@
 from flask      import Blueprint
-from flask      import request
 from flask      import g
 from flask_cors import CORS
 # from flask_cors import cross_origin
@@ -15,6 +14,10 @@ from utils.jwtToken import issueToken
 from utils.jwtToken import setInvalid as tokenSetInvalid
 from config         import TAG_USERS
 
+from middleware.arguments    import arguments_schema
+from schemas.validation.auth import SchemaAuthLogin
+from schemas.validation.auth import SchemaAuthRegister
+
 
 # router config
 bp_auth = Blueprint('auth', __name__, url_prefix = '/auth')
@@ -23,95 +26,96 @@ bp_auth = Blueprint('auth', __name__, url_prefix = '/auth')
 cors_bp_auth = CORS(bp_auth)
 
 @bp_auth.route('/register', methods = ('POST',))
+@arguments_schema(SchemaAuthRegister())
 def auth_register():
-  # data: { email: string; password: string }
-  data = request.get_json()
+  email    = g.arguments['email']
+  password = g.arguments['password']
   
-  email    = data.get('email')
-  password = data.get('password')
-  
-  tag   = None
   token = ''
+  error = '@error/internal.500'
 
-  # require email and password
-  if email and password:
-    try:
-      tag = Tags.by_name(TAG_USERS)
-      # skip if already registered
-      for doc in tag.docs:
-        if email == doc.data['email'] and checkPassword(password, doc.data['password']):
-          raise Exception
-      
-      # register
-      dataNewUser = { 
-        'email'    : email, 
-        'password' : hashPassword(password)
-      }
-      docNewUser = Docs(data = dataNewUser)
-      tag.docs.append(docNewUser)
-      db.session.commit()
+  try:
+    tag = Tags.by_name(TAG_USERS)
 
-      # new user added, get access-token
-      token = issueToken({ 'id': docNewUser.id })
-      
-    # except Exception as err:
-    #   raise err
-    except:
-      pass
-    else:
-      # user registered, send token, 201
+    # skip if already registered
+    if any(email == doc.data['email'] for doc in tag.docs):
+      raise Exception('access denied')
+    
+    # register
+    dataNewUser = { 
+      'email'    : email, 
+      'password' : hashPassword(password)
+    }
+    docNewUser = Docs(data = dataNewUser)
+    tag.docs.append(docNewUser)
+    db.session.commit()
+
+    # new user added, get access-token
+    token = issueToken({ 'id': docNewUser.id })
+    
+  except Exception as err:
+    error = err
+  
+  else:
+    # user registered, send token, 201
+    if token:
       return { 'token': token }, 201
   
-  return {}, 403
+  # forbiden otherwise
+  return { 'error': str(error) }, 403
   
   
 @bp_auth.route('/login', methods = ('POST',))
+@arguments_schema(SchemaAuthLogin())
 def auth_login():
-  data = request.get_json()
-  
-  email    = data.get('email')
-  password = data.get('password')
+  email    = g.arguments['email']
+  password = g.arguments['password']
   
   docUser = None
   token   = ''
+  error   = '@error/internal.500'
   
-  if email and password:
-    try:
-      for doc in Docs.tagged(TAG_USERS):
-        if email == doc.data['email'] and checkPassword(password, doc.data['password']):
-          docUser = doc
-          break
+  
+  try:
+    for doc in Docs.tagged(TAG_USERS):
+      if email == doc.data['email']:
+        if not checkPassword(password, doc.data['password']):
+          raise Exception('access denied')
+        docUser = doc
+        break
 
-      if docUser:
-        token = issueToken({ 'id': docUser.id })
-        
-    except:
-      pass
+    if docUser:
+      token = issueToken({ 'id': docUser.id })
+      
+  except Exception as err:
+    error = err
 
-    else:
-      if token:
-        return { 'token': token }, 200
+  else:
+    if token:
+      return { 'token': token }, 200
 
-  return {}, 401
+  return { 'error': str(error) }, 401
 
 
 @bp_auth.route('/logout', methods = ('POST',))
 def auth_logout():
+  error = '@error/internal.500'
   try:
-    tokenSetInvalid(g.get('access_token'))
+    tokenSetInvalid(g.access_token)
   except Exception as err:
-    raise err
-  # except:
-  #   pass
+    error = err
   else:
     return {}, 200
   
+  return { 'error': str(error) }, 500
+  
 @bp_auth.route('/who', methods = ('GET',))
 def auth_who():
+  error = '@error/internal.500'
   try:
     # send user data
-    return { 'email': g.get('user_data')['email'] }, 200
+    return { 'email': g.user_data['email'] }, 200
   except Exception as err:
-    raise err
-    # pass
+    error = err
   
+  return { 'error': str(error) }, 500

@@ -1,4 +1,4 @@
-import json
+# import json
 from typing import List
 
 from sqlalchemy.orm import Mapped
@@ -13,6 +13,11 @@ from .tags import Tags
 
 from src.mixins import MixinTimestamps
 
+from schemas.serialization import SchemaSerializeDocJsonTimes
+
+
+_schemaDocsDump     = SchemaSerializeDocJsonTimes()
+_schemaDocsDumpMany = SchemaSerializeDocJsonTimes(many = True)
 
 class Docs(MixinTimestamps, db.Model):
   __tablename__ = docsTable
@@ -33,8 +38,16 @@ class Docs(MixinTimestamps, db.Model):
     tag = Tags.by_name(tag_name)
     return tag.docs if tag else []
   
+  @staticmethod
+  def dicts(docs, **kwargs):
+    return _schemaDocsDumpMany.dump(docs, **kwargs)
+  
+
   def includes_tags(self, *args):
     tags_self = [t.tag for t in self.tags]
     return all(tag in tags_self for tag in args)
+  
+  def dump(self, **kwargs):
+    return _schemaDocsDump.dump(self, **kwargs)
   
   

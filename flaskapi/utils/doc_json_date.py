@@ -1,1 +1,5 @@
-docJsonDates = lambda d: { 'id': d.id, 'data': d.data, 'created_at': str(d.created_at), 'updated_at': str(d.updated_at) }
+from schemas.serialization import SchemaSerializeDocJsonTimes
+
+
+_schema = SchemaSerializeDocJsonTimes()
+docJsonDates = lambda d: _schema.dump(d)

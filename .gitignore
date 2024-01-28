@@ -348,3 +348,4 @@ flaskapi/templates/*
 !flaskapi/templates/demo.html
 cat-config.sh
 .configs
+demo.mjs

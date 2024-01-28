@@ -8,7 +8,6 @@ from flask_app   import db
 from flask_app   import io
 from models.docs import Docs
 from models.tags import Tags
-from utils.doc_json_date import docJsonDates as docPlain
 
 
 IOEVENT_DOCS_CHANGE = os.getenv('IOEVENT_DOCS_CHANGE')
@@ -16,15 +15,16 @@ IOEVENT_DOCS_CHANGE = os.getenv('IOEVENT_DOCS_CHANGE')
 class DocsResource(Resource):
 
   def get(self, tag_name):
-    return [docPlain(doc) for doc in Docs.tagged(tag_name)]
+    return Docs.dicts(Docs.tagged(tag_name))
   
   def post(self, tag_name):
-    data      = request.get_json()
-    ID        = data.get('id')
-    doc       = None
-    docUpdate = None
-    ioevent   = IOEVENT_DOCS_CHANGE
-    sNewData  = ''
+    data        = request.get_json()
+    ID          = data.get('id')
+    doc         = None
+    docUpdate   = None
+    ioevent     = IOEVENT_DOCS_CHANGE
+    sNewData    = ''
+    status_code = 200
 
 
     tag = Tags.by_name(tag_name)
@@ -38,15 +38,13 @@ class DocsResource(Resource):
         if ID == d.id:
           docUpdate = d
           break
-    
-    sNewData = json.dumps(data['data'])
 
     if docUpdate:
-
       sOldData       = json.dumps(docUpdate.data)
+      sNewData       = json.dumps(data['data'])
       docUpdate.data = data['data']
 
-      if sNewData == sOldData:
+      if sOldData == sNewData:
         ioevent = None
       
       doc = docUpdate
@@ -54,24 +52,28 @@ class DocsResource(Resource):
     else:
       doc = Docs(id = ID, data = data['data'])
       tag.docs.append(doc)
-      
+      status_code = 201
+    
     try:
       db.session.commit()
-    except Exception as err:
-      raise err
+    # except Exception as err:
+    #   raise err
+    except:
+      status_code = 400
     else:
       # change:docs:orders@122, doc{}
       # ! io_send(f'{ioevent}:{tag.tag}')
       if ioevent:
         io.emit(f'{ioevent}:{tag.tag}')
     
-    return docPlain(doc)
+    return doc.dump() if doc else None, status_code
   
   def delete(self, tag_name):
     data = request.get_json()
     ID   = data.get('id')
     doc  = None
     tag  = None
+    status_code = 200
     
     if ID:
       tag = Tags.by_name(tag_name)
@@ -82,12 +84,14 @@ class DocsResource(Resource):
               tag.docs.remove(d)
               db.session.delete(d)
               db.session.commit()
-            except Exception as err:
-              raise err
+            # except Exception as err:
+            #   raise err
+            except:
+              status_code = 400
             else:
               doc = d
               io.emit(f'{IOEVENT_DOCS_CHANGE}:{tag.tag}')            
             
             break
     
-    return docPlain(doc) if doc else None
+    return doc.dump() if doc else None, status_code
