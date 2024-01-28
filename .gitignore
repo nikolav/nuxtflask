@@ -346,3 +346,5 @@ heroku-config-set.sh
 flaskapi/templates/*
 !flaskapi/templates/base.html
 !flaskapi/templates/demo.html
+cat-config.sh
+.configs

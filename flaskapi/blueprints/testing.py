@@ -23,6 +23,4 @@ cors_bp_testing = CORS(bp_testing)
 
 @bp_testing.route('/', methods = ('GET',))
 def testing_home():
-  a = Policy.by_name('admins')
-  docs = [d.id for d in a.docs]
-  return docs
+  return 'ok'

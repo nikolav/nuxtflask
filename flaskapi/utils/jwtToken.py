@@ -87,12 +87,9 @@ def setInvalid(token):
 
 
 def clearExpiredAll():
-  tag = Tags.by_name(TAG_TOKEN_VALID)
-  if tag:
-    for doc in tag.docs:
-      for token in json.loads(doc.data):
-        if expired(token):
-          db.session.delete(doc)
-    db.session.commit()
-
-
+  # for doc in tag.docs:
+  for doc in Docs.tagged(TAG_TOKEN_VALID):
+    for token in json.loads(doc.data):
+      if expired(token):
+        db.session.delete(doc)
+  db.session.commit()
