@@ -19,7 +19,8 @@ class Tags(db.Model):
   tag: Mapped[str] = mapped_column(String(1024))
 
   # virtual
-  docs: Mapped[List['Docs']] = relationship('Docs', secondary = ln_docs_tags, back_populates = 'tags')
+  docs: Mapped[List['Docs']] = relationship(secondary      = ln_docs_tags, 
+                                            back_populates = 'tags')
 
   # magic
   def __repr__(self):

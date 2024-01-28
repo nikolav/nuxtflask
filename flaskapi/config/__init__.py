@@ -1,18 +1,14 @@
+from flask_app import PRODUCTION
 
 PATHS_SKIP_AUTH = (
-
+  # status check
   r'^/$',
+  # auth 
   r'^/auth/register$',
   r'^/auth/login$',
-  # r'^/policies/\d+$',
 
-  # allow static resources
-  # @static-generator/SerifWebPlus
-  r'^/demo$',
-  r'^/wpscripts/.*$',
-  r'^/wpimages/.*$',
-  r'^/favicon\.ico$',
-  
+  # r'^/test/?$',
+  # r'^/test/.*$',
 )
 
 TAG_USERS        = '@users'

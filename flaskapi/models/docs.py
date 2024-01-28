@@ -22,11 +22,10 @@ class Docs(MixinTimestamps, db.Model):
   data: Mapped[str] = mapped_column(Text)
 
   # virtual
-  tags: Mapped[List['Tags']] = relationship('Tags', 
-                                            secondary      = ln_docs_tags, 
+  tags: Mapped[List['Tags']] = relationship(secondary      = ln_docs_tags, 
                                             back_populates = 'docs')
-  policies: Mapped[List['Policy']] = relationship('Policy', 
-                                                  secondary      = ln_docs_policies, 
+  # virtual
+  policies: Mapped[List['Policy']] = relationship(secondary      = ln_docs_policies, 
                                                   back_populates = 'docs')
 
   # magic

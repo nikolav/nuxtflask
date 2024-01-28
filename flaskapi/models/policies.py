@@ -19,8 +19,7 @@ class Policy(db.Model):
   policy: Mapped[str] = mapped_column(String(1024), unique = True)
 
   # virtual
-  docs: Mapped[List['Docs']] = relationship('Docs', 
-                                            secondary = ln_docs_policies, 
+  docs: Mapped[List['Docs']] = relationship(secondary      = ln_docs_policies, 
                                             back_populates = 'policies')
 
   def __repr__(self):
