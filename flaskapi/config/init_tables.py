@@ -1,5 +1,3 @@
-import json
-
 from flask_app   import db
 from models.tags import Tags
 from models.docs import Docs
@@ -17,16 +15,16 @@ except:
 
 
 try:
-
   tag = Tags.by_name(TAG_VARS)
+  
   if tag:  
-    vars_data = (json.loads(doc.data) for doc in tag.docs)
+    vars_data = [doc.data for doc in tag.docs]
     
     if all(not 'app:name' in node for node in vars_data):
-      tag.docs.append(Docs(data = json.dumps({ 'app:name': "app:nuxtflask" })))
+      tag.docs.append(Docs(data = { 'app:name': "app:nuxtflask" }))
 
     if all(not 'admin:email' in node for node in vars_data):
-      tag.docs.append(Docs(data = json.dumps({ 'admin:email': "admin@nikolav.rs" })))
+      tag.docs.append(Docs(data = { 'admin:email': "admin@nikolav.rs" }))
   
   db.session.commit()
     

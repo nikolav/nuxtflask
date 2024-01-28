@@ -1,2 +1,1 @@
-import json
-docJson = lambda d: dict(id = d.id, data = json.loads(d.data))
+docJson = lambda d: dict(id = d.id, data = d.data)

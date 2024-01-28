@@ -60,9 +60,8 @@ if __name__ == '__main__':
     # @app/init
 
     # load models
-    from models.tags     import Tags
-    from models.docs     import Docs
-    from models.policies import Policy
+    from models.tags import Tags
+    from models.docs import Docs
     
     # create schema
     db.create_all()

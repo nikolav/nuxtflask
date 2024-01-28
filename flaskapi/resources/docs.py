@@ -16,7 +16,7 @@ IOEVENT_DOCS_CHANGE = os.getenv('IOEVENT_DOCS_CHANGE')
 class DocsResource(Resource):
 
   def get(self, tag_name):
-    return [ docPlain(doc) for doc in Docs.tagged(tag_name) ]
+    return [docPlain(doc) for doc in Docs.tagged(tag_name)]
   
   def post(self, tag_name):
     data      = request.get_json()
@@ -43,8 +43,8 @@ class DocsResource(Resource):
 
     if docUpdate:
 
-      sOldData       = docUpdate.data
-      docUpdate.data = sNewData
+      sOldData       = json.dumps(docUpdate.data)
+      docUpdate.data = data['data']
 
       if sNewData == sOldData:
         ioevent = None
@@ -52,7 +52,7 @@ class DocsResource(Resource):
       doc = docUpdate
 
     else:
-      doc = Docs(id = ID, data = sNewData)
+      doc = Docs(id = ID, data = data['data'])
       tag.docs.append(doc)
       
     try:

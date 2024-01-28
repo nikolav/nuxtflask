@@ -1,5 +1,4 @@
 import re
-import json
 
 from flask import request
 from flask import abort
@@ -52,7 +51,7 @@ def authenticate():
       # cache auth-data
       g.access_token         = token
       g.access_token_payload = payload
-      g.user_data            = json.loads(docUser.data)
+      g.user_data            = docUser.data
       g.user                 = docUser
       # run next
       return

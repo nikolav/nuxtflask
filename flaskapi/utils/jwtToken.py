@@ -1,10 +1,9 @@
 import os
 import re
 from datetime import datetime
-import json
 
-from flask import request
 import jwt
+from flask import request
 
 from flask_app   import db
 from models.tags import Tags
@@ -62,7 +61,7 @@ def issueToken(jsonPayload):
     tag = Tags(tag = TAG_TOKEN_VALID)
     db.session.add(tag)
   
-  docTokenValid = Docs(data = json.dumps({ f'{token}': 1 }))
+  docTokenValid = Docs(data = { f'{token}': 1 })
   tag.docs.append(docTokenValid)
   
   db.session.commit()
@@ -72,7 +71,7 @@ def issueToken(jsonPayload):
 
 def valid(token):
   tag = Tags.by_name(TAG_TOKEN_VALID)
-  return any(token in json.loads(doc.data) for doc in tag.docs) if tag else False
+  return any(token in doc.data for doc in tag.docs) if tag else False
 
 
 def setInvalid(token):
@@ -80,7 +79,7 @@ def setInvalid(token):
     tag = Tags.by_name(TAG_TOKEN_VALID)
     if tag:
       for doc in tag.docs:
-        if token in json.loads(doc.data):
+        if token in doc.data:
           db.session.delete(doc)
           db.session.commit()
           break
@@ -89,7 +88,7 @@ def setInvalid(token):
 def clearExpiredAll():
   # for doc in tag.docs:
   for doc in Docs.tagged(TAG_TOKEN_VALID):
-    for token in json.loads(doc.data):
+    for token in doc.data:
       if expired(token):
         db.session.delete(doc)
   db.session.commit()

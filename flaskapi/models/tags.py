@@ -4,7 +4,6 @@ from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
 
-
 from . import tagsTable
 from . import db
 from . import ln_docs_tags

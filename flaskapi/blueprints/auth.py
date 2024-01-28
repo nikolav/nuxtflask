@@ -1,5 +1,3 @@
-import json
-
 from flask      import Blueprint
 from flask      import request
 from flask      import g
@@ -24,8 +22,6 @@ bp_auth = Blueprint('auth', __name__, url_prefix = '/auth')
 # cors blueprints as wel for cross-domain requests
 cors_bp_auth = CORS(bp_auth)
 
-
-# @cross_origin
 @bp_auth.route('/register', methods = ('POST',))
 def auth_register():
   # data: { email: string; password: string }
@@ -43,15 +39,14 @@ def auth_register():
       tag = Tags.by_name(TAG_USERS)
       # skip if already registered
       for doc in tag.docs:
-        d = json.loads(doc.data)
-        if email == d['email'] and checkPassword(password, d['password']):
+        if email == doc.data['email'] and checkPassword(password, doc.data['password']):
           raise Exception
       
       # register
-      dataNewUser = json.dumps({ 
+      dataNewUser = { 
         'email'    : email, 
         'password' : hashPassword(password)
-      })
+      }
       docNewUser = Docs(data = dataNewUser)
       tag.docs.append(docNewUser)
       db.session.commit()
@@ -83,10 +78,8 @@ def auth_login():
   
   if email and password:
     try:
-      tag = Tags.by_name(TAG_USERS)
-      for doc in tag.docs:
-        d = json.loads(doc.data)
-        if email == d['email'] and checkPassword(password, d['password']):
+      for doc in Docs.tagged(TAG_USERS):
+        if email == doc.data['email'] and checkPassword(password, doc.data['password']):
           docUser = doc
           break
 

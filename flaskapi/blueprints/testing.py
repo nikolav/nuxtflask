@@ -11,7 +11,6 @@ from flask_cors import CORS
 from flask_app       import db
 from models.tags     import Tags
 from models.docs     import Docs
-from models.policies import Policy
 # from utils.pw       import hash  as hashPassword
 # from utils.pw       import check as checkPassword
 # from utils.jwtToken import issueToken
@@ -23,4 +22,4 @@ cors_bp_testing = CORS(bp_testing)
 
 @bp_testing.route('/', methods = ('GET',))
 def testing_home():
-  return 'ok'
+  return { 'status': 'ok' }
