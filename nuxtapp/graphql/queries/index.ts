@@ -7,8 +7,9 @@ export const Q_statusCheck = gql`
 
 
 export const Q_vars = gql`
-  query statusCheck {
+  query varsList {
     vars {
+      id,
       name,
       value
     }

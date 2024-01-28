@@ -8,7 +8,7 @@ useHead({
 
 
 const { result } = useQuery<{ vars: { name: string; value: string }[] }>(Q_vars);
-
+const vars$ = computed(() => result.value?.vars || []);
 // #eos
 </script>
 
@@ -19,7 +19,7 @@ const { result } = useQuery<{ vars: { name: string; value: string }[] }>(Q_vars)
       </h1>
       <p>
         <pre>
-          {{ JSON.stringify({ result }, null, 2) }}
+          {{ JSON.stringify({ vars$ }, null, 2) }}
         </pre>
       </p>
       <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime temporibus officiis illum.</p>

@@ -13,13 +13,13 @@ export default defineNuxtPlugin((_nuxtApp) => {
     return Fancybox.show(slides, options);
   };
 
+  const lightbox = {
+    Fancybox,
+    open,
+    close,
+  };
+
   return {
-    provide: {
-      lightbox: {
-        Fancybox,
-        open,
-        close,
-      },
-    },
+    provide: { lightbox },
   };
 });
