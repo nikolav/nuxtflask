@@ -18,7 +18,7 @@ from src.mixins import MixinTimestamps
 class Docs(MixinTimestamps, db.Model):
   __tablename__ = docsTable
 
-  id: Mapped[int] = mapped_column(primary_key = True)
+  id:   Mapped[int] = mapped_column(primary_key = True)
   data: Mapped[str] = mapped_column(Text)
 
   # virtual

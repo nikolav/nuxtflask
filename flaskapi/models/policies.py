@@ -1,7 +1,5 @@
-import os
+# import os
 from typing import List
-
-from sqlalchemy import String
 
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import Mapped
@@ -15,8 +13,8 @@ from . import ln_docs_policies
 class Policy(db.Model):
   __tablename__ = policiesTable
 
-  id: Mapped[int] = mapped_column(primary_key = True)
-  policy: Mapped[str] = mapped_column(String(1024), unique = True)
+  id:     Mapped[int] = mapped_column(primary_key = True)
+  policy: Mapped[str] = mapped_column(unique = True)
 
   # virtual
   docs: Mapped[List['Docs']] = relationship(secondary      = ln_docs_policies, 

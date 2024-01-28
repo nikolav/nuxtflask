@@ -2,7 +2,7 @@
 
 from flask      import Blueprint
 # from flask      import request
-# from flask      import g
+from flask      import g
 from flask_cors import CORS
 # from flask_cors import cross_origin
 # from flask import make_response
@@ -23,4 +23,6 @@ cors_bp_testing = CORS(bp_testing)
 
 @bp_testing.route('/', methods = ('GET',))
 def testing_home():
-  return 'ok:testing_home'
+  a = Policy.by_name('admins')
+  docs = [d.id for d in a.docs]
+  return docs

@@ -1,7 +1,5 @@
 from typing import List
 
-from sqlalchemy import String
-
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column
 from sqlalchemy.orm import relationship
@@ -15,8 +13,8 @@ from . import ln_docs_tags
 class Tags(db.Model):
   __tablename__ = tagsTable
 
-  id: Mapped[int] = mapped_column(primary_key = True)
-  tag: Mapped[str] = mapped_column(String(1024))
+  id:  Mapped[int] = mapped_column(primary_key = True)
+  tag: Mapped[str] = mapped_column(unique = True)
 
   # virtual
   docs: Mapped[List['Docs']] = relationship(secondary      = ln_docs_tags, 
