@@ -24,8 +24,21 @@ class Tags(db.Model):
     return f'Tags(id={self.id!r}, data={self.tag!r})'
   
   @staticmethod
-  def by_name(tag_name):
-    return db.session.scalar(
+  def by_name(tag_name, *, create = False):
+    tag = db.session.scalar(
       db.select(Tags)
         .where(Tags.tag == tag_name)
     )
+    tag_ = None
+    
+    if not tag and True == create:
+      try:
+        tag_ = Tags(tag = tag_name)
+        db.session.add(tag_)
+        db.session.commit()
+      except:
+        pass
+      else:
+        tag = tag_
+    
+    return tag

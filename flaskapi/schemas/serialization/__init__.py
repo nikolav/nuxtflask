@@ -1,6 +1,5 @@
 from marshmallow import Schema
 from marshmallow import fields
-from marshmallow import EXCLUDE
 
 
 class SchemaSerializeDocJson(Schema):

@@ -18,17 +18,7 @@ def __with_created_at(payload):
 
 
 def tokenFromRequest():
-  t     = ''
-  token = ''
-  try:
-    t = re.match(r'^Bearer (.+)$', request.headers.get('Authorization')).groups()[0]
-  except Exception as err:
-    raise err
-  else:
-    if t:
-      token = t
-  
-  return token
+  return re.match(r'^Bearer (.+)$', request.headers.get('Authorization')).groups()[0]
 
 
 def decode(sToken):
@@ -84,7 +74,6 @@ def setInvalid(token):
 
 
 def clearExpiredAll():
-  # for doc in tag.docs:
   for doc in Docs.tagged(TAG_TOKEN_VALID):
     for token in doc.data:
       if expired(token):

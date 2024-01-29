@@ -18,6 +18,7 @@ def authenticate():
   # @before_request
 
   docUser = None
+  error   = '@error/internal.500'
 
   # pass open routes
   if any(re.match(p, request.path) for p in PATHS_SKIP_AUTH):
@@ -34,16 +35,15 @@ def authenticate():
     # get token/payload from auth header
     token   = tokenFromRequest()
     payload = jwtTokenDecode(token)
-
     
     # abort.401 if token expired
     if tokenExpired(payload):
       # setInvalid(token)
-      raise Exception
+      raise Exception('access denied')
 
     # abort.401 if token invalid
     if not tokenValid(token):
-      raise Exception
+      raise Exception('access denied')
     
     # pass if authenticated, user exists in db
     docUser = db.session.get(Docs, payload['id'])
@@ -56,10 +56,8 @@ def authenticate():
       # run next
       return
   
-  # except Exception as err:
-  #   raise err
-  except:
-    pass
+  except Exception as err:
+    error = err
 
   # 401/unauthenticated otherwise
-  return abort(make_response('', 401))
+  return abort(make_response({ 'error': str(error) }, 401))
