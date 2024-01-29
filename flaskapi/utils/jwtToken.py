@@ -46,11 +46,7 @@ def issueToken(jsonPayload):
   tag   = Tags.by_name(TAG_TOKEN_VALID)
 
   # add valid tokens '@token/valid' list
-  
-  if not tag:
-    tag = Tags(tag = TAG_TOKEN_VALID)
-    db.session.add(tag)
-  
+    
   docTokenValid = Docs(data = { f'{token}': 1 })
   tag.docs.append(docTokenValid)
   

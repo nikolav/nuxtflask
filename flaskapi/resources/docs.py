@@ -1,7 +1,6 @@
 import os
 import json
 
-from flask         import request
 from flask         import g
 from flask_restful import Resource
 
@@ -68,9 +67,9 @@ class DocsResource(Resource):
       
     else:
       doc = doc_
-      # change:docs:orders@122, doc{}
-      # ! io_send(f'{ioevent}:{tag.tag}')
       if ioevent:
+        # change:docs:orders@122, doc{}
+        # ! io_send(f'{ioevent}:{tag.tag}')
         io.emit(f'{ioevent}:{tag.tag}')
     
     return doc.dump() if doc else { 'error': str(error) }, status

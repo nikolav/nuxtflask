@@ -29,16 +29,10 @@ class Tags(db.Model):
       db.select(Tags)
         .where(Tags.tag == tag_name)
     )
-    tag_ = None
-    
-    if not tag and True == create:
-      try:
-        tag_ = Tags(tag = tag_name)
-        db.session.add(tag_)
-        db.session.commit()
-      except:
-        pass
-      else:
-        tag = tag_
+
+    if (not tag) and (True == create):
+      tag = Tags(tag = tag_name)
+      db.session.add(tag)
+      db.session.commit()
     
     return tag

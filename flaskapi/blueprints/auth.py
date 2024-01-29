@@ -1,9 +1,6 @@
 from flask      import Blueprint
 from flask      import g
 from flask_cors import CORS
-# from flask_cors import cross_origin
-# from flask import make_response
-# from flask import abort
 
 from flask_app      import db
 from models.tags    import Tags
@@ -114,7 +111,7 @@ def auth_who():
   error = '@error/internal.500'
   try:
     # send user data
-    return { 'email': g.user_data['email'] }, 200
+    return { 'email': g.user.data['email'] }, 200
   except Exception as err:
     error = err
   
