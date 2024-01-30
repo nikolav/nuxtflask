@@ -4,14 +4,13 @@ from models.docs import Docs
 from .           import init_docs_tags
 from config      import TAG_VARS
 
-try:
 
-  for t in init_docs_tags:
+for t in init_docs_tags:
+  try:
     db.session.add(Tags(tag = t))
-  
-  db.session.commit()
-except:
-  pass
+    db.session.commit()
+  except:
+    pass
 
 
 try:

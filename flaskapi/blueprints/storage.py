@@ -1,9 +1,10 @@
 import os
-from pprint import pprint
+# from pprint import pprint
 
 from flask       import Blueprint
 # from flask       import request
 from flask       import g
+from flask       import send_file
 from flask_cors  import CORS
 
 from flask_app   import db
@@ -24,6 +25,7 @@ from utils.mimetype      import mimetype
 from utils.doc_json_date import docJsonDates as doc_plain
 
 from config import TAG_STORAGE
+from config import TAG_IS_FILE
 
 
 UPLOAD_PATH = os.getenv('UPLOAD_PATH')
@@ -87,11 +89,19 @@ def storage_upload():
           pass
         
         else:
+
           # persist
           try:
+            
             doc_file_data = Docs(data = file_data)
+            
             tag = Tags.by_name(tag_storage_, create = True)
+            tag_isfile = Tags.by_name(TAG_IS_FILE, create = True)
+            
+            # link file tags
+            tag_isfile.docs.append(doc_file_data)
             tag.docs.append(doc_file_data)
+
             db.session.commit()
             
           except:
@@ -171,8 +181,42 @@ def storage_remove():
 
 @bp_storage.route('/<string:file_id>', methods = ('GET',))
 def storage_download(file_id):
-  return f'ok:storage_download:{file_id}'
+  
+  error  = ''
+  status = 400
 
+  doc_dl_file = None
+  
+
+  try:
+
+    tag_isfile = Tags.by_name(TAG_IS_FILE, create = True)
+
+    for doc in tag_isfile.docs:
+      if file_id == doc.data['file_id']:
+        doc_dl_file = doc
+        break
+      
+    if not doc_dl_file:
+      raise Exception('file not found')
+    
+    if not os.path.exists(doc_dl_file.data['path']):
+      raise Exception('no file')
+    
+    if not doc_dl_file.data['public']:
+      status = 403
+      raise Exception('access denied')
+    
+    
+  except Exception as err:
+    error = err
+  
+  else:
+      return send_file(doc_dl_file.data['path'], 
+                      as_attachment = True)
+  
+  return { 'error': str(error) }, status
+  
 
 # @Docs/file
 #   .file_id
