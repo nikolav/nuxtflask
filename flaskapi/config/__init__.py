@@ -1,5 +1,3 @@
-from flask_app import PRODUCTION
-
 PATHS_SKIP_AUTH = (
   # status check
   r'^/$',
@@ -14,6 +12,8 @@ PATHS_SKIP_AUTH = (
 TAG_USERS        = '@users'
 TAG_VARS         = '@vars'
 TAG_TOKEN_VALID  = '@token/valid'
+TAG_STORAGE      = '@storage:'
+
 
 init_docs_tags = (TAG_USERS, TAG_VARS, TAG_TOKEN_VALID,)
 

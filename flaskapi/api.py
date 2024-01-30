@@ -9,6 +9,7 @@ from flask_app import PRODUCTION
 from resources.docs          import DocsResource
 from blueprints              import bp_home
 from blueprints.auth         import bp_auth
+from blueprints.storage      import bp_storage
 from blueprints.testing      import bp_testing
 from middleware.authenticate import authenticate
 
@@ -22,6 +23,8 @@ api.add_resource(DocsResource, '/docs/<string:tag_name>')
 app.register_blueprint(bp_auth)
 #   /
 app.register_blueprint(bp_home)
+#   /storage
+app.register_blueprint(bp_storage)
 #   /test
 if not PRODUCTION:
   app.register_blueprint(bp_testing)

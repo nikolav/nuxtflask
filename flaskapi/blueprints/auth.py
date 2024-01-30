@@ -56,7 +56,7 @@ def auth_register():
   else:
     # user registered, send token, 201
     if token:
-      return { 'token': token }, 201
+      return { 'id': docNewUser.id, 'token': token }, 201
   
   # forbiden otherwise
   return { 'error': str(error) }, 403
@@ -89,7 +89,7 @@ def auth_login():
 
   else:
     if token:
-      return { 'token': token }, 200
+      return { 'id': docUser.id, 'token': token }, 200
 
   return { 'error': str(error) }, 401
 
@@ -111,7 +111,7 @@ def auth_who():
   error = '@error/internal.500'
   try:
     # send user data
-    return { 'email': g.user.data['email'] }, 200
+    return { 'id': g.user.id, 'email': g.user.data['email'] }, 200
   except Exception as err:
     error = err
   
