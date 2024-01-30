@@ -1,4 +1,5 @@
 import os
+from pprint import pprint
 
 from flask       import Blueprint
 # from flask       import request
@@ -12,8 +13,10 @@ from models.docs import Docs
 
 from middleware.wrappers.files import files
 from middleware.authguard      import authguard
+from middleware.arguments      import arguments_schema
 
 from schemas.validation.storage import SchemaStorageFile
+from schemas.validation.storage import SchemaStorageRemoveArguments
 
 from utils import id_gen
 from utils import gen_filename
@@ -44,9 +47,9 @@ def storage_upload():
   for name, node in g.files.items():
     # try:
     #   save file locally
-    #   dump file_data from schema
-    #   persist file_data @Docs
-    #   @success: 201, signal io:changed
+    #    dump file_data from schema
+    #     persist file_data @Docs
+    #      @success: 201, signal io:changed
     file_id_  = id_gen()
     filename_ = gen_filename(node['file'].filename, file_id_)
     filepath_ = os.path.join(os.path.abspath(UPLOAD_PATH), UPLOAD_DIR, str(g.user.id), filename_)
@@ -105,15 +108,70 @@ def storage_upload():
   return saved, status
 
 
+@bp_storage.route('/', methods = ('DELETE',))
+@authguard(os.getenv('POLICY_FILESTORAGE'))
+@arguments_schema(SchemaStorageRemoveArguments())
+def storage_remove():
+  # try
+  #  file exists
+  #   unlink
+  #    rm data @db
+  #     @200, file deleted, io:change
+
+  error    = ''
+  status   = 400
+  doc_file = None
+  tag_storage_ = f'{TAG_STORAGE}{g.user.id}'
+
+
+  try:
+    # get related file Docs{}
+    tag = Tags.by_name(f'{TAG_STORAGE}{g.user.id}', create = True)
+    for doc in tag.docs:
+      if g.arguments['file_id'] == doc.data['file_id']:
+        doc_file = doc
+        break
+    
+    if not doc_file:
+      raise Exception('file not found')
+    
+    if not os.path.exists(doc_file.data['path']):
+      raise Exception('no file')
+    
+  except Exception as err:
+    error = err
+    
+  else:
+    
+    try:
+      os.unlink(doc_file.data['path'])
+      
+    except Exception as err:
+      error  = err
+      status = 500
+    
+    else:
+      if not os.path.exists(doc_file.data['path']):
+        try:
+          tag.docs.remove(doc_file)
+          db.session.delete(doc_file)
+          db.session.commit()
+          
+        except Exception as err:
+          error  = err
+          status = 500
+
+        else:
+          # @200, file deleted
+          io.emit(tag_storage_)
+          return doc_plain(doc_file), 200
+  
+  return { 'error': str(error) }, status
+
+
 @bp_storage.route('/<string:file_id>', methods = ('GET',))
 def storage_download(file_id):
   return f'ok:storage_download:{file_id}'
-
-
-@bp_storage.route('/', methods = ('DELETE',))
-@authguard(os.getenv('POLICY_FILESTORAGE'))
-def storage_remove():
-  return f'ok:storage_remove'
 
 
 # @Docs/file

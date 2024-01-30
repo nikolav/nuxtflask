@@ -19,3 +19,7 @@ class SchemaStorageFile(Schema):
   size        = fields.Int(required = True)
   mimetype    = fields.Str(load_default = 'application/octet-stream')
   public      = fields.Bool(load_default = False)
+
+
+class SchemaStorageRemoveArguments(Schema):
+  file_id = fields.Str(required = True)
