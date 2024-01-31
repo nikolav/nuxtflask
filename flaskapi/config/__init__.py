@@ -5,7 +5,7 @@ PATHS_SKIP_AUTH = (
   r'^/auth/register$',
   r'^/auth/login$',
 
-  r'^/storage/[0-9a-fA-F]+$',
+  # r'^/storage/[0-9a-fA-F]+$',
 
   # r'^/test/?$',
   # r'^/test/.*$',

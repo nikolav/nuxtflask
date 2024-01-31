@@ -28,7 +28,7 @@ def authenticate():
   # are answered with a successful HTTP status code (2xx)
   # and do not redirect
   if 'OPTIONS' == request.method.upper():
-    return
+    return abort(make_response('', 200))
 
   # @auth
   try:

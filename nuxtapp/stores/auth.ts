@@ -51,7 +51,7 @@ export const useStoreApiAuth = defineStore("auth", () => {
     } catch (error) {
       error$.value = error;
     } finally {
-      if (data?.email) {
+      if (data) {
         token$.value = token;
         user$.value = <TAuthUser>data;
       }
@@ -81,7 +81,7 @@ export const useStoreApiAuth = defineStore("auth", () => {
       } catch (error) {
         error$.value = error;
       } finally {
-        if (data?.email) {
+        if (data) {
           // cache auth data
           user$.value = <TAuthUser>data;
           // pass auth token to apollo

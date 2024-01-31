@@ -13,7 +13,7 @@ export interface IDocDataUsers {
 
 // @types/auth
 
-export type TAuthUser = OrNull<{ email: string }>;
+export type TAuthUser = OrNull<{ id: number; email: string }>;
 
 export interface IAuthCreds {
   email: string;
@@ -25,7 +25,22 @@ export interface IAuthResponse {
 }
 
 export interface IAuthWhoResponse {
+  id?: number | undefined;
   email?: string | undefined;
 }
 
 export interface IAuthLogoutResponse {}
+
+export interface IStorageFileInfo {
+  id: number;
+  file_id: string;
+  title: string;
+  description: string;
+  filename: string;
+  path: string;
+  size: number;
+  mimetype: string;
+  public: boolean;
+  created_at: string;
+  updated_at: string;
+}

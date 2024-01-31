@@ -7,6 +7,7 @@ from ariadne import graphql_sync
 from ariadne import load_schema_from_path
 from ariadne import make_executable_schema
 from ariadne import QueryType
+from ariadne import MutationType
 # from ariadne import ObjectType
 
 from flask_app import app
@@ -15,13 +16,13 @@ from flask_app import app
 type_defs = load_schema_from_path(os.path.join(
   os.path.dirname(__file__), 'schema.graphql'))
 
-query = QueryType()
+query    = QueryType()
+mutation = MutationType()
 
-# bind query/mutation resolvers
-import config.graphql.resolvers.query
 import config.graphql.resolvers.mutation
+import config.graphql.resolvers.query
 
-schema = make_executable_schema(type_defs, query)
+schema = make_executable_schema(type_defs, query, mutation)
 
 # mount
 @app.route('/graphql', methods=('POST',))

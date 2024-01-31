@@ -56,7 +56,7 @@ def auth_register():
   else:
     # user registered, send token, 201
     if token:
-      return { 'id': docNewUser.id, 'token': token }, 201
+      return { 'token': token }, 201
   
   # forbiden otherwise
   return { 'error': str(error) }, 403
@@ -89,7 +89,7 @@ def auth_login():
 
   else:
     if token:
-      return { 'id': docUser.id, 'token': token }, 200
+      return { 'token': token }, 200
 
   return { 'error': str(error) }, 401
 

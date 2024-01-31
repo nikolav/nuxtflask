@@ -9,6 +9,10 @@ export default defineAppConfig({
   KEY_APP_MOUNTED: "Zkcmk4BnXHU",
   KEY_APP_PROCESSING: "FlaelfhZddK",
   //
+  graphql: {
+    STORAGE_QUERY_POLL_INTERVAL: 67890,
+  },
+  // 
   stores: {
     main: {
       initial: <TStoreMain>{
@@ -33,5 +37,6 @@ export default defineAppConfig({
   //
   io: {
     IOEVENT_DOCS_CHANGE: "change:docs",
+    IOEVENT_STORAGE_CHANGE: "@storage:",
   },
 });
