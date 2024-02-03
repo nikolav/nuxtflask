@@ -11,11 +11,9 @@ from utils.pw    import hash as hashPassword
 
 for t in init_docs_tags:
   try:
-    db.session.add(Tags(tag = t))
+    Tags.by_name(t, create = True)
   except:
     pass
-
-db.session.commit()
 
 
 try:
