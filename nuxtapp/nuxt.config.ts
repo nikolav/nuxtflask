@@ -1,8 +1,21 @@
-import { ENDPOINT_GRAPHQL } from "./config";
+import { ENDPOINT_GRAPHQL, API_URL } from "./config";
 import { stripSlashesEnd } from "./utils/strip-slashes-end";
 
+type TMeta = Record<string, any>[];
 
 const BASE_DIR = process.env.BASE_DIR;
+const meta: TMeta = [
+  { name: "description", content: "NuxtApp" },
+  { name: "theme-color", content: "#fafafa" },
+];
+
+// --force-https-if-heroku
+// <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+if (/herokuapp\.com/.test(API_URL))
+  meta.push({
+    "http-equiv": "Content-Security-Policy",
+    content: "upgrade-insecure-requests",
+  });
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -14,7 +27,7 @@ export default defineNuxtConfig({
   // # universal rendering
   //   ssr: true,
   // # client-side only rendering; no prerender
-  // ssr: false,
+  ssr: false,
   //
   modules: [
     "@vueuse/nuxt",
@@ -60,10 +73,8 @@ export default defineNuxtConfig({
         "width=device-width, initial-scale=1.0, shrink-to-fit=no, minimum-scale=1",
       title: "nuxtapp.nikolav.rs",
       // https://www.geeksforgeeks.org/meta-tags-in-nuxt-js/
-      meta: [
-        { name: "description", content: "NuxtApp" },
-        { name: "theme-color", content: "#fafafa" },
-      ],
+      meta,
+      //
       link: [
         {
           rel: "icon",
