@@ -1,1 +1,1 @@
-export default () => false;
+export const False = () => false;

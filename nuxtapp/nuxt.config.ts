@@ -1,5 +1,5 @@
 import { ENDPOINT_GRAPHQL } from "./config";
-import { stripSlashesEnd } from "./utils";
+import { stripSlashesEnd } from "./utils/strip-slashes-end";
 
 
 const BASE_DIR = process.env.BASE_DIR;
