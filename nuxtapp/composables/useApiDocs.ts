@@ -111,6 +111,6 @@ export const useApiDocs = <TDocData>(tagName: string) => {
     put,
     rm,
     docs,
-    ON_IO: ioEventDocsChange,
+    IOEVENT: ioEventDocsChange,
   };
 };

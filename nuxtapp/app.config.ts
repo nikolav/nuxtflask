@@ -8,7 +8,14 @@ export default defineAppConfig({
   //
   KEY_APP_MOUNTED: "Zkcmk4BnXHU",
   KEY_APP_PROCESSING: "FlaelfhZddK",
-  //
+  // 
+  FIELDS_STORAGE_META_CAN_UPDATE: ["title", "description", "public"],
+  FIELDS_OMIT_DOCS_DATA: ["id", "created_at", "updated_at"],
+  // 
+  api: {
+    TAG_STORAGE: '@storage:',
+  },
+  // 
   graphql: {
     STORAGE_QUERY_POLL_INTERVAL: 67890,
   },

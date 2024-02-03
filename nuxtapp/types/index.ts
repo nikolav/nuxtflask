@@ -44,3 +44,32 @@ export interface IStorageFileInfo {
   created_at: string;
   updated_at: string;
 }
+
+export interface IFilesUpload {
+  [name: string]: {
+    file?: any | undefined;
+    data: {
+      title?: string | undefined;
+      description?: string | undefined;
+    };
+  };
+}
+
+export interface IStorageFileDataSaved {
+  file_id: string;
+  user_id: number;
+  title: string;
+  description: string;
+  filename: string;
+  path: string;
+  size: number;
+  mimetype: string;
+  public: boolean;
+}
+
+export interface IStorageStatusFileSaved {
+  id: number;
+  data: IStorageFileDataSaved;
+  created_at: string;
+  updated_at: string;
+}
