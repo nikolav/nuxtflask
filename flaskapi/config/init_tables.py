@@ -47,18 +47,23 @@ if not docAdmin:
 db.session.commit()
 
 
-tagPolicyADMINS = Tags.by_name(os.getenv('POLICY_ADMINS'), create = True)
-tagPolicyEMAIL  = Tags.by_name(os.getenv('POLICY_EMAIL'), create = True)
-tagPolicyFS     = Tags.by_name(os.getenv('POLICY_FILESTORAGE'), create = True)
-tagPolicyALL    = Tags.by_name(os.getenv('POLICY_ALL'), create = True)
+policy_admins_ = os.getenv('POLICY_ADMINS')
+policy_email_  = os.getenv('POLICY_EMAIL')
+policy_fs_     = os.getenv('POLICY_FILESTORAGE')
+policy_all_    = os.getenv('POLICY_ALL')
 
-if not docAdmin.includes_tags(os.getenv('POLICY_ADMINS')):
+tagPolicyADMINS = Tags.by_name(policy_admins_, create = True)
+tagPolicyEMAIL  = Tags.by_name(policy_email_,  create = True)
+tagPolicyFS     = Tags.by_name(policy_fs_,     create = True)
+tagPolicyALL    = Tags.by_name(policy_all_,    create = True)
+
+if not docAdmin.includes_tags(policy_admins_):
   tagPolicyADMINS.docs.append(docAdmin)
-if not docAdmin.includes_tags(os.getenv('POLICY_EMAIL')):
+if not docAdmin.includes_tags(policy_email_):
   tagPolicyEMAIL.docs.append(docAdmin)
-if not docAdmin.includes_tags(os.getenv('POLICY_FILESTORAGE')):
+if not docAdmin.includes_tags(policy_fs_):
   tagPolicyFS.docs.append(docAdmin)
-# if not docAdmin.includes_tags(os.getenv('POLICY_ALL')):
+# if not docAdmin.includes_tags(policy_all_):
 #   tagPolicyALL.docs.append(docAdmin)
 
 db.session.commit()
