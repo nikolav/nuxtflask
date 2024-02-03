@@ -28,11 +28,10 @@ try:
     if all(not 'admin:email' in node for node in vars_data):
       tag.docs.append(Docs(data = { 'admin:email': "admin@nikolav.rs" }))
   
-  db.session.commit()
-    
 except:
   pass
-
+else:
+  db.session.commit()
 
 email_    = os.getenv('ADMIN_EMAIL')
 password_ = os.getenv('ADMIN_PASSWORD')
@@ -64,20 +63,26 @@ try:
   tagPolicyADMINS.docs.append(docAdmin)
 except:
   pass
+else:
+  db.session.commit()
 
 try:
   tagPolicyEMAIL.docs.append(docAdmin)
 except:
   pass
+else:
+  db.session.commit()
 
 try:
   tagPolicyFS.docs.append(docAdmin)
 except:
   pass
+else:
+  db.session.commit()
 
 # try:
 #   tagPolicyALL.docs.append(docAdmin)
 # except:
 #   pass
-
-db.session.commit()
+# else:
+#   db.session.commit()
