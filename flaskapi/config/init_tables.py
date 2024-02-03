@@ -50,7 +50,7 @@ if not docAdmin:
                 'email': email_, 
                 'password': hashPassword(password_) 
               })
-  tagUsers.append(docAdmin)
+  tagUsers.docs.append(docAdmin)
   db.session.add(docAdmin)
   db.session.commit()
 
