@@ -12,9 +12,10 @@ from utils.pw    import hash as hashPassword
 for t in init_docs_tags:
   try:
     db.session.add(Tags(tag = t))
-    db.session.commit()
   except:
     pass
+
+db.session.commit()
 
 
 try:
@@ -39,7 +40,7 @@ email_    = os.getenv('ADMIN_EMAIL')
 password_ = os.getenv('ADMIN_PASSWORD')
 
 docAdmin  = None
-tagUsers  = Tags.by_name(TAG_USERS, create = True);
+tagUsers  = Tags.by_name(TAG_USERS);
 
 for d in tagUsers.docs:
   if email_ == d.data['email']:
