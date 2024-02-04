@@ -3,6 +3,8 @@ schema {
   mutation: Mutation
 }
 
+scalar JsonData
+
 type Var {
   id: ID!
   name: String!
@@ -50,6 +52,9 @@ type StorageFileRemovedInfo {
 
 type Query {
   
+  # docs
+  docsByTopic(topic: String!): [JsonData!]!
+  
   status: String!
 
   # vars
@@ -63,5 +68,8 @@ type Mutation {
 
   # storage
   storageRemoveFile(file_id: String!): StorageFileRemovedInfo
-}
 
+  # docs
+  docsUpsert(topic: String!, data: JsonData!, id: ID): JsonData!
+  docsRm(topic: String!, id: ID!): JsonData
+}
