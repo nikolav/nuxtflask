@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { idGen } from "@/utils";
-// import { useStoreApiAuth } from '@/stores';
-import { type IDoc } from "@/types";
+
+interface IDocDataVars {
+  [key: string]: string;
+}
+
 
 useHead({
   title: "--demo",
 });
 
 
-const auth = inject<ReturnType<typeof useStoreApiAuth>>("auth:api");
-// const token$ = computed(() => auth.token$);
+const auth = inject(useAppConfig().key.INJECT_AUTHAPI);
 
 const credsAdmin = {
   "email": "admin@nikolav.rs",
@@ -25,12 +27,7 @@ const credsRand = () => {
 const loginAdmin   = async () => await auth?.login(credsAdmin);
 const registerUser = async () => await auth?.register(credsRand())
 
-// 
 
-  interface IDocDataVars {
-    [key: string]: string;
-  }
-  type TDocVars = IDoc<IDocDataVars>;
   const { docs, put, rm, reload } = useApiDocs<IDocDataVars>("@vars");
   const varsUpsert = async () => {
     const ID = idGen()

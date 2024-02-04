@@ -1,7 +1,9 @@
+import vitePluginVuetify, { transformAssetUrls } from "vite-plugin-vuetify";
+
 import { ENDPOINT_GRAPHQL, API_URL } from "./config";
 import { stripSlashesEnd } from "./utils/strip-slashes-end";
 
-type TMeta = Record<string, any>[];
+type TMeta = Record<string, string>[];
 
 const BASE_DIR = process.env.BASE_DIR;
 const meta: TMeta = [
@@ -27,7 +29,7 @@ export default defineNuxtConfig({
   // # universal rendering
   //   ssr: true,
   // # client-side only rendering; no prerender
-  ssr: false,
+  // ssr: false,
   //
   modules: [
     "@vueuse/nuxt",
@@ -39,7 +41,30 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     // https://apollo.nuxtjs.org/getting-started/quick-start
     "@nuxtjs/apollo",
+    // https://vuetifyjs.com/en/getting-started/installation/#using-nuxt-3
+    (_options, nuxt) => {
+      nuxt.hooks.hook("vite:extendConfig", (config) => {
+        // --at-ts-expect-error
+        // config.plugins.push(vitePluginVuetify({ autoImport: true }));
+        try {
+          config.plugins &&
+            config.plugins.push(
+              vitePluginVuetify({
+                autoImport: true,
+                // # https://next.vuetifyjs.com/en/features/sass-variables/#component-specific-variables
+                // styles: { configFile: "assets/vuetify-sass-variables.scss" },
+              })
+            );
+        } catch (error) {
+          // ignore
+        }
+      });
+    },
   ],
+  build: {
+    transpile: ["vuetify"],
+  },
+
   runtimeConfig: {
     // The private keys which are only available server-side
     // apiSecret: '123',
@@ -71,7 +96,7 @@ export default defineNuxtConfig({
       charset: "utf-8",
       viewport:
         "width=device-width, initial-scale=1.0, shrink-to-fit=no, minimum-scale=1",
-      title: "nuxtapp.nikolav.rs",
+      title: "nuxtflaskapp.nikolav.rs",
       // https://www.geeksforgeeks.org/meta-tags-in-nuxt-js/
       meta,
       //
@@ -100,20 +125,34 @@ export default defineNuxtConfig({
       ],
     },
     // transition pages
-    pageTransition: { name: "BLUR", mode: "out-in" },
+    pageTransition: { name: "BLUR", mode: "in-out" },
     // transition layouts
-    layoutTransition: { name: "BLUR", mode: "out-in" },
+    layoutTransition: { name: "BLUR", mode: "in-out" },
   },
   css: [
     // default
     "~/assets/styles/main.scss",
 
-    // ui styles
-    // @todo/vuetify,
+    // vuetify
+    "vuetify/lib/styles/main.sass",
+    "@mdi/font/css/materialdesignicons.css",
 
     // plugin styles
     "@fancyapps/ui/dist/fancybox/fancybox.css",
   ],
+
+  // https://vuetifyjs.com/en/getting-started/installation/#using-nuxt-3
+  vite: {
+    define: {
+      "process.env.DEBUG": false,
+    },
+    vue: {
+      template: {
+        transformAssetUrls,
+      },
+    },
+  },
+
   //
   // #hybrid-rendering
   // #https://nuxt.com/docs/getting-started/server#hybrid-rendering

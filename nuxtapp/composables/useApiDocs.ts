@@ -1,8 +1,9 @@
 import { URL_DOCS } from "@/config";
-import type { OrNull, IDoc } from "@/types";
-import { useStoreApiAuth } from "../stores/auth";
+import type { OrNull, IDoc, TDocData as TDocData_default } from "@/types";
 
-export const useApiDocs = <TDocData>(tagName: string) => {
+
+// .useApiDocs
+export const useApiDocs = <TDocData = TDocData_default>(tagName: string) => {
   const {
     io: { IOEVENT_DOCS_CHANGE },
   } = useAppConfig();

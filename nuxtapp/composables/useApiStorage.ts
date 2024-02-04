@@ -91,7 +91,7 @@ export const useApiStorage = () => {
       });
       try {
         for (let _ in data) {
-          // upload info available here; set flag =true; resolve
+          // files uploaded; set flag =true; resolve
           uploadStatus.successful();
           return data;
         }
@@ -142,7 +142,7 @@ export const useApiStorage = () => {
   ) => {
     const values_ = pick(values, FIELDS_STORAGE_META_CAN_UPDATE);
     if (!len(values_)) return;
-    
+
     const doc = find(files$.value, { file_id });
     if (!doc?.id) return;
 

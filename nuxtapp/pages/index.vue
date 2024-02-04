@@ -10,6 +10,11 @@ const dInc = () => {
   d$.value.count += 1;
 };
 
+const theme$ = inject(useAppConfig().key.INJECT_THEME);
+const themeToggle = () => {
+  theme$.value = "dark" !== theme$.value ? "dark" : "light2";
+};
+
 // eos
 </script>
 
@@ -17,12 +22,13 @@ const dInc = () => {
   <section id="page-home">
     <Title>--home</Title>
     <h1>@home.nuxt</h1>
-    <button
-      @click="dInc"
-      class="rounded active:bg-sky-900 bg-sky-700 px-4 py-2 text-white hover:bg-sky-800 sm:px-8 sm:py-3"
-    >
-      ok
-    </button>
+    <VBtn color="primary" @click="dInc" variant="flat">
+      <VIcon icon="$menu" start />
+      <strong class="ms-2"> ok </strong>
+    </VBtn>
+    <VBtn size="small" color="secondary" @click="themeToggle" variant="flat">
+      theme:toggle
+    </VBtn>
     <p>data: [{{ d$.count }}]</p>
   </section>
 </template>
