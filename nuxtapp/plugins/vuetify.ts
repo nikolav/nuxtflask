@@ -1,4 +1,5 @@
 import "vuetify/styles";
+
 import {
   createVuetify,
   // ThemeDefinition
@@ -102,7 +103,6 @@ export default defineNuxtPlugin((nuxtApp) => {
         mdi,
       },
     },
-
     // locale: {
     //   locale: 'zhHans',
     //   fallback: 'sv',
