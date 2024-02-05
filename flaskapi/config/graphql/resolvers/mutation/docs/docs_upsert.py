@@ -6,7 +6,6 @@ from models.tags import Tags
 from models.docs import Docs
 
 from config.graphql.init import mutation
-from utils.doc_json_date import docJsonDates as doc_plain
 
 from . import IOEVENT_JsonData
 
@@ -42,6 +41,6 @@ def resolve_docsUpsert(_obj, _info, topic, data, id = None):
       pass
     
     else:
-      io.emit(IOEVENT_JsonData)
+      io.emit(f'{IOEVENT_JsonData}{topic}')
       
-  return doc_plain(doc)
+  return doc.dump()

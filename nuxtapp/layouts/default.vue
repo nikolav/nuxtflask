@@ -19,8 +19,9 @@ const fullPath$ = computed(() => useRoute().fullPath);
         <ul class="d-flex space-x-2">
           <li><NuxtLink to="/">home</NuxtLink></li>
           <li><NuxtLink to="about">about</NuxtLink></li>
-          <li><NuxtLink to="demo">demo</NuxtLink></li>
+          <li><NuxtLink to="demo-fs">fs</NuxtLink></li>
           <li><NuxtLink to="demo-auth">auth</NuxtLink></li>
+          <li><NuxtLink to="demo">demo</NuxtLink></li>
         </ul>
       </div>
       <VSpacer />

@@ -8,6 +8,7 @@ export const useIOEvent = <T = any>(
   e: string,
   handle: ISocketEventHandler<T>
 ) => {
+  if (!e) return;
   const { $socket } = useNuxtApp();
   $socket?.on(e, handle);
   onUnmounted(() => $socket?.off(e, handle));

@@ -42,7 +42,6 @@ class Docs(MixinTimestamps, db.Model):
   def dicts(docs, **kwargs):
     return _schemaDocsDumpMany.dump(docs, **kwargs)
   
-
   def includes_tags(self, *args):
     tags_self = [t.tag for t in self.tags]
     return all(tag in tags_self for tag in args)

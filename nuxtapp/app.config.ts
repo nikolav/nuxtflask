@@ -53,6 +53,7 @@ export default defineAppConfig({
   io: {
     IOEVENT_DOCS_CHANGE: "change:docs",
     IOEVENT_STORAGE_CHANGE: "@storage:",
+    IOEVENT_DOCS_CHANGE_JsonData: "change:docs:JsonData:",
   },
   // @theme
   THEME_DARK: "dark",
