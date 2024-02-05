@@ -21,18 +21,25 @@ class Tags(db.Model):
 
   # magic
   def __repr__(self):
-    return f'Tags(id={self.id!r}, data={self.tag!r})'
+    return f'Tags(id={self.id!r}, tag={self.tag!r})'
   
   @staticmethod
   def by_name(tag_name, *, create = False):
-    tag = db.session.scalar(
-      db.select(Tags)
-        .where(Tags.tag == tag_name)
-    )
+    tag = None
 
-    if (not tag) and (True == create):
-      tag = Tags(tag = tag_name)
-      db.session.add(tag)
-      db.session.commit()
+    try:
+      tag = db.session.scalar(
+        db.select(Tags)
+          .where(Tags.tag == tag_name))
+
+    except:
+      pass
+
+    else:
+      if not tag:
+        if True == create:
+          tag = Tags(tag = tag_name)
+          db.session.add(tag)
+          db.session.commit()
     
     return tag

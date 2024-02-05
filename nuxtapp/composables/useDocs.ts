@@ -5,11 +5,18 @@ import type { OrNull, IDoc, TDocData } from "@/types";
 export const useDocs = <TData = TDocData>(tagInitial = "") => {
   const topic$ = ref(tagInitial);
   const auth = useStoreApiAuth();
+  const toggleEnabled = useToggleFlag(true);
   const enabled$ = computed(
-    () => !!(topic$.value && auth?.token$ && useAppMounted().value)
+    () =>
+      !!(
+        toggleEnabled.isActive.value &&
+        topic$.value &&
+        auth?.token$ &&
+        useAppMounted().value
+      )
   );
 
-  const { result, refetch, load } = useLazyQuery<{
+  const { result, refetch, load, loading, error } = useLazyQuery<{
     docsByTopic: IDoc<TData>[];
   }>(
     Q_docsByTopic,
@@ -51,7 +58,7 @@ export const useDocs = <TData = TDocData>(tagInitial = "") => {
   const remove = async (id: number) => await mutateDocsRm({ id });
 
   return {
-    // # get data by topic
+    // # data by topic
     topic$,
 
     // # data
@@ -63,6 +70,12 @@ export const useDocs = <TData = TDocData>(tagInitial = "") => {
     reload,
 
     // # get
+    error,
+    loading,
     IOEVENT: ioEvent$,
+    enabled: enabled$,
+
+    // on/off
+    toggleEnabled,
   };
 };

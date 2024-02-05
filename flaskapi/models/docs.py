@@ -1,4 +1,4 @@
-# import json
+import json
 from typing import List
 
 from sqlalchemy.orm import Mapped
@@ -31,7 +31,7 @@ class Docs(MixinTimestamps, db.Model):
   
   # magic
   def __repr__(self):
-    return f'Docs(id={self.id!r}, data={self.data!r})'
+    return f'Docs({json.dumps(self.dump())})'
 
   @staticmethod
   def tagged(tag_name):
@@ -41,6 +41,22 @@ class Docs(MixinTimestamps, db.Model):
   @staticmethod
   def dicts(docs, **kwargs):
     return _schemaDocsDumpMany.dump(docs, **kwargs)
+  
+  @staticmethod
+  def by_tag_and_id(tag, id):
+    doc = None
+
+    try:
+      doc = db.session.scalar(
+        db.select(Docs)
+          .join(Docs.tags)
+          .where(Tags.tag == tag, Docs.id == id))
+      
+    except:
+      pass
+    
+    return doc
+    
   
   def includes_tags(self, *args):
     tags_self = [t.tag for t in self.tags]
