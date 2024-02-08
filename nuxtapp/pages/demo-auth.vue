@@ -5,36 +5,33 @@ interface IDocDataVars {
   [key: string]: string;
 }
 
-
 useHead({
   title: "--demo",
 });
 
-
-const auth = useStoreApiAuth2();
+const auth = useStoreApiAuth();
 
 const credsAdmin = {
-  "email": "admin@nikolav.rs",
-  "password": "122",
+  email: "admin@nikolav.rs",
+  password: "122",
 };
 const credsRand = () => {
   const ID = idGen();
   return {
-    "email": `user:${ID}@email.com`,
-    "password": ID
-  }
+    email: `user:${ID}@email.com`,
+    password: ID,
+  };
 };
-const loginAdmin   = async () => await auth?.login(credsAdmin);
-const registerUser = async () => await auth?.register(credsRand())
+const loginAdmin = async () => await auth?.login(credsAdmin);
+const registerUser = async () => await auth?.register(credsRand());
 
-
-  // const { docs, put, rm, reload } = useApiDocs<IDocDataVars>("@vars");
-  // const varsUpsert = async () => {
-  //   const ID = idGen()
-  //   await put({ data: { [`var::${ID}`]: ID } });
-  // }
-  // const choice = (ls: any[]) => ls[Math.floor(Math.random() * ls.length)];
-  // const varsRm = async () => await rm(choice(docs.value));
+// const { docs, put, rm, reload } = useApiDocs<IDocDataVars>("@vars");
+// const varsUpsert = async () => {
+//   const ID = idGen()
+//   await put({ data: { [`var::${ID}`]: ID } });
+// }
+// const choice = (ls: any[]) => ls[Math.floor(Math.random() * ls.length)];
+// const varsRm = async () => await rm(choice(docs.value));
 
 // #eos
 </script>

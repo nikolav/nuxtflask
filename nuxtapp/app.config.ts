@@ -2,8 +2,8 @@ import type { TStoreMain, TStoreFlags, IConfigDocs } from "@/types";
 import { assign } from "@/utils";
 import { PRODUCTION$ } from "@/config";
 
+
 export default defineAppConfig({
-  //
   ADMIN_EMAIL: "admin@nikolav.rs",
   DEBUG: true !== PRODUCTION$,
   //
@@ -48,8 +48,8 @@ export default defineAppConfig({
         assign(
           token
             ? {
-                Authorization: `Bearer ${token}`,
-              }
+              Authorization: `Bearer ${token}`,
+            }
             : {},
           additional || {}
         ),

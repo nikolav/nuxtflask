@@ -21,7 +21,7 @@ export const useStoreApiAuth = defineStore("auth", () => {
     initial: initialStorage,
     authHeaders,
   } = useAppConfig().stores.auth;
-  const token$ = useLocalStorage(KEY_ACCESS_TOKEN, initialStorage);
+  const token$ = useLocalStorage(KEY_ACCESS_TOKEN, initialStorage, { initOnMounted: true });
   const headers$ = computed(() => authHeaders(token$.value));
   const {
     data: user$,
@@ -76,28 +76,28 @@ export const useStoreApiAuth = defineStore("auth", () => {
 
   const authentication$ =
     (authEndpoint: string = URL_AUTH_login) =>
-    async (credentials: IAuthCreds) => {
-      if (user$.value) return;
-      let token: OrNoValue<string> = "";
-      status.begin();
-      try {
-        token = get(
-          await $fetch<IAuthResponse>(authEndpoint, {
-            method: "POST",
-            body: credentials,
-          }),
-          "token"
-        );
-      } catch (error) {
-        status.setError(error);
-      } finally {
-        if (token) {
-          token$.value = token;
-          status.successful();
+      async (credentials: IAuthCreds) => {
+        if (user$.value) return;
+        let token: OrNoValue<string> = "";
+        status.begin();
+        try {
+          token = get(
+            await $fetch<IAuthResponse>(authEndpoint, {
+              method: "POST",
+              body: credentials,
+            }),
+            "token"
+          );
+        } catch (error) {
+          status.setError(error);
+        } finally {
+          if (token) {
+            token$.value = token;
+            status.successful();
+          }
         }
-      }
-      status.done();
-    };
+        status.done();
+      };
   // @register
   const register = authentication$(URL_AUTH_register);
   // @login

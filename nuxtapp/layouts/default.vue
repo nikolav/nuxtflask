@@ -1,7 +1,5 @@
 <script setup lang="ts">
-
-const auth = inject(useAppConfig().key.INJECT_AUTHAPI);
-
+const auth = useStoreApiAuth();
 
 const fullPath$ = computed(() => useRoute().fullPath);
 
