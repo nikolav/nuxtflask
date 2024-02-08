@@ -6,6 +6,8 @@ export type TDocData = Record<string, any>;
 export interface IDoc<T = TDocData> {
   id?: number | undefined;
   data: T;
+  created_at?: string | undefined;
+  updated_at?: string | undefined;
 }
 export interface IDocDataUsers {
   email: string;
@@ -31,7 +33,7 @@ export interface IAuthWhoResponse {
   error?: string | undefined;
 }
 
-export interface IAuthLogoutResponse {}
+export interface IAuthLogoutResponse { }
 
 export interface IStorageFileInfo {
   id: number;

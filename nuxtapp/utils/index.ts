@@ -37,3 +37,4 @@ export { False } from "./fn-false";
 export { has } from "./has";
 export { stripSlashesEnd } from "./strip-slashes-end";
 export { idGen } from "./id-gen";
+export { setBatch as batchSet } from "./set-batch";

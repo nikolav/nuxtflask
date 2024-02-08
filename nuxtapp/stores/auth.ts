@@ -26,13 +26,11 @@ export const useStoreApiAuth = defineStore("auth", () => {
   const {
     data: user$,
     refresh: authDataReload,
-    // execute: authDataLoad,
   } = useFetch<OrNoValue<IAuthWhoResponse>>(URL_API_who, {
     key: KEY_USEFETCH_AUTHDATA,
     method: "GET",
     headers: headers$,
     lazy: true,
-    // immediate: false,
     watch: [token$],
     default: () => null,
     transform: (responseAuth) => {
@@ -44,11 +42,7 @@ export const useStoreApiAuth = defineStore("auth", () => {
       return null;
     },
   });
-  // const enabled$ = computed(() => !!(useMounted().value && token$.value));
-  // const { runSetup: queryStart } = useRunSetupOnce(authDataLoad);
-  // watchEffect(() => {
-  //   if (enabled$.value) queryStart();
-  // });
+
   onMounted(authDataReload);
 
   // track api activity

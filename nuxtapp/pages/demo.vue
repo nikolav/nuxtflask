@@ -26,6 +26,8 @@ const docsUpdate = async () => {
   await upsert(assign(<IFooBar>{}, doc.data, { foo: idGen() }), doc.id);
 }
 
+const { data$: doc, put: putDoc } = useDoc<{ name?: string | undefined; photo?: string | undefined }>("#123");
+const docUpsert = async () => await putDoc({ photo: `photo:${idGen()}`,  });
 // #eos
 </script>
 
@@ -49,8 +51,12 @@ const docsUpdate = async () => {
         <VBtn @click="docsRm" color="secondary" variant="flat">
           docs:rm
         </VBtn>
+        <VBtn @click="docUpsert" color="secondary" variant="flat">
+          doc:put
+        </VBtn>
       </VBtnGroup>
       <pre>
+        {{ JSON.stringify({ doc }, null, 2) }}
         {{ JSON.stringify({ data }, null, 2) }}
       </pre>
     </p>

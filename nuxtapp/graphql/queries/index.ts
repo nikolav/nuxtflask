@@ -43,3 +43,8 @@ export const Q_docsByTopic = gql`
 `;
 
 
+export const Q_docByDocId = gql`
+  query q_docByDocId($doc_id: String!) {
+    docByDocId(doc_id: $doc_id)
+  }
+`;
