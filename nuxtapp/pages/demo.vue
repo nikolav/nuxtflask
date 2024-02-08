@@ -1,12 +1,29 @@
 <script setup lang="ts">
+import { idGen, find, assign } from "@/utils";
+import type { OrNull } from "@/types";
 
 useHead({
   title: "--demo",
 });
 
-const { topic$, data } = useDocs("@vars");
+interface IFooBar {
+  foo: string;
+  bar: string;
+}
+
+const { topic$, data, upsert, remove } = useDocs<IFooBar>("@temp:1");
+
+const id$ = ref();
+
 const topicToggle = () => {
-  topic$.value = '@vars' !== topic$.value ? '@vars' : '@users';
+  topic$.value = '@temp:1' !== topic$.value ? '@temp:1' : '@temp:2';
+}
+const docsAdd = async () => await upsert(<IFooBar>{ 'foo': idGen(), 'bar': idGen() });
+const docsRm = async () => await remove(id$.value);
+const docsUpdate = async () => {
+  const doc = find(data.value, { id: parseInt(id$.value, 10) });
+  if (!doc) return;
+  await upsert(assign(<IFooBar>{}, doc.data, { foo: idGen() }), doc.id);
 }
 
 // #eos
@@ -16,9 +33,23 @@ const topicToggle = () => {
   <section id="page-demo">
     <h1>@demo</h1>
     <p>
-      <VBtn @click="topicToggle" color="secondary" variant="flat">
-        topic:toggle
-      </VBtn>
+      <VTextField type="number" v-model="id$" />
+    </p>
+    <p>
+      <VBtnGroup>
+        <VBtn @click="topicToggle" color="secondary" variant="flat">
+          [{{ topic$ }}] topic:toggle
+        </VBtn>
+        <VBtn @click="docsAdd" color="secondary" variant="flat">
+          docs:add
+        </VBtn>
+        <VBtn @click="docsUpdate" color="secondary" variant="flat">
+          docs:update
+        </VBtn>
+        <VBtn @click="docsRm" color="secondary" variant="flat">
+          docs:rm
+        </VBtn>
+      </VBtnGroup>
       <pre>
         {{ JSON.stringify({ data }, null, 2) }}
       </pre>

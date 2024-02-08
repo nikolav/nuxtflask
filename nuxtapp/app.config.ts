@@ -1,13 +1,15 @@
 import type { TStoreMain, TStoreFlags, IConfigDocs } from "@/types";
 import { assign } from "@/utils";
+import { PRODUCTION$ } from "@/config";
 
 export default defineAppConfig({
   //
   ADMIN_EMAIL: "admin@nikolav.rs",
+  DEBUG: true !== PRODUCTION$,
   //
   KEY_APP_MOUNTED: "Zkcmk4BnXHU",
   KEY_APP_PROCESSING: "FlaelfhZddK",
-  // 
+  //
   key: {
     APP_MOUNTED: "Zkcmk4BnXHU",
     APP_PROCESSING: "FlaelfhZddK",
@@ -39,12 +41,16 @@ export default defineAppConfig({
     },
     auth: {
       KEY_ACCESS_TOKEN: ":sEe5xYuTL4q",
+      KEY_USEFETCH_AUTHDATA: "GEXjh1kt9Oc",
+      authDataFields: ["id", "email"],
       initial: () => "",
       authHeaders: (token: string, additional?: Record<string, any>) =>
         assign(
-          {
-            Authorization: `Bearer ${token}`,
-          },
+          token
+            ? {
+                Authorization: `Bearer ${token}`,
+              }
+            : {},
           additional || {}
         ),
     },

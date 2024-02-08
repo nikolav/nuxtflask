@@ -14,7 +14,7 @@ import {
 } from "@/config";
 import { schemaAuthData } from "@/schemas";
 
-export const useStoreApiAuth = defineStore("auth", () => {
+export const useStoreApiAuth2 = defineStore("auth2", () => {
   const {
     KEY_ACCESS_TOKEN,
     KEY_USEFETCH_AUTHDATA,

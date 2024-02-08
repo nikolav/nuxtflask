@@ -28,6 +28,7 @@ export interface IAuthResponse {
 export interface IAuthWhoResponse {
   id?: number | undefined;
   email?: string | undefined;
+  error?: string | undefined;
 }
 
 export interface IAuthLogoutResponse {}

@@ -26,7 +26,7 @@ export const useDocs = <TData = TDocData>(tagInitial = "") => {
       pollInterval: useAppConfig().graphql.STORAGE_QUERY_POLL_INTERVAL,
     }
   );
-  const docs$ = computed(() => result.value?.docsByTopic || []);
+  const data$ = computed(() => result.value?.docsByTopic || []);
   const reload = async () => await refetch();
 
   const { runSetup: queryStart } = useRunSetupOnce(load);
@@ -39,37 +39,35 @@ export const useDocs = <TData = TDocData>(tagInitial = "") => {
       ? `${useAppConfig().io.IOEVENT_DOCS_CHANGE_JsonData}${topic$.value}`
       : ""
   );
-  useIOEvent(ioEvent$.value, reload);
-
-  const { mutate: mutateDocsUpsert } = useMutation<IDoc<TData>>(M_docsUpsert, {
-    variables: {
-      topic: topic$,
-    },
-  });
-  const { mutate: mutateDocsRm } = useMutation<OrNull<IDoc<TData>>>(M_docsRm, {
-    variables: {
-      topic: topic$,
-    },
+  watchEffect(() => {
+    useIOEvent(ioEvent$.value, reload);
   });
 
-  const upsert = async (data: TData, id: OrNull<number> = null) =>
-    await mutateDocsUpsert({ data, id });
+  const { mutate: mutateDocsUpsert } = useMutation<IDoc<TData>>(M_docsUpsert);
+  const { mutate: mutateDocsRm } = useMutation<OrNull<IDoc<TData>>>(M_docsRm);
 
-  const remove = async (id: number) => await mutateDocsRm({ id });
+  const upsert = async (data: TData, id: OrNull<number> = null) => {
+    if (enabled$.value)
+      await mutateDocsUpsert({ topic: topic$.value, data, id });
+  };
+
+  const remove = async (id: number) => {
+    if (enabled$.value) await mutateDocsRm({ topic: topic$.value, id });
+  };
 
   return {
     // # data by topic
     topic$,
 
     // # data
-    data: docs$,
+    data: data$,
 
     // # crud
     upsert,
     remove,
     reload,
 
-    // # get
+    // # flags
     error,
     loading,
     IOEVENT: ioEvent$,

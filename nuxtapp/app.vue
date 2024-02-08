@@ -7,7 +7,8 @@
 // });
 
 const { THEME_LIGHT, THEME_DARK } = useAppConfig();
-provide(useAppConfig().key.INJECT_AUTHAPI, useStoreApiAuth());
+// provide(useAppConfig().key.INJECT_AUTHAPI, useStoreApiAuth());
+// provide(useAppConfig().key.INJECT_AUTHAPI, useStoreApiAuth2());
 
 onUnmounted(() => {
   useAppMounted().value = false;
