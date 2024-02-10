@@ -10,6 +10,6 @@ export const useIOEvent = <T = any>(
 ) => {
   if (!e) return;
   const { $socket } = useNuxtApp();
-  $socket?.on(e, handle);
   onUnmounted(() => $socket?.off(e, handle));
+  $socket?.on(e, handle);
 };

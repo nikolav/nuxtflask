@@ -19,7 +19,8 @@ def resolve_docsUpsert(_obj, _info, topic, data, id = None):
     doc = db.session.scalar(
       db.select(Docs)
         .join(Docs.tags)
-        .where(Docs.tags.any(Tags.tag == topic), Docs.id == id))
+        # .where(Docs.tags.any(Tags.tag == topic), Docs.id == id))
+        .where(Tags.tag == topic, Docs.id == id))
   
   except:
     pass

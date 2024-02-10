@@ -15,10 +15,11 @@ export default defineAppConfig({
     APP_PROCESSING: "FlaelfhZddK",
     INJECT_AUTHAPI: "WYvEK29UZIP",
     INJECT_THEME: "Aasnvy2eaxE",
+    THEME: "0Fgky53B2UbA1fG3lKcV",
   },
   //
   FIELDS_STORAGE_META_CAN_UPDATE: ["title", "description", "public"],
-  FIELDS_OMIT_DOCS_DATA: ["id", "created_at", "updated_at"],
+  FIELDS_OMIT_DOCS_DATA: ["id", "created_at", "updated_at", "__typename"],
   //
   DEFAULT_CONFIG_useApiDocs: <IConfigDocs>{ autoReload: true },
   //
@@ -62,7 +63,9 @@ export default defineAppConfig({
     IOEVENT_DOCS_CHANGE_JsonData: "change:docs:JsonData:",
     IOEVENT_DOC_CHANGE_prefix: "change://doc@",
   },
+  theme: {
+    DARK: "dark",
+    LIGHT: "light2",
+  },
   // @theme
-  THEME_DARK: "dark",
-  THEME_LIGHT: "light2",
 });

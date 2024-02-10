@@ -1,34 +1,34 @@
 <script setup lang="ts">
-//
 // # force the color mode at the page level (only parent)
 // # by setting the colorMode property, nuxt3 only
 // definePageMeta({
 //   colorMode: "light",
 // });
-
-const { THEME_LIGHT, THEME_DARK } = useAppConfig();
 onUnmounted(() => {
   useAppMounted().value = false;
 });
 
+// theme
+import { type IThemeToggle } from "@/types";
+const { theme } = <IThemeToggle>useNuxtApp().$theme;
+
+const { DARK, LIGHT } = useAppConfig().theme;
+const htmlAttrs$ = computed(() => ({
+  class: DARK === theme.value ? "dark" : LIGHT,
+}));
 useHead({
   titleTemplate: (ttl) => `[${ttl}]`,
   bodyAttrs: {
-    class:
-      "**dark:bg-slate-900 **dark:text-white/80 **dark:selection:bg-white/20",
+    class: "dark:selection:bg-white/20",
   },
+  htmlAttrs: htmlAttrs$,
 });
-
-
-const theme$ = ref("dark");
-provide(useAppConfig().key.INJECT_THEME, theme$);
-
 
 // eos
 </script>
 
 <template>
-  <VApp :theme="theme$" id="app-main" class="**text-indigo-800">
+  <VApp :theme="theme" id="app-main" class="**text-indigo-800">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

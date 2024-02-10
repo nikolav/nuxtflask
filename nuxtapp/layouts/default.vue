@@ -9,17 +9,13 @@ const fullPath$ = computed(() => useRoute().fullPath);
 <template>
   <section id="layout-default" class="ma-0 pa-0">
     <VAppBar :height="222">
-      <VSpacer />
       <div>
         <pre>
           {{ JSON.stringify({ token: auth?.token$, fullPath$ }, null, 2) }}
         </pre>
         <ul class="d-flex space-x-2">
           <li><NuxtLink to="/">home</NuxtLink></li>
-          <li><NuxtLink to="about">about</NuxtLink></li>
-          <li><NuxtLink to="demo-fs">fs</NuxtLink></li>
           <li><NuxtLink to="demo-auth">auth</NuxtLink></li>
-          <li><NuxtLink to="demo">demo</NuxtLink></li>
         </ul>
       </div>
       <VSpacer />

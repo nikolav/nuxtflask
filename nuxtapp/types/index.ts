@@ -1,3 +1,5 @@
+import { type Ref } from "vue";
+
 export type OrNull<T = any> = T | null;
 export type OrNoValue<T = any> = OrNull<T> | undefined;
 export type TStoreMain<T = any> = Record<string, T>;
@@ -80,4 +82,9 @@ export interface IStorageStatusFileSaved {
 
 export interface IConfigDocs {
   autoReload: boolean;
+}
+
+export interface IThemeToggle {
+  theme: Ref<string>;
+  themeToggle: (mode?: string | undefined) => void;
 }

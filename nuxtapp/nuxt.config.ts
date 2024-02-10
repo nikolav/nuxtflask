@@ -133,6 +133,7 @@ export default defineNuxtConfig({
   css: [
     // default
     "~/assets/styles/main.scss",
+    "animate.css",
 
     // vuetify
     "vuetify/lib/styles/main.sass",

@@ -25,14 +25,6 @@ const credsRand = () => {
 const loginAdmin = async () => await auth?.login(credsAdmin);
 const registerUser = async () => await auth?.register(credsRand());
 
-// const { docs, put, rm, reload } = useApiDocs<IDocDataVars>("@vars");
-// const varsUpsert = async () => {
-//   const ID = idGen()
-//   await put({ data: { [`var::${ID}`]: ID } });
-// }
-// const choice = (ls: any[]) => ls[Math.floor(Math.random() * ls.length)];
-// const varsRm = async () => await rm(choice(docs.value));
-
 // #eos
 </script>
 
@@ -51,9 +43,6 @@ const registerUser = async () => await auth?.register(credsRand());
       <pre>
         {{ JSON.stringify({ token$: auth?.token$, user$: auth?.user$ }, null, 2) }}
       </pre>
-      <!-- <pre>
-        {{ JSON.stringify({ docs }, null, 2) }}
-      </pre> -->
     </p>
   </section>
 </template>

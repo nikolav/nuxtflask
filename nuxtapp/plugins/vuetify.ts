@@ -72,18 +72,23 @@ export default defineNuxtPlugin((nuxtApp) => {
       VSheet: {
         elevation: 2,
       },
+      VBtn: {
+        color: 'secondary',
+        variant: 'flat'
+      },
+      
       // MyButton: {
       //   color: 'primary',
       //   variant: 'tonal',
       // },
-      // VBtn: {
-      //   color: 'secondary',
-      //   variant: 'flat'
-      // },
       // VCard: {
-      //   MyButton: { color: 'secondary' },
-      //   VBtn: { color: 'primary' },
+        //   MyButton: { color: 'secondary' },
+        //   VBtn: { color: 'primary' },
+        // },
+      // <CustomComponent>: {
+      //   "foo:1": "bar",
       // },
+      
       VCol: {
         cols: 12,
       },

@@ -6,13 +6,14 @@ export const useDocs = <TData = TDocData>(tagInitial = "") => {
   const topic$ = ref(tagInitial);
   const auth = useStoreApiAuth();
   const toggleEnabled = useToggleFlag(true);
+  const mounted$ = useMounted();
   const enabled$ = computed(
     () =>
       !!(
         toggleEnabled.isActive.value &&
         topic$.value &&
         auth?.token$ &&
-        useAppMounted().value
+        mounted$.value
       )
   );
 

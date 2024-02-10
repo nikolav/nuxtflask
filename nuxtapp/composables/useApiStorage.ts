@@ -43,15 +43,14 @@ export const useApiStorage = () => {
     if (isAuth$.value) queryStart();
   });
 
+  const appMounted$ = useAppMounted();
   watch(
-    () => [auth.token$, useAppMounted().value],
+    () => [auth.token$, appMounted$.value],
     (token, appMounted) => {
       if (!(token && appMounted)) return;
       reloadFiles();
     }
   );
-
-  useIOEvent(`${IOEVENT_STORAGE_CHANGE}${auth.user$?.id}`, reloadFiles);
 
   // upload({
   //   'file-1': {
@@ -118,13 +117,13 @@ export const useApiStorage = () => {
     return !path
       ? null
       : await navigateTo(
-          {
-            path,
-          },
-          {
-            external: true,
-          }
-        );
+        {
+          path,
+        },
+        {
+          external: true,
+        }
+      );
   };
 
   // # .remove
@@ -132,10 +131,23 @@ export const useApiStorage = () => {
   const remove = async (fileID: string) => await mutateRemoveFile({ fileID });
 
   // # .meta
-  const { put: metaPut, IOEVENT: IOEVENT_STORAGE_META_CHANGE } = useApiDocs(
-    `${TAG_STORAGE}${auth.user$?.id}`
-  );
-  useIOEvent(IOEVENT_STORAGE_META_CHANGE, reloadFiles);
+  // const { put: metaPut, IOEVENT: IOEVENT_STORAGE_META_CHANGE } = useApiDocs(
+  //   `${TAG_STORAGE}${get(auth.user$, "id")}`
+  // );
+  // # .meta
+  const {
+    enabled: enabledMeta$,
+    topic$: topicStorageUser$,
+    upsert: metaPut,
+    IOEVENT: IOEVENT_STORAGE_META_CHANGE
+  } = useDocs();
+
+  watch(() => get(auth.user$, "id"),
+    (id) => {
+      if (!id) return;
+      topicStorageUser$.value = `${TAG_STORAGE}${id}`;
+    });
+
   const meta = async (
     file_id: string,
     values: Record<string, string | number | boolean>
@@ -149,11 +161,21 @@ export const useApiStorage = () => {
     if (!some(Object.keys(values_), (key) => get(doc, key) != values_[key]))
       return;
 
-    return await metaPut({
-      id: doc.id,
-      data: omit(assign({}, doc, values_), FIELDS_OMIT_DOCS_DATA),
-    });
+    return await metaPut(
+      omit(assign({}, doc, values_), FIELDS_OMIT_DOCS_DATA),
+      doc.id);
   };
+
+  // @io/listen
+  watch(() => get(auth.user$, "id"), (id) => {
+    if (!id) return;
+    useIOEvent(`${IOEVENT_STORAGE_CHANGE}${id}`, reloadFiles);
+  });
+  watch(enabledMeta$, (enabled) => {
+    if (!enabled) return;
+    useIOEvent(toValue(IOEVENT_STORAGE_META_CHANGE), reloadFiles);
+  });
+
 
   return {
     // # ls

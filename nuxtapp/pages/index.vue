@@ -1,35 +1,57 @@
 <script setup lang="ts">
 // import { ref } from "vue";
+import { type IThemeToggle } from "@/types";
+import { typeCore, get, idGen } from "@/utils";
 
-interface IDatum {
-  count: number;
-}
+const { themeToggle } = <IThemeToggle>useNuxtApp().$theme;
 
-const d$ = ref<IDatum>({ count: 0 });
-const dInc = () => {
-  d$.value.count += 1;
+const { files, upload, download, remove, meta } = useApiStorage();
+const file$ = ref();
+const fileId$ = ref("");
+const setFile = ([file]: File[]) => {
+  file$.value = file;
 };
-
-const theme$ = inject(useAppConfig().key.INJECT_THEME);
-const themeToggle = () => {
-  theme$.value = "dark" !== theme$.value ? "dark" : "light2";
-};
-
-// eos
+// await upload({
+//   "#01": {
+//     file,
+//     data: {
+//       title: "#01:title",
+//       description: "#01:description",
+//     },
+//   },
+// });
+const fileUpload = async () =>
+  await upload({
+    "#01": {
+      file: file$.value,
+      data: {
+        title: `title: --VcnhMt4Z`,
+        description: `desc: --cBLOO`,
+      },
+    },
+  });
+const fileRm = async () => await remove(toValue(fileId$));
+const fileTitle = async () =>
+  await meta(fileId$.value, { title: `--${idGen()}` });
+const fileDl = async () => await download(toValue(fileId$));
 </script>
 
 <template>
   <section id="page-home">
     <Title>--home</Title>
     <h1>@home.nuxt</h1>
-    <VBtn color="primary" @click="dInc" variant="flat">
-      <VIcon icon="$menu" start />
-      <strong class="ms-2"> ok </strong>
-    </VBtn>
-    <VBtn size="small" color="secondary" @click="themeToggle" variant="flat">
-      theme:toggle
-    </VBtn>
-    <p>data: [{{ d$.count }}]</p>
+    <VBtn size="small" @click="themeToggle()"> theme:toggle </VBtn>
+    <div>
+      <VFileInput @update:model-value="setFile" />
+      <VTextField v-model="fileId$" label="file_id" />
+      <VBtn size="small" @click="fileUpload"> file:upload </VBtn>
+      <VBtn size="small" @click="fileRm"> file:rm </VBtn>
+      <VBtn size="small" @click="fileTitle"> file:title </VBtn>
+      <VBtn size="small" @click="fileDl"> file:dl </VBtn>
+    </div>
+    <VSheet elevation="2" class="pa-2">
+      <pre>{{ JSON.stringify(files, null, 2) }}</pre>
+    </VSheet>
   </section>
 </template>
 
