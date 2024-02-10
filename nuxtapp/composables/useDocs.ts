@@ -40,9 +40,6 @@ export const useDocs = <TData = TDocData>(tagInitial = "") => {
       ? `${useAppConfig().io.IOEVENT_DOCS_CHANGE_JsonData}${topic$.value}`
       : ""
   );
-  watchEffect(() => {
-    useIOEvent(ioEvent$.value, reload);
-  });
 
   const { mutate: mutateDocsUpsert } = useMutation<IDoc<TData>>(M_docsUpsert);
   const { mutate: mutateDocsRm } = useMutation<OrNull<IDoc<TData>>>(M_docsRm);
@@ -56,6 +53,12 @@ export const useDocs = <TData = TDocData>(tagInitial = "") => {
     if (enabled$.value) await mutateDocsRm({ topic: topic$.value, id });
   };
 
+  // @io/listen
+  watchEffect(() => {
+    useIOEvent(ioEvent$.value, reload);
+  });
+
+  
   return {
     // # data by topic
     topic$,

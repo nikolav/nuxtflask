@@ -18,7 +18,7 @@ const credsAdmin = {
 const credsRand = () => {
   const ID = idGen();
   return {
-    email: `user:${ID}@email.com`,
+    email: `user-${ID}@email.com`,
     password: ID,
   };
 };

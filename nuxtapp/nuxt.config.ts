@@ -136,8 +136,8 @@ export default defineNuxtConfig({
     "animate.css",
 
     // vuetify
-    "vuetify/lib/styles/main.sass",
     "@mdi/font/css/materialdesignicons.css",
+    "vuetify/lib/styles/main.sass",
 
     // plugin styles
     "@fancyapps/ui/dist/fancybox/fancybox.css",

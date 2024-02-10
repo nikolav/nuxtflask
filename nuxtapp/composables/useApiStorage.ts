@@ -53,9 +53,9 @@ export const useApiStorage = () => {
   );
 
   // upload({
-  //   'file-1': {
+  //   '#1:fileName': {
   //     'data': {},
-  //     'file': {}
+  //     'file': File{}
   //   },
   //   // ...
   // })

@@ -12,7 +12,7 @@ import {
   URL_AUTH_logout,
   URL_API_who,
 } from "@/config";
-import { schemaAuthData } from "@/schemas";
+import { schemaAuthData, schemaAuthCredentials } from "@/schemas";
 
 export const useStoreApiAuth = defineStore("auth", () => {
   const {
@@ -78,7 +78,7 @@ export const useStoreApiAuth = defineStore("auth", () => {
           token = get(
             await $fetch<IAuthResponse>(authEndpoint, {
               method: "POST",
-              body: credentials,
+              body: schemaAuthCredentials.parse(credentials),
             }),
             "token"
           );
