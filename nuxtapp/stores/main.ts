@@ -22,7 +22,7 @@ export const useStoreMain = defineStore("main", () => {
   };
 
   return {
-    store$,
+    data: store$,
     get,
     put,
     drop,

@@ -1,11 +1,5 @@
-// @useStoreFlags
 export const useStoreFlags = defineStore("flags", () => {
-  const {
-    stores: {
-      flags: { initial },
-    },
-  } = useAppConfig();
-  const flags$ = ref(initial);
+  const flags$ = ref(useAppConfig().stores.flags.initial);
   const flag = (name: string) => flags$.value[name] || false;
   const on = (name: string) => {
     flags$.value[name] = true;

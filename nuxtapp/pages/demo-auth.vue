@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { idGen } from "@/utils";
+import { faker } from "@faker-js/faker";
 
 interface IDocDataVars {
   [key: string]: string;
@@ -16,14 +16,13 @@ const credsAdmin = {
   password: "122",
 };
 const credsRand = () => {
-  const ID = idGen();
   return {
-    email: `user-${ID}@email.com`,
-    password: ID,
+    email: faker.internet.email(),
+    password: faker.internet.password({ length: 5, memorable: true }),
   };
 };
-const loginAdmin = async () => await auth?.login(credsAdmin);
-const registerUser = async () => await auth?.register(credsRand());
+const loginAdmin = async () => await auth.login(credsAdmin);
+const registerUser = async () => await auth.register(credsRand());
 
 // #eos
 </script>
@@ -41,7 +40,7 @@ const registerUser = async () => await auth?.register(credsRand());
 
     <p>
       <pre>
-        {{ JSON.stringify({ token$: auth?.token$, user$: auth?.user$ }, null, 2) }}
+        {{ JSON.stringify({ token$: auth.token$, user$: auth.user$ }, null, 2) }}
       </pre>
     </p>
   </section>

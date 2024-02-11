@@ -2,17 +2,17 @@ import { Q_docsByTopic, M_docsUpsert, M_docsRm } from "@/graphql";
 import type { OrNull, IDoc, TDocData } from "@/types";
 
 // .useDocs
-export const useDocs = <TData = TDocData>(tagInitial = "") => {
-  const topic$ = ref(tagInitial);
+export const useDocs = <TData = TDocData>(initialTag = "", initialEnabled = true) => {
+  const topic$ = ref(initialTag);
   const auth = useStoreApiAuth();
-  const toggleEnabled = useToggleFlag(true);
+  const toggleEnabled = useToggleFlag(initialEnabled);
   const mounted$ = useMounted();
   const enabled$ = computed(
     () =>
       !!(
         toggleEnabled.isActive.value &&
         topic$.value &&
-        auth?.token$ &&
+        auth.token$ &&
         mounted$.value
       )
   );
@@ -58,7 +58,7 @@ export const useDocs = <TData = TDocData>(tagInitial = "") => {
     useIOEvent(ioEvent$.value, reload);
   });
 
-  
+
   return {
     // # data by topic
     topic$,

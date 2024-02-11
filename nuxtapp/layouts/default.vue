@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const auth = useStoreApiAuth();
-
 const fullPath$ = computed(() => useRoute().fullPath);
 
 // # eos
@@ -11,7 +10,7 @@ const fullPath$ = computed(() => useRoute().fullPath);
     <VAppBar :height="222">
       <div>
         <pre>
-          {{ JSON.stringify({ token: auth?.token$, fullPath$ }, null, 2) }}
+          {{ JSON.stringify({ token: auth.token$, fullPath$ }, null, 2) }}
         </pre>
         <ul class="d-flex space-x-2">
           <li><NuxtLink to="/">home</NuxtLink></li>

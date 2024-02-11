@@ -2,26 +2,35 @@ import axios from "axios";
 import FormData from "form-data";
 
 import { Q_storageList, M_STORAGE_FILE_REMOVE } from "@/graphql";
-import { assign, each, find, get, omit, pick, len, some } from "@/utils";
+import { assign, each, find, get, len, omit } from "@/utils";
 import { URL_STORAGE } from "@/config";
 import type {
   IStorageFileInfo,
   IFilesUpload,
   IStorageStatusFileSaved,
 } from "@/types";
+import { schemaStorageMeta } from "@/schemas";
+
 
 // .useApiStorage
-export const useApiStorage = () => {
+export const useApiStorage = (initialEnabled = true) => {
   const {
     graphql: { STORAGE_QUERY_POLL_INTERVAL },
     io: { IOEVENT_STORAGE_CHANGE },
     api: { TAG_STORAGE },
-    FIELDS_STORAGE_META_CAN_UPDATE,
-    FIELDS_OMIT_DOCS_DATA,
+    FIELDS_OMIT_STORAGE_META,
   } = useAppConfig();
 
   const auth = useStoreApiAuth();
-  const isAuth$ = computed(() => !!auth.token$);
+  const toggleEnabled = useToggleFlag(initialEnabled);
+  const mounted$ = useMounted();
+  const enabled$ = computed(
+    () =>
+      !!(
+        mounted$.value &&
+        toggleEnabled.isActive.value &&
+        auth.token$
+      ));
 
   const {
     load: loadStorage,
@@ -31,8 +40,8 @@ export const useApiStorage = () => {
     Q_storageList,
     undefined,
     {
+      enabled: enabled$,
       pollInterval: STORAGE_QUERY_POLL_INTERVAL,
-      enabled: isAuth$,
     }
   );
   const files$ = computed(() => result.value?.storageList || []);
@@ -40,15 +49,13 @@ export const useApiStorage = () => {
 
   const { runSetup: queryStart } = useRunSetupOnce(loadStorage);
   watchEffect(() => {
-    if (isAuth$.value) queryStart();
+    if (enabled$.value) queryStart();
   });
 
-  const appMounted$ = useAppMounted();
   watch(
-    () => [auth.token$, appMounted$.value],
-    (token, appMounted) => {
-      if (!(token && appMounted)) return;
-      reloadFiles();
+    () => [auth.token$, enabled$],
+    (token, enabled) => {
+      if (token && enabled) reloadFiles();
     }
   );
 
@@ -65,7 +72,7 @@ export const useApiStorage = () => {
   const upload = async <TFileData = IStorageStatusFileSaved>(
     uplFiles: IFilesUpload
   ) => {
-    if (!auth.token$) return;
+    if (!enabled$.value) return;
 
     const fdata = new FormData();
     let numfiles = 0;
@@ -128,12 +135,11 @@ export const useApiStorage = () => {
 
   // # .remove
   const { mutate: mutateRemoveFile } = useMutation(M_STORAGE_FILE_REMOVE);
-  const remove = async (fileID: string) => await mutateRemoveFile({ fileID });
+  const remove = async (fileID: string) => {
+    if (enabled$.value)
+      return await mutateRemoveFile({ fileID })
+  };
 
-  // # .meta
-  // const { put: metaPut, IOEVENT: IOEVENT_STORAGE_META_CHANGE } = useApiDocs(
-  //   `${TAG_STORAGE}${get(auth.user$, "id")}`
-  // );
   // # .meta
   const {
     enabled: enabledMeta$,
@@ -149,20 +155,25 @@ export const useApiStorage = () => {
     });
 
   const meta = async (
+    values: Record<string, string | number | boolean>,
     file_id: string,
-    values: Record<string, string | number | boolean>
   ) => {
-    const values_ = pick(values, FIELDS_STORAGE_META_CAN_UPDATE);
-    if (!len(values_)) return;
+    if (!enabled$.value) return;
 
     const doc = find(files$.value, { file_id });
     if (!doc?.id) return;
 
-    if (!some(Object.keys(values_), (key) => get(doc, key) != values_[key]))
+    let values_;
+    try {
+      values_ = schemaStorageMeta.parse(values);
+    } catch (error) {
+      // skip
       return;
+    }
+    if (!len(values_)) return;
 
     return await metaPut(
-      omit(assign({}, doc, values_), FIELDS_OMIT_DOCS_DATA),
+      omit(assign({}, doc, values_), FIELDS_OMIT_STORAGE_META),
       doc.id);
   };
 
@@ -170,9 +181,9 @@ export const useApiStorage = () => {
   watch(() => get(auth.user$, "id"), (id) => {
     if (!id) return;
     useIOEvent(`${IOEVENT_STORAGE_CHANGE}${id}`, reloadFiles);
-  });
-  watch(enabledMeta$, (enabled) => {
-    if (!enabled) return;
+  })
+  watchEffect(() => {
+    if (!enabledMeta$.value) return;
     useIOEvent(toValue(IOEVENT_STORAGE_META_CHANGE), reloadFiles);
   });
 
@@ -181,18 +192,18 @@ export const useApiStorage = () => {
     // # ls
     files: files$,
 
-    // # flags
-    uploadStatus,
-
     // # crud
     upload,
     remove,
     download,
-
-    // @set
     meta,
-
-    // @get
     publicUrl,
+
+    // # flags
+    uploadStatus,
+
+    // @toggle
+    enabled: enabled$,
+    toggleEnabled,
   };
 };

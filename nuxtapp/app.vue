@@ -39,7 +39,7 @@ useHead({
 <style>
 .BLUR-enter-active,
 .BLUR-leave-active {
-  transition: all 0.122s;
+  transition: all 0.24s;
 }
 
 .BLUR-leave-active {

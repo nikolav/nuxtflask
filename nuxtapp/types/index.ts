@@ -4,7 +4,7 @@ export type OrNull<T = any> = T | null;
 export type OrNoValue<T = any> = OrNull<T> | undefined;
 export type TStoreMain<T = any> = Record<string, T>;
 export type TStoreFlags = Record<string, boolean>;
-export type TDocData = Record<string, any>;
+export type TDocData<T = any> = Record<string, T>;
 export interface IDoc<T = TDocData> {
   id?: number | undefined;
   data: T;

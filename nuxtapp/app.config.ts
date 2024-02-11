@@ -18,8 +18,7 @@ export default defineAppConfig({
     THEME: "0Fgky53B2UbA1fG3lKcV",
   },
   //
-  FIELDS_STORAGE_META_CAN_UPDATE: ["title", "description", "public"],
-  FIELDS_OMIT_DOCS_DATA: ["id", "created_at", "updated_at", "__typename"],
+  FIELDS_OMIT_STORAGE_META: ["id", "created_at", "updated_at", "__typename"],
   //
   DEFAULT_CONFIG_useApiDocs: <IConfigDocs>{ autoReload: true },
   //

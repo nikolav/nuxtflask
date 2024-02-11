@@ -3,9 +3,9 @@ import { Q_docByDocId, M_docUpsert } from "@/graphql";
 import { get, batchSet } from "@/utils";
 
 
-export const useDoc = <TDoc = Record<string, any>>(doc_id: string) => {
+export const useDoc = <TDoc = Record<string, any>>(doc_id: string, initialEnabled = true) => {
   const auth = useStoreApiAuth();
-  const toggleEnabled = useToggleFlag(true);
+  const toggleEnabled = useToggleFlag(initialEnabled);
   const mounted$ = useMounted();
   const enabled$ = computed(
     () =>
@@ -53,7 +53,7 @@ export const useDoc = <TDoc = Record<string, any>>(doc_id: string) => {
   return {
 
     // #crud
-    data$,
+    data: data$,
     put,
     reload,
 

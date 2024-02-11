@@ -2,12 +2,13 @@
 import lodash from "lodash";
 const {
   assign,
-  // deb
+  debounce,
   each,
   every,
   find,
   forEach,
   get,
+  noop,
   omit,
   pick,
   set,
@@ -18,12 +19,14 @@ const {
 } = lodash;
 export {
   assign,
+  debounce,
   each,
   every,
   find,
   forEach,
   get,
   len,
+  noop,
   omit,
   pick,
   set,
@@ -31,7 +34,6 @@ export {
   transform,
   unset,
 };
-// export { tree } from "nikolav-treets";
 
 export { False } from "./fn-false";
 export { has } from "./has";
