@@ -7,9 +7,9 @@ import {
 import { md2 } from "vuetify/blueprints";
 import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 
-import { light2 } from "@/assets/themes";
+import { light2, dark } from "@/assets/themes";
 
-import { IconDial, IconRedEye, IconMenu } from "@/components/icons";
+import { IconDial, IconRedEye, IconMenu, IconDotsVertical } from "@/components/icons";
 
 // # --default-light-theme
 // const demoLightTheme: ThemeDefinition = {
@@ -51,10 +51,11 @@ export default defineNuxtPlugin((nuxtApp) => {
       // defaultTheme: "light2",
       themes: {
         light2,
+        dark,
       },
       variations: {
         colors: ["primary", "secondary"],
-        lighten: 1,
+        lighten: 2,
         darken: 1,
       },
     },
@@ -103,6 +104,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         // # add: <VIcon icon="$other">
         iconDial: IconDial,
         iconRedEye: IconRedEye,
+        iconDotsV: IconDotsVertical,
       },
       sets: {
         mdi,
@@ -117,3 +119,43 @@ export default defineNuxtPlugin((nuxtApp) => {
   // @@
   nuxtApp.vueApp.use(vuetify);
 });
+
+
+// interface IconAliases {
+//   [name: string]: IconValue;
+//   calendar: IconValue;
+//   cancel: IconValue;
+//   checkboxIndeterminate: IconValue;
+//   checkboxOff: IconValue;
+//   checkboxOn: IconValue;
+//   clear: IconValue;
+//   close: IconValue;
+//   complete: IconValue;
+//   delete: IconValue;
+//   delimiter: IconValue;
+//   dropdown: IconValue;
+//   edit: IconValue;
+//   error: IconValue;
+//   expand: IconValue;
+//   file: IconValue;
+//   first: IconValue;
+//   info: IconValue;
+//   last: IconValue;
+//   loading: IconValue;
+//   menu: IconValue;
+//   minus: IconValue;
+//   next: IconValue;
+//   plus: IconValue;
+//   prev: IconValue;
+//   radioOff: IconValue;
+//   radioOn: IconValue;
+//   ratingEmpty: IconValue;
+//   ratingFull: IconValue;
+//   ratingHalf: IconValue;
+//   sortAsc: IconValue;
+//   sortDesc: IconValue;
+//   subgroup: IconValue;
+//   success: IconValue;
+//   unfold: IconValue;
+//   warning: IconValue;
+// }

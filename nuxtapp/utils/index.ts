@@ -45,3 +45,4 @@ export { stripSlashesEnd } from "./strip-slashes-end";
 export { idGen } from "./id-gen";
 export { setBatch as batchSet } from "./set-batch";
 export { typeCore } from "./type-core";
+export { isNumeric } from "./is-numeric";

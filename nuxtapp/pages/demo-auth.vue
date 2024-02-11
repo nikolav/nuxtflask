@@ -29,15 +29,12 @@ const registerUser = async () => await auth.register(credsRand());
 
 <template>
     <section id="page-demo">
-      <button class="p-2 bg-sky-600 rounded text-white/80" @click="loginAdmin">login</button>
-      <button class="p-2 bg-sky-600 rounded text-white/80" @click="auth?.logout">logout</button>
-      <button class="p-2 bg-sky-600 rounded text-white/80" @click="registerUser">register</button>
-    <!-- <hr class="border-sky-600 border-4"/>
-    <button class="p-2 bg-sky-600 rounded text-white/80" @click="varsUpsert">docs:upsert</button>
-    <button class="p-2 bg-sky-600 rounded text-white/80" @click="varsRm">docs:rm</button>
-    <button class="p-2 bg-sky-600 rounded text-white/80" @click="reload">docs:reload</button> -->
-    <hr class="border-sky-600 border-4"/>
-
+      <VBtnGroup density="comfortable">
+        <VBtn size="small" @click="loginAdmin" color="primary">login:admin</VBtn>
+        <VBtn size="small" @click="auth.logout" color="primary-lighten-1">logout</VBtn>
+        <VBtn size="small" @click="registerUser" color="primary-lighten-1">register</VBtn>
+      </VBtnGroup>
+      <VDivider thickness="2" class="mb-2"/>
     <p>
       <pre>
         {{ JSON.stringify({ token$: auth.token$, user$: auth.user$ }, null, 2) }}

@@ -2,31 +2,38 @@
 // const { $command } = useNuxtApp();
 import { type IThemeToggle } from "@/types";
 import { map, idGen, noop, transform } from "@/utils";
-import { faker } from "@faker-js/faker";
+// import { faker } from "@faker-js/faker";
+// import { type ChartData } from "chart.js";
 import Chart from "chart.js/auto";
+import chroma from "chroma-js";
+import { useTheme } from "vuetify";
 
 const chartCanvas = ref();
 const chart = ref();
+const { current: themeCurrent } = useTheme();
 
-const { themeToggle, theme } = <IThemeToggle>useNuxtApp().$theme;
-const isDark$ = computed(() => useAppConfig().theme.DARK === theme.value);
+const { themeToggle } = <IThemeToggle>useNuxtApp().$theme;
 const chartDraw = () => {
   chart.value?.destroy();
-  const data = [
-    { x: 10, y: 20 },
-    { x: 15, y: 30 },
-    { x: 20, y: 12 },
-    { x: 34, y: 112 },
-  ];
-
   chart.value = new Chart(toValue(chartCanvas), {
-    type: "line",
+    type: "bar",
     data: {
-      labels: map(data, "x"),
       datasets: [
         {
-          label: "foo",
-          data,
+          label: "Total",
+          data: [
+            { key: "New York", value: 20 },
+            { key: "Chicago", value: 10 },
+            { key: "Ohio", value: 43 },
+            { key: "Virginia", value: 11 },
+          ],
+          backgroundColor: `${chroma(themeCurrent.value.colors.primary).alpha(
+            0.5
+          )}`,
+          parsing: {
+            xAxisKey: "key",
+            yAxisKey: "value",
+          },
         },
       ],
     },
@@ -37,45 +44,7 @@ const chartDraw = () => {
           display: false,
         },
       },
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-        x: {
-          beginAtZero: true,
-        },
-      },
-      // parsing: {
-      //   xAxisKey: "x",
-      // },
     },
-
-    // type: "line",
-    // // options: {
-    // //   animation: false,
-    // //   plugins: {
-    // //     legend: {
-    // //       display: false,
-    // //     },
-    // //     tooltip: {
-    // //       // enabled: false,
-    // //       animation: false,
-    // //     },
-    // //   },
-    // // },
-    // data: {
-    //   // labels: data.map((row) => row.year),
-    //   datasets: [
-    //     {
-    //       data,
-    //       ...(toValue(isDark$)
-    //         ? {
-    //             backgroundColor: "grey",
-    //           }
-    //         : {}),
-    //     },
-    //   ],
-    // },
   });
 };
 
@@ -87,15 +56,28 @@ onMounted(() => watchEffect(chartDraw));
 <template>
   <section id="page-home">
     <Title>--home</Title>
-    <h1 class="text-amber-darken-2">@home.nuxt</h1>
-    <VBtn size="small" @click="themeToggle()"> theme:toggle </VBtn>
-    <VBtn size="small" class="text-none" @click="noop"> ok </VBtn>
+    <VContainer fluid class="flex justify-center space-x-2">
+      <VBtn @click="themeToggle()" color="primary">
+        theme:toggle
+      </VBtn>
+      <VBtn @click="noop"> ok </VBtn>
+    </VContainer>
     <VDivider thickness="4" />
-    <VSheet width="500" class="mx-auto pa-4">
-      <canvas ref="chartCanvas" id="chartDemo"></canvas>
-    </VSheet>
+    <VCard width="500" class="mx-auto">
+      <VCardTitle class="text-medium-emphasis text-center mb-2">
+        chart demo
+      </VCardTitle>
+      <VCardText>
+        <canvas ref="chartCanvas" id="chartDemo"></canvas>
+      </VCardText>
+      <VDivider thickness="2" class="ma-0" />
+      <VCardActions class="**bg-red">
+        <VSpacer />
+        <VBtn variant="text" color="primary">ok</VBtn>
+      </VCardActions>
+    </VCard>
   </section>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 </style>

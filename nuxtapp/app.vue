@@ -9,8 +9,8 @@ onUnmounted(() => {
 });
 
 // theme
-import { type IThemeToggle } from "@/types";
-const { theme } = <IThemeToggle>useNuxtApp().$theme;
+// import { type IThemeToggle } from "@/types";
+const { theme } = useNuxtApp().$theme;
 
 const { DARK, LIGHT } = useAppConfig().theme;
 const htmlAttrs$ = computed(() => ({

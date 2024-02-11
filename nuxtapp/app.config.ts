@@ -66,5 +66,9 @@ export default defineAppConfig({
     DARK: "dark",
     LIGHT: "light2",
   },
-  // @theme
+  layout: {
+    appBarHeight: 82,
+    // additional @VMain/padding-top
+    offsetTop: "1rem",
+  }
 });
