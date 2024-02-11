@@ -8,6 +8,7 @@ const {
   find,
   forEach,
   get,
+  map,
   noop,
   omit,
   pick,
@@ -16,6 +17,7 @@ const {
   some,
   transform,
   unset,
+  zipObject,
 } = lodash;
 export {
   assign,
@@ -26,6 +28,7 @@ export {
   forEach,
   get,
   len,
+  map,
   noop,
   omit,
   pick,
@@ -33,6 +36,7 @@ export {
   some,
   transform,
   unset,
+  zipObject,
 };
 
 export { False } from "./fn-false";
