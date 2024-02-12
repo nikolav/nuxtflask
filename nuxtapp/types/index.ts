@@ -88,3 +88,8 @@ export interface IThemeToggle {
   theme: Ref<string>;
   themeToggle: (mode?: string | undefined) => void;
 }
+
+export interface IAuthData {
+  id: number;
+  email: string;
+}

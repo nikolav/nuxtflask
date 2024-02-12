@@ -12,7 +12,7 @@ const chartCanvas = ref();
 const chart = ref();
 const { current: themeCurrent } = useTheme();
 
-const { themeToggle } = <IThemeToggle>useNuxtApp().$theme;
+const { themeToggle } = useNuxtApp().$theme;
 const chartDraw = () => {
   chart.value?.destroy();
   chart.value = new Chart(toValue(chartCanvas), {
@@ -22,10 +22,10 @@ const chartDraw = () => {
         {
           label: "Total",
           data: [
-            { key: "New York", value: 20 },
-            { key: "Chicago", value: 10 },
-            { key: "Ohio", value: 43 },
-            { key: "Virginia", value: 11 },
+            { key: "A", value: 20 },
+            { key: "B", value: 10 },
+            { key: "C", value: 43 },
+            { key: "D", value: 11 },
           ],
           backgroundColor: `${chroma(themeCurrent.value.colors.primary).alpha(
             0.5

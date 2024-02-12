@@ -21,12 +21,13 @@ export const useStoreApiAuth = defineStore("auth", () => {
     initial: initialStorage,
     authHeaders,
   } = useAppConfig().stores.auth;
-  const token$ = useLocalStorage(KEY_ACCESS_TOKEN, initialStorage, { initOnMounted: true });
+  const token$ = useLocalStorage(KEY_ACCESS_TOKEN, initialStorage, {
+    initOnMounted: true,
+  });
   const headers$ = computed(() => authHeaders(token$.value));
-  const {
-    data: user$,
-    refresh: authDataReload,
-  } = useFetch<OrNoValue<IAuthWhoResponse>>(URL_API_who, {
+  const { data: user$, refresh: authDataReload } = useFetch<
+    OrNoValue<IAuthWhoResponse>
+  >(URL_API_who, {
     key: KEY_USEFETCH_AUTHDATA,
     method: "GET",
     headers: headers$,
@@ -70,28 +71,28 @@ export const useStoreApiAuth = defineStore("auth", () => {
 
   const authentication$ =
     (authEndpoint: string = URL_AUTH_login) =>
-      async (credentials: IAuthCreds) => {
-        if (user$.value) return;
-        let token: OrNoValue<string> = "";
-        status.begin();
-        try {
-          token = get(
-            await $fetch<IAuthResponse>(authEndpoint, {
-              method: "POST",
-              body: schemaAuthCredentials.parse(credentials),
-            }),
-            "token"
-          );
-        } catch (error) {
-          status.setError(error);
-        } finally {
-          if (token) {
-            token$.value = token;
-            status.successful();
-          }
+    async (credentials: IAuthCreds) => {
+      if (user$.value) return;
+      let token: OrNoValue<string> = "";
+      status.begin();
+      try {
+        token = get(
+          await $fetch<IAuthResponse>(authEndpoint, {
+            method: "POST",
+            body: schemaAuthCredentials.parse(credentials),
+          }),
+          "token"
+        );
+      } catch (error) {
+        status.setError(error);
+      } finally {
+        if (token) {
+          token$.value = token;
+          status.successful();
         }
-        status.done();
-      };
+      }
+      status.done();
+    };
   // @register
   const register = authentication$(URL_AUTH_register);
   // @login
@@ -118,15 +119,22 @@ export const useStoreApiAuth = defineStore("auth", () => {
     status.done();
   };
 
+  // flag `logged in`
+  const isAuth$ = computed(() => null != get(user$.value, "id"));
+
+  // #api
   return {
     // @auth/data
     token$,
     user$,
+    isAuth$,
+
     // @auth/crud
     register,
     login,
     logout,
     authDataReload,
+
     // @api/flags
     processing: status.processing,
     error: status.error,

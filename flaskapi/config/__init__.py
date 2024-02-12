@@ -1,14 +1,13 @@
 PATHS_SKIP_AUTH = (
+  
   # status check
   r'^/$',
+  
   # auth 
   r'^/auth/register$',
   r'^/auth/login$',
-
+  
   r'^/storage/[0-9a-fA-F]+$',
-
-  # r'^/test/?$',
-  # r'^/test/.*$',
 )
 
 TAG_USERS        = '@users'

@@ -4,9 +4,14 @@
 // definePageMeta({
 //   colorMode: "light",
 // });
+import { get } from "@/utils";
+
 onUnmounted(() => {
   useAppMounted().value = false;
 });
+
+const auth = useStoreApiAuth();
+watchEffect(() => console.log({ auth: auth.isAuth$ }));
 
 // theme
 // import { type IThemeToggle } from "@/types";
