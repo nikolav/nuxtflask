@@ -9,7 +9,12 @@ import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 
 import { light2, dark } from "@/assets/themes";
 
-import { IconDial, IconRedEye, IconMenu, IconDotsVertical } from "@/components/icons";
+import {
+  IconDial,
+  IconRedEye,
+  IconMenu,
+  IconDotsVertical,
+} from "@/components/icons";
 
 // # --default-light-theme
 // const demoLightTheme: ThemeDefinition = {
@@ -54,9 +59,9 @@ export default defineNuxtPlugin((nuxtApp) => {
         dark,
       },
       variations: {
-        colors: ["primary", "secondary"],
+        colors: ["primary", "secondary", "accent1", "accent2", "complement"],
         lighten: 2,
-        darken: 1,
+        darken: 2,
       },
     },
 
@@ -74,22 +79,22 @@ export default defineNuxtPlugin((nuxtApp) => {
         elevation: 2,
       },
       VBtn: {
-        color: 'secondary',
-        variant: 'flat'
+        color: "secondary",
+        variant: "flat",
       },
-      
+
       // MyButton: {
       //   color: 'primary',
       //   variant: 'tonal',
       // },
       // VCard: {
-        //   MyButton: { color: 'secondary' },
-        //   VBtn: { color: 'primary' },
-        // },
+      //   MyButton: { color: 'secondary' },
+      //   VBtn: { color: 'primary' },
+      // },
       // <CustomComponent>: {
       //   "foo:1": "bar",
       // },
-      
+
       VCol: {
         cols: 12,
       },
@@ -119,7 +124,6 @@ export default defineNuxtPlugin((nuxtApp) => {
   // @@
   nuxtApp.vueApp.use(vuetify);
 });
-
 
 // interface IconAliases {
 //   [name: string]: IconValue;

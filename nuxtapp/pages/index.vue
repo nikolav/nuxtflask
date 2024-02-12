@@ -26,6 +26,7 @@ const chartDraw = () => {
             { key: "B", value: 10 },
             { key: "C", value: 43 },
             { key: "D", value: 11 },
+            { key: "E", value: 34 },
           ],
           backgroundColor: `${chroma(themeCurrent.value.colors.primary).alpha(
             0.5

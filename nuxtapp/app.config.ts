@@ -2,7 +2,6 @@ import type { TStoreMain, TStoreFlags, IConfigDocs } from "@/types";
 import { assign } from "@/utils";
 import { PRODUCTION$ } from "@/config";
 
-
 export default defineAppConfig({
   ADMIN_EMAIL: "admin@nikolav.rs",
   DEBUG: true !== PRODUCTION$,
@@ -48,8 +47,8 @@ export default defineAppConfig({
         assign(
           token
             ? {
-              Authorization: `Bearer ${token}`,
-            }
+                Authorization: `Bearer ${token}`,
+              }
             : {},
           additional || {}
         ),
@@ -70,5 +69,5 @@ export default defineAppConfig({
     appBarHeight: 82,
     // additional @VMain/padding-top
     offsetTop: "1rem",
-  }
+  },
 });
