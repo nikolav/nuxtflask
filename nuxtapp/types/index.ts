@@ -1,4 +1,5 @@
 import { type Ref } from "vue";
+import { type ChartData } from "chart.js";
 
 export type OrNull<T = any> = T | null;
 export type OrNoValue<T = any> = OrNull<T> | undefined;
@@ -35,7 +36,7 @@ export interface IAuthWhoResponse {
   error?: string | undefined;
 }
 
-export interface IAuthLogoutResponse { }
+export interface IAuthLogoutResponse {}
 
 export interface IStorageFileInfo {
   id: number;
@@ -93,3 +94,8 @@ export interface IAuthData {
   id: number;
   email: string;
 }
+
+export type TChartDataBar<TData = Record<string, any>[]> = ChartData<
+  "bar",
+  TData
+>;

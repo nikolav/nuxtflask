@@ -1,55 +1,24 @@
 <script setup lang="ts">
 // const { $command } = useNuxtApp();
-import { type IThemeToggle } from "@/types";
-import { map, idGen, noop, transform } from "@/utils";
+import type { TChartDataBar } from "@/types";
+import { map, idGen, noop, transform, assign } from "@/utils";
 // import { faker } from "@faker-js/faker";
-// import { type ChartData } from "chart.js";
-import Chart from "chart.js/auto";
-import chroma from "chroma-js";
-import { useTheme } from "vuetify";
+import { Bar } from "vue-chartjs";
 
-const chartCanvas = ref();
-const chart = ref();
-const { current: themeCurrent } = useTheme();
 
 const { themeToggle } = useNuxtApp().$theme;
-const chartDraw = () => {
-  chart.value?.destroy();
-  chart.value = new Chart(toValue(chartCanvas), {
-    type: "bar",
-    data: {
-      datasets: [
-        {
-          label: "Total",
-          data: [
-            { key: "A", value: 20 },
-            { key: "B", value: 10 },
-            { key: "C", value: 43 },
-            { key: "D", value: 11 },
-            { key: "E", value: 34 },
-          ],
-          backgroundColor: `${chroma(themeCurrent.value.colors.primary).alpha(
-            0.5
-          )}`,
-          parsing: {
-            xAxisKey: "key",
-            yAxisKey: "value",
-          },
-        },
-      ],
-    },
-    options: {
-      animation: false,
-      plugins: {
-        legend: {
-          display: false,
-        },
-      },
-    },
-  });
-};
 
-onMounted(() => watchEffect(chartDraw));
+const data$: TChartDataBar<number[]> = {
+  labels: ["January", "February", "March"],
+  datasets: [{ data: [40, 20, 12] }],
+};
+const options$ = {
+  plugins: {
+    legend: {
+      display: false,
+    },
+  },
+};
 
 // #eos
 </script>
@@ -58,9 +27,7 @@ onMounted(() => watchEffect(chartDraw));
   <section id="page-home">
     <Title>--home</Title>
     <VContainer fluid class="flex justify-center space-x-2">
-      <VBtn @click="themeToggle()" color="primary">
-        theme:toggle
-      </VBtn>
+      <VBtn @click="themeToggle()" color="primary"> theme:toggle </VBtn>
       <VBtn @click="noop"> ok </VBtn>
     </VContainer>
     <VDivider thickness="4" />
@@ -69,7 +36,7 @@ onMounted(() => watchEffect(chartDraw));
         chart demo
       </VCardTitle>
       <VCardText>
-        <canvas ref="chartCanvas" id="chartDemo"></canvas>
+        <Bar :data="data$" :options="options$" />
       </VCardText>
       <VDivider thickness="2" class="ma-0" />
       <VCardActions class="**bg-red">
