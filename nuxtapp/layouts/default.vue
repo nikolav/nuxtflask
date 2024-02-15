@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { isNumeric } from "@/utils";
 
-const appbar = ref();
-// const { height } = useElementSize(appbar);
 const { appBarHeight, offsetTop } = useAppConfig().layout;
 const paddingTop = `calc(${
   isNumeric(appBarHeight) ? appBarHeight + "px" : appBarHeight
@@ -12,17 +10,18 @@ const paddingTop = `calc(${
 
 <template>
   <section id="layout-default" class="ma-0 pa-0">
-    <VAppBar ref="appbar" :height="useAppConfig().layout.appBarHeight">
+    <VAppBar name="appbar-main" :height="appBarHeight" elevation="1">
       <template #prepend>
         <VAppBarNavIcon color="primary-darken-1" />
       </template>
       <template #append>
-        <VBtn icon="$iconDotsV" size="small" color="primary-darken-1"/>
+        <VBtn icon="$iconDotsV" size="small" color="primary-darken-1" />
       </template>
       <VAppBarTitle>app:foo</VAppBarTitle>
-      <ul class="d-flex space-x-2 items-center me-6">
+      <ul class="d-flex gap-x-4 items-center me-6">
         <li><NuxtLink to="/">home</NuxtLink></li>
         <li><NuxtLink to="demo-auth">auth</NuxtLink></li>
+        <li><NuxtLink to="demo">demo</NuxtLink></li>
       </ul>
     </VAppBar>
 

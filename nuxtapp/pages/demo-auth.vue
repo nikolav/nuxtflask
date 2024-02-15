@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { faker } from "@faker-js/faker";
 
-
 useHead({
-  title: "--demo",
+  title: "--auth",
 });
 
 const auth = useStoreApiAuth();

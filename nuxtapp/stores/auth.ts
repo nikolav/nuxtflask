@@ -30,9 +30,9 @@ export const useStoreApiAuth = defineStore("auth", () => {
   >(URL_API_who, {
     key: KEY_USEFETCH_AUTHDATA,
     method: "GET",
+    // watch: [token$],
     headers: headers$,
     lazy: true,
-    watch: [token$],
     default: () => null,
     transform: (responseAuth) => {
       try {
@@ -46,8 +46,8 @@ export const useStoreApiAuth = defineStore("auth", () => {
 
   onMounted(authDataReload);
 
-  // track api activity
-  const status = useProcessMonitor();
+  // `logged in` .flag
+  const isAuth$ = computed(() => null != get(user$.value, "id"));
 
   // apply auth token to Apollo client
   // ..if GraphQL API expects authentication to be passed via a HTTP header
@@ -59,8 +59,8 @@ export const useStoreApiAuth = defineStore("auth", () => {
   } = useApollo();
 
   // sync apollo:auth
-  watch(user$, async (user) => {
-    if (user) {
+  watch(isAuth$, async (isAuth) => {
+    if (isAuth) {
       await onLoginApollo(token$.value);
     } else {
       // signal logout to apollo
@@ -69,10 +69,13 @@ export const useStoreApiAuth = defineStore("auth", () => {
     }
   });
 
+  // track api activity
+  const status = useProcessMonitor();
+
   const authentication$ =
     (authEndpoint: string = URL_AUTH_login) =>
     async (credentials: IAuthCreds) => {
-      if (user$.value) return;
+      if (isAuth$.value) return;
       let token: OrNoValue<string> = "";
       status.begin();
       try {
@@ -99,7 +102,7 @@ export const useStoreApiAuth = defineStore("auth", () => {
   const login = authentication$();
   // @logout
   const logout = async () => {
-    if (!user$.value) return;
+    if (!isAuth$.value) return;
     status.begin();
     try {
       await $fetch<IAuthLogoutResponse>(URL_AUTH_logout, {
@@ -118,9 +121,6 @@ export const useStoreApiAuth = defineStore("auth", () => {
     }
     status.done();
   };
-
-  // flag `logged in`
-  const isAuth$ = computed(() => null != get(user$.value, "id"));
 
   // #api
   return {

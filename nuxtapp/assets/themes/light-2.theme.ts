@@ -1,8 +1,9 @@
 import { type ThemeDefinition } from "vuetify";
+import colorsVuetify from "vuetify/util/colors";
 import chroma from "chroma-js";
 import { THEME_ACCENT_SHIFT } from "@/config";
 
-const primary = "#37474F";
+const primary = colorsVuetify.blueGrey.darken3; // "#37474F"
 // primary => accent1, accent2, complement
 
 const pHsla = chroma(primary).hsl();

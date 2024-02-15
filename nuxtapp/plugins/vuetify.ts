@@ -82,6 +82,9 @@ export default defineNuxtPlugin((nuxtApp) => {
         color: "secondary",
         variant: "flat",
       },
+      VTextField: {
+        "center-affix": true,
+      },
 
       // MyButton: {
       //   color: 'primary',

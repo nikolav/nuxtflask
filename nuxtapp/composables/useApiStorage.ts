@@ -11,7 +11,6 @@ import type {
 } from "@/types";
 import { schemaStorageMeta } from "@/schemas";
 
-
 // .useApiStorage
 export const useApiStorage = (initialEnabled = true) => {
   const {
@@ -25,12 +24,8 @@ export const useApiStorage = (initialEnabled = true) => {
   const toggleEnabled = useToggleFlag(initialEnabled);
   const mounted$ = useMounted();
   const enabled$ = computed(
-    () =>
-      !!(
-        mounted$.value &&
-        toggleEnabled.isActive.value &&
-        auth.token$
-      ));
+    () => !!(mounted$.value && toggleEnabled.isActive.value && auth.token$)
+  );
 
   const {
     load: loadStorage,
@@ -112,11 +107,10 @@ export const useApiStorage = (initialEnabled = true) => {
   };
 
   // # .publicUrl
-  const publicUrl = (file_id: string) => {
-    const file = find(files$.value, { file_id, public: true });
-    if (!file) return;
-    return `${URL_STORAGE}/${file_id}`;
-  };
+  const publicUrl = (file_id: string) =>
+    !find(files$.value, { file_id, public: true })
+      ? ""
+      : `${URL_STORAGE}/${file_id}`;
 
   // # .download
   const download = async (file_id: string) => {
@@ -124,20 +118,19 @@ export const useApiStorage = (initialEnabled = true) => {
     return !path
       ? null
       : await navigateTo(
-        {
-          path,
-        },
-        {
-          external: true,
-        }
-      );
+          {
+            path,
+          },
+          {
+            external: true,
+          }
+        );
   };
 
   // # .remove
   const { mutate: mutateRemoveFile } = useMutation(M_STORAGE_FILE_REMOVE);
   const remove = async (fileID: string) => {
-    if (enabled$.value)
-      return await mutateRemoveFile({ fileID })
+    if (enabled$.value) return await mutateRemoveFile({ fileID });
   };
 
   // # .meta
@@ -145,18 +138,20 @@ export const useApiStorage = (initialEnabled = true) => {
     enabled: enabledMeta$,
     topic$: topicStorageUser$,
     upsert: metaPut,
-    IOEVENT: IOEVENT_STORAGE_META_CHANGE
+    IOEVENT: IOEVENT_STORAGE_META_CHANGE,
   } = useDocs();
 
-  watch(() => get(auth.user$, "id"),
+  watch(
+    () => get(auth.user$, "id"),
     (id) => {
       if (!id) return;
       topicStorageUser$.value = `${TAG_STORAGE}${id}`;
-    });
+    }
+  );
 
   const meta = async (
     values: Record<string, string | number | boolean>,
-    file_id: string,
+    file_id: string
   ) => {
     if (!enabled$.value) return;
 
@@ -174,19 +169,22 @@ export const useApiStorage = (initialEnabled = true) => {
 
     return await metaPut(
       omit(assign({}, doc, values_), FIELDS_OMIT_STORAGE_META),
-      doc.id);
+      doc.id
+    );
   };
 
   // @io/listen
-  watch(() => get(auth.user$, "id"), (id) => {
-    if (!id) return;
-    useIOEvent(`${IOEVENT_STORAGE_CHANGE}${id}`, reloadFiles);
-  })
+  watch(
+    () => get(auth.user$, "id"),
+    (id) => {
+      if (!id) return;
+      useIOEvent(`${IOEVENT_STORAGE_CHANGE}${id}`, reloadFiles);
+    }
+  );
   watchEffect(() => {
     if (!enabledMeta$.value) return;
     useIOEvent(toValue(IOEVENT_STORAGE_META_CHANGE), reloadFiles);
   });
-
 
   return {
     // # ls

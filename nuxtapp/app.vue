@@ -4,6 +4,7 @@
 // definePageMeta({
 //   colorMode: "light",
 // });
+import { SpinnerAppProcessing } from "@/components/ui";
 import { get } from "@/utils";
 
 onUnmounted(() => {
@@ -38,6 +39,7 @@ useHead({
       <NuxtPage />
     </NuxtLayout>
     <NuxtLoadingIndicator color="red" />
+    <SpinnerAppProcessing />
   </VApp>
 </template>
 

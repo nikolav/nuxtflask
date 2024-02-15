@@ -25,11 +25,23 @@ Chart.register(
 assign(Chart.defaults, {
   animation: false,
   responsive: true,
-  font: {
-    family: "Open Sans",
-    weight: "lighter",
-    size: 10,
-  },
 });
+
+// @defaults/font
+assign(Chart.defaults.font, {
+  family: "Open Sans",
+  weight: "lighter",
+  size: 10,
+});
+
+// @defaults/elements
+// Chart.defaults.elements.point
+// Chart.defaults.elements.line
+assign(Chart.defaults.elements.line, {
+  borderCapStyle: "round",
+  borderJoinStyle: "round",
+});
+// Chart.defaults.elements.bar
+// Chart.defaults.elements.arc
 
 export default defineNuxtPlugin(() => {});
