@@ -9,6 +9,7 @@ from . import db
 from . import ln_docs_tags
 
 
+# https://docs.sqlalchemy.org/en/20/tutorial/metadata.html#declaring-mapped-classes
 class Tags(db.Model):
   __tablename__ = tagsTable
 

@@ -23,6 +23,8 @@ _prefix_by_doc_id = os.getenv('PREFIX_BY_DOC_ID')
 _schemaDocsDump     = SchemaSerializeDocJsonTimes()
 _schemaDocsDumpMany = SchemaSerializeDocJsonTimes(many = True)
 
+
+# https://docs.sqlalchemy.org/en/20/tutorial/metadata.html#declaring-mapped-classes
 class Docs(MixinTimestamps, db.Model):
   __tablename__ = docsTable
 

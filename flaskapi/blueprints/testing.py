@@ -9,6 +9,8 @@ from flask_cors import cross_origin
 from flask      import make_response
 from flask      import abort
 
+from sqlalchemy import select
+
 from flask_app       import db
 from flask_app       import app
 from models.tags     import Tags
@@ -38,7 +40,6 @@ class SchemaTesting(Schema):
     unknown = EXCLUDE
     
   x0 = fields.Integer(load_default = -1)
-  x1 = fields.Integer(required = True)
 
 @bp_testing.route('/', methods = ('POST',))
 @arguments_schema(SchemaTesting())

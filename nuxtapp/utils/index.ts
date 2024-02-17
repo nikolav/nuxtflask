@@ -2,9 +2,12 @@
 import lodash from "lodash";
 const {
   assign,
+  at,
   debounce,
   each,
   every,
+  uniqueId,
+  now,
   find,
   forEach,
   get,
@@ -21,6 +24,7 @@ const {
 } = lodash;
 export {
   assign,
+  at,
   debounce,
   each,
   every,
@@ -37,6 +41,8 @@ export {
   transform,
   unset,
   zipObject,
+  now,
+  uniqueId,
 };
 
 export { False } from "./fn-false";

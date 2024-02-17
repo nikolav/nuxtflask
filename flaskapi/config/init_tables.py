@@ -29,7 +29,7 @@ email_    = os.getenv('ADMIN_EMAIL')
 password_ = os.getenv('ADMIN_PASSWORD')
 
 docAdmin  = None
-tag_users  = Tags.by_name(TAG_USERS);
+tag_users = Tags.by_name(TAG_USERS);
 
 for d in tag_users.docs:
   if email_ == d.data['email']:
@@ -38,8 +38,8 @@ for d in tag_users.docs:
 
 if not docAdmin:
   docAdmin = Docs(data = { 
-                'email': email_, 
-                'password': hashPassword(password_) 
+                'email'    : email_, 
+                'password' : hashPassword(password_) 
               })
   tag_users.docs.append(docAdmin)
   db.session.add(docAdmin)

@@ -3,7 +3,7 @@ import { useTheme } from "vuetify";
 import BeatLoader from "vue-spinner/src/BeatLoader.vue";
 import { isNumeric } from "@/utils";
 
-const props$ = withDefaults(defineProps<{ size: string }>(), {
+const props$ = withDefaults(defineProps<{ size?: string }>(), {
   size: ".88rem",
 });
 const size = isNumeric(props$.size) ? `${props$.size}px` : props$.size;

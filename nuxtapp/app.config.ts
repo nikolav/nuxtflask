@@ -70,4 +70,8 @@ export default defineAppConfig({
     // additional @VMain/padding-top
     offsetTop: "1rem",
   },
+  effect: {
+    default: "headShake",
+    duration: 890,
+  },
 });
