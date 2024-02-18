@@ -20,6 +20,8 @@ const credsRand = () => {
 const loginAdmin = async () => await auth.login(credsAdmin);
 const registerUser = async () => await auth.register(credsRand());
 
+const { data } = useDocs("@vars");
+
 // #eos
 </script>
 
@@ -39,6 +41,11 @@ const registerUser = async () => await auth.register(credsRand());
       <p>
         <pre>
           {{ JSON.stringify({ token: auth.token$, user: auth.user$ }, null, 2) }}
+        </pre>
+      </p>
+      <p>
+        <pre>
+          {{ JSON.stringify({ data }, null, 2) }}
         </pre>
       </p>
     </VSheet>

@@ -30,7 +30,10 @@ export const useDocs = <TData = TDocData>(
       pollInterval: useAppConfig().graphql.STORAGE_QUERY_POLL_INTERVAL,
     }
   );
-  const data$ = computed(() => result.value?.docsByTopic || []);
+
+  const data$ = computed(() =>
+    enabled$.value ? result.value?.docsByTopic || [] : []
+  );
   const reload = async () => await refetch();
 
   const { runSetup: queryStart } = useRunSetupOnce(load);
