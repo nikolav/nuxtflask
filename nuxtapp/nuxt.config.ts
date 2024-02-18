@@ -41,6 +41,8 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     // https://apollo.nuxtjs.org/getting-started/quick-start
     "@nuxtjs/apollo",
+    // https://image.nuxt.com/
+    "@nuxt/image",
     // https://vuetifyjs.com/en/getting-started/installation/#using-nuxt-3
     (_options, nuxt) => {
       nuxt.hooks.hook("vite:extendConfig", (config) => {
@@ -209,6 +211,25 @@ export default defineNuxtConfig({
     },
     useStylesheet: true,
     download: false,
+  },
+
+  // https://image.nuxt.com/get-started/configuration
+  image: {
+    // quality: 92,
+    // inject: true,
+    // format: ["webp"],
+    // domains: ["nuxtjs.org"],
+    //
+    // The screen sizes predefined by `@nuxt/image`:
+    // screens: {
+    //   xs: 320,
+    //   sm: 640,
+    //   md: 768,
+    //   lg: 1024,
+    //   xl: 1280,
+    //   xxl: 1536,
+    //   "2xl": 1536,
+    // },
   },
 
   // https://apollo.nuxtjs.org/getting-started/configuration#configuration

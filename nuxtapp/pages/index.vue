@@ -4,11 +4,16 @@ import type { TChartDataBar } from "@/types";
 import { now, map, idGen, noop, transform, assign } from "@/utils";
 // import { faker } from "@faker-js/faker";
 import { Bar } from "vue-chartjs";
+import { useTheme } from "vuetify";
 
-const data$: TChartDataBar<number[]> = {
+const thm = useTheme();
+const barColor$ = computed(() => thm.current.value.colors.primary);
+const data$: Ref<TChartDataBar<number[]>> = computed(() => ({
   labels: ["January", "February", "March"],
-  datasets: [{ label: "@data/1", data: [40, 20, 12] }],
-};
+  datasets: [
+    { label: "@data/1", data: [40, 20, 12], backgroundColor: barColor$.value },
+  ],
+}));
 const options$ = {
   plugins: {
     legend: {
@@ -17,30 +22,35 @@ const options$ = {
   },
 };
 
-const signalEffect$ = useUniqueId(false);
+const {
+  $theme: { themeToggle },
+} = useNuxtApp();
 
-// const okOnClick = () => {
-//   // flags$.toggle(useAppConfig().key.APP_PROCESSING);
-//   value1$.value = now();
-// };
+const okOnClick = () => {};
+
 // #eos
 </script>
 
 <template>
   <section id="page-home">
     <Title>--home</Title>
-    <VBtn @click="signalEffect$"> ok </VBtn>
+    <VBtn @click="okOnClick"> ok </VBtn>
+    <VBtn @click="themeToggle()"> theme </VBtn>
     <VDivider thickness="4" />
-    <VCard
-      width="500"
+    <VAlert
+      border-color="accent1-darken-2"
+      border="start"
+      max-width="550"
       class="mx-auto"
-      v-effect:headShake="{ watch: signalEffect$.ID.value }"
+      position="relative"
+      variant="elevated"
     >
-      <VCardText class="position-relative">
-        <Bar :data="data$" :options="options$" />
-      </VCardText>
-      <VDivider thickness="2" class="ma-0" />
-    </VCard>
+      <template #prepend>
+        <VIcon icon="$loading" size="20" color="accent2-lighten-1" />
+      </template>
+      <VAlertTitle class="ms-4 mb-4"> Lorem, ipsum dolor </VAlertTitle>
+      <Bar :data="data$" :options="options$" />
+    </VAlert>
   </section>
 </template>
 

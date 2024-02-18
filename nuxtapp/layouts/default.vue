@@ -5,6 +5,28 @@ const { appBarHeight, offsetTop } = useAppConfig().layout;
 const paddingTop = `calc(${
   isNumeric(appBarHeight) ? appBarHeight + "px" : appBarHeight
 } + ${isNumeric(offsetTop) ? offsetTop + "px" : offsetTop}) !important`;
+
+const links = [
+  {
+    title: "home",
+    href: "/",
+  },
+  {
+    title: "auth",
+    href: "auth",
+  },
+  {
+    title: "demo",
+    href: "demo",
+  },
+  {
+    title: "auth --demo",
+    href: "demo-auth",
+  },
+];
+const btnVariant = (href: string) =>
+  href == useRoute().name ? "text" : "plain";
+
 // # eos
 </script>
 
@@ -15,14 +37,25 @@ const paddingTop = `calc(${
         <VAppBarNavIcon color="primary-darken-1" />
       </template>
       <template #append>
-        <VBtn icon="$iconDotsV" size="small" color="primary-darken-1" />
+        <template v-for="link in links" :key="link.href">
+          <NuxtLink :to="link.href">
+            <VBtn
+              :variant="btnVariant(link.href)"
+              class="text-none !text-sm"
+              slim
+              rounded="pill"
+              >{{ link.title }}</VBtn
+            >
+          </NuxtLink>
+        </template>
+        <VBtn
+          icon="$iconDotsV"
+          size="small"
+          color="primary-darken-1"
+          class="ms-3"
+        />
       </template>
       <VAppBarTitle>app:foo</VAppBarTitle>
-      <ul class="d-flex gap-x-4 items-center me-6">
-        <li><NuxtLink to="/">home</NuxtLink></li>
-        <li><NuxtLink to="demo-auth">auth</NuxtLink></li>
-        <li><NuxtLink to="demo">demo</NuxtLink></li>
-      </ul>
     </VAppBar>
 
     <VMain :style="{ paddingTop }">

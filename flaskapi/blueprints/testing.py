@@ -10,6 +10,9 @@ from flask      import make_response
 from flask      import abort
 
 from sqlalchemy import select
+from sqlalchemy import literal_column
+from sqlalchemy import text
+from sqlalchemy import func
 
 from flask_app       import db
 from flask_app       import app
@@ -44,4 +47,8 @@ class SchemaTesting(Schema):
 @bp_testing.route('/', methods = ('POST',))
 @arguments_schema(SchemaTesting())
 def testing_home():
+  r = db.session.scalar(
+    db.select(literal_column('1 + 1').label('p'))
+  )
+  print(r)
   return g.arguments, 200
