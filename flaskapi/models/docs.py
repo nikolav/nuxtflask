@@ -12,9 +12,7 @@ from . import docsTable
 from . import ln_docs_tags
 from . import db
 from .tags import Tags
-
 from src.mixins import MixinTimestamps
-
 from schemas.serialization import SchemaSerializeDocJsonTimes
 
 
@@ -100,7 +98,7 @@ class Docs(MixinTimestamps, db.Model):
         if True == create:
           
           # add default blank doc
-          doc = Docs(data = {})
+          doc = Docs(data = {})          
           db.session.add(doc)
           db.session.commit()
           

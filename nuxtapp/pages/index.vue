@@ -1,58 +1,48 @@
 <script setup lang="ts">
-// const { $command } = useNuxtApp();
-import type { TChartDataBar } from "@/types";
-import { now, map, idGen, noop, transform, assign } from "@/utils";
-// import { faker } from "@faker-js/faker";
-import { Bar } from "vue-chartjs";
-import { useTheme } from "vuetify";
+import { faker } from "@faker-js/faker";
 
-const thm = useTheme();
-const barColor$ = computed(() => thm.current.value.colors.primary);
-const data$: Ref<TChartDataBar<number[]>> = computed(() => ({
-  labels: ["January", "February", "March"],
-  datasets: [
-    { label: "@data/1", data: [40, 20, 12], backgroundColor: barColor$.value },
-  ],
-}));
-const options$ = {
-  plugins: {
-    legend: {
-      // display: false,
-    },
-  },
+useHead({
+  title: "--home",
+});
+
+const auth = useStoreApiAuth();
+
+const credsAdmin = {
+  email: "admin@nikolav.rs",
+  password: "122",
 };
-
-const {
-  $theme: { themeToggle },
-} = useNuxtApp();
-
-const okOnClick = () => {};
+const credsRand = () => {
+  return {
+    email: faker.internet.email(),
+    password: faker.internet.password({ length: 5, memorable: true }),
+  };
+};
+const loginAdmin = async () => await auth.login(credsAdmin);
+const registerUser = async () => await auth.register(credsRand());
 
 // #eos
 </script>
 
 <template>
-  <section id="page-home">
-    <Title>--home</Title>
-    <VBtn @click="okOnClick"> ok </VBtn>
-    <VBtn @click="themeToggle()"> theme </VBtn>
-    <VDivider thickness="4" />
-    <VAlert
-      border-color="accent1-darken-2"
-      border="start"
-      max-width="550"
-      class="mx-auto"
-      position="relative"
-      variant="elevated"
-    >
-      <template #prepend>
-        <VIcon icon="$loading" size="20" color="accent2-lighten-1" />
-      </template>
-      <VAlertTitle class="ms-4 mb-4"> Lorem, ipsum dolor </VAlertTitle>
-      <Bar :data="data$" :options="options$" />
-    </VAlert>
+  <section id="page-demo">
+    <VBtnGroup density="comfortable">
+      <VBtn size="small" @click="loginAdmin" color="primary">login:admin</VBtn>
+      <VBtn size="small" @click="auth.logout" color="primary-lighten-1"
+        >logout</VBtn
+      >
+      <VBtn size="small" @click="registerUser" color="primary-lighten-1"
+        >register</VBtn
+      >
+    </VBtnGroup>
+    <VDivider thickness="2" class="mb-2" />
+    <VSheet>
+      <p>
+        <pre>
+          {{ JSON.stringify({ token: auth.token$, user: auth.user$ }, null, 2) }}
+        </pre>
+      </p>
+    </VSheet>
   </section>
 </template>
 
-<style scoped lang="scss">
-</style>
+<style scoped></style>

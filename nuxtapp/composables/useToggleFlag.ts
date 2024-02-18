@@ -11,5 +11,28 @@ export const useToggleFlag = (initial = false) => {
   const off = () => {
     isActive$.value = false;
   };
-  return assign(toggle, { on, off, isActive: isActive$ });
+  // @delayed
+  const timeout_ = ref();
+  const delayCancel = () => {
+    clearTimeout(timeout_.value);
+  };
+  const delayOn = (msTimeout = 1000) => {
+    delayCancel();
+    timeout_.value = setTimeout(on, msTimeout);
+  };
+  const delayOff = (msTimeout = 1000) => {
+    delayCancel();
+    timeout_.value = setTimeout(off, msTimeout);
+  };
+  // @api
+  return assign(toggle, {
+    isActive: isActive$,
+    on,
+    off,
+    delay: {
+      on: delayOn,
+      off: delayOff,
+      cancel: delayCancel,
+    },
+  });
 };

@@ -11,18 +11,6 @@ const links = [
     title: "home",
     href: "/",
   },
-  {
-    title: "auth",
-    href: "auth",
-  },
-  {
-    title: "demo",
-    href: "demo",
-  },
-  {
-    title: "auth --demo",
-    href: "demo-auth",
-  },
 ];
 const btnVariant = (href: string) =>
   href == useRoute().name ? "text" : "plain";

@@ -24,6 +24,7 @@ class Tags(db.Model):
   def __repr__(self):
     return f'Tags(id={self.id!r}, tag={self.tag!r})'
   
+
   @staticmethod
   def by_name(tag_name, *, create = False):
     tag = None

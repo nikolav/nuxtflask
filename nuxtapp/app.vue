@@ -6,13 +6,13 @@
 // });
 import { SpinnerAppProcessing } from "@/components/ui";
 
-onUnmounted(() => {
-  useAppMounted().value = false;
+const auth = useStoreApiAuth();
+onMounted(() => {
+  watchEffect(() => console.log({ auth: auth.isAuth$ }));
 });
 
-const auth = useStoreApiAuth();
-watchEffect(() => {
-  console.log({ auth: auth.isAuth$ });
+onUnmounted(() => {
+  useAppMounted().value = false;
 });
 
 // theme

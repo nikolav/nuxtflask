@@ -19,7 +19,7 @@ IO_CORS_ALLOW_ORIGINS = (
   os.getenv('IOCORS_ALLOW_ORIGIN_dev_1'),
   os.getenv('IOCORS_ALLOW_ORIGIN_production'),
   os.getenv('IOCORS_ALLOW_ORIGIN_nikolavrs'),
-);
+)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
