@@ -6,9 +6,6 @@ export default defineAppConfig({
   ADMIN_EMAIL: "admin@nikolav.rs",
   DEBUG: true !== PRODUCTION$,
   //
-  // KEY_APP_MOUNTED: "Zkcmk4BnXHU",
-  // KEY_APP_PROCESSING: "FlaelfhZddK",
-  //
   key: {
     APP_MOUNTED: "Zkcmk4BnXHU",
     APP_PROCESSING: "FlaelfhZddK",

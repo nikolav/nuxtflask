@@ -206,8 +206,8 @@ export default defineNuxtConfig({
   // #https://google-fonts.nuxtjs.org
   googleFonts: {
     families: {
-      "Roboto+Mono": true,
       "Open+Sans": true,
+      "Roboto+Mono": true,
     },
     useStylesheet: true,
     download: false,

@@ -12,7 +12,7 @@ import {
   URL_AUTH_logout,
   URL_API_who,
 } from "@/config";
-import { schemaAuthData, schemaAuthCredentials } from "@/schemas";
+import { schemaAuthData, schemaAuthCredentials, schemaJwt } from "@/schemas";
 
 export const useStoreApiAuth = defineStore("auth", () => {
   const {
@@ -30,7 +30,6 @@ export const useStoreApiAuth = defineStore("auth", () => {
   >(URL_API_who, {
     key: KEY_USEFETCH_AUTHDATA,
     method: "GET",
-    // watch: [token$],
     headers: headers$,
     lazy: true,
     default: () => null,
@@ -47,7 +46,14 @@ export const useStoreApiAuth = defineStore("auth", () => {
   onMounted(authDataReload);
 
   // `logged in` .flag
-  const isAuth$ = computed(() => null != get(user$.value, "id"));
+  const isAuth$ = computed(() => {
+    try {
+      return true === schemaAuthData.safeParse(user$.value).success;
+    } catch (error_) {
+      // pass
+    }
+    return false;
+  });
 
   // apply auth token to Apollo client
   // ..if GraphQL API expects authentication to be passed via a HTTP header
@@ -89,7 +95,7 @@ export const useStoreApiAuth = defineStore("auth", () => {
       } catch (error) {
         status.setError(error);
       } finally {
-        if (token) {
+        if (true === schemaJwt.safeParse(token).success) {
           token$.value = token;
           status.successful();
         }

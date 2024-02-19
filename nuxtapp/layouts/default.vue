@@ -21,9 +21,9 @@ const btnVariant = (href: string) =>
 <template>
   <section id="layout-default" class="ma-0 pa-0">
     <VAppBar name="appbar-main" :height="appBarHeight" elevation="1">
-      <template #prepend>
-        <VAppBarNavIcon color="primary-darken-1" />
-      </template>
+      <VAppBarTitle class="text-disabled text-body-1">
+        <pre>uni.nikolav.rs</pre>
+      </VAppBarTitle>
       <template #append>
         <template v-for="link in links" :key="link.href">
           <NuxtLink :to="link.href">
@@ -35,15 +35,9 @@ const btnVariant = (href: string) =>
               >{{ link.title }}</VBtn
             >
           </NuxtLink>
+          <VAppBarNavIcon class="ms-2 ms-md-3" color="primary-darken-1" />
         </template>
-        <VBtn
-          icon="$iconDotsV"
-          size="small"
-          color="primary-darken-1"
-          class="ms-3"
-        />
       </template>
-      <VAppBarTitle>app:foo</VAppBarTitle>
     </VAppBar>
 
     <VMain :style="{ paddingTop }">

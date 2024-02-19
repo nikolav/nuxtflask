@@ -37,6 +37,18 @@ const { data } = useDocs("@vars");
       >
     </VBtnGroup>
     <VDivider thickness="2" class="mb-2" />
+    <VCard max-width="550" class="ma-2 mx-auto" rounded>
+      <VToolbar height="32">
+        <template #append>
+          <VBtn class="translate-x-2" icon size="small" variant="text" density="comfortable">
+            <VIcon icon="$close" size="14" />
+          </VBtn>
+        </template>
+      </VToolbar>
+      <div class="pa-4">
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi facere sed fuga, voluptate veniam ratione nihil vero consequuntur eveniet in ducimus voluptatibus minus impedit rerum natus dolore blanditiis tempora nostrum!</p>
+      </div>
+    </VCard>
     <VSheet>
       <p>
         <pre>

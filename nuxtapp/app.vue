@@ -36,11 +36,16 @@ useHead({
 
 <template>
   <VApp :theme="theme" id="app-main" class="**text-indigo-800">
+    <VSystemBar height="16" class="px-2">
+      <VSpacer />
+      <VIcon size="12" icon="$complete"/>
+    </VSystemBar>
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
     <NuxtLoadingIndicator color="red" />
     <SpinnerAppProcessing />
+    <VFooter app height="35">foo</VFooter>
   </VApp>
 </template>
 
