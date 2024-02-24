@@ -6,6 +6,7 @@
 // });
 import { SpinnerAppProcessing } from "@/components/ui";
 
+
 const auth = useStoreApiAuth();
 onMounted(() => {
   watchEffect(() => console.log({ auth: auth.isAuth$ }));
@@ -38,7 +39,7 @@ useHead({
   <VApp :theme="theme" id="app-main" class="**text-indigo-800">
     <VSystemBar height="16" class="px-2">
       <VSpacer />
-      <VIcon size="12" icon="$complete"/>
+      <VIcon size="12" icon="$complete" />
     </VSystemBar>
     <NuxtLayout>
       <NuxtPage />

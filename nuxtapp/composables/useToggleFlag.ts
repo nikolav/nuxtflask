@@ -12,9 +12,11 @@ export const useToggleFlag = (initial = false) => {
     isActive$.value = false;
   };
   // @delayed
-  const timeout_ = ref();
-  const delayCancel = () => {
-    clearTimeout(timeout_.value);
+  const timeout_ = ref<ReturnType<typeof setTimeout>>();
+  const delayCancel = () => clearTimeout(timeout_.value);
+  const delayToggle = (msTimeout = 1000) => {
+    delayCancel();
+    timeout_.value = setTimeout(toggle, msTimeout);
   };
   const delayOn = (msTimeout = 1000) => {
     delayCancel();
@@ -32,6 +34,7 @@ export const useToggleFlag = (initial = false) => {
     delay: {
       on: delayOn,
       off: delayOff,
+      toggle: delayToggle,
       cancel: delayCancel,
     },
   });

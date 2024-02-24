@@ -9,7 +9,7 @@ export const useStoreMain = defineStore("main", () => {
   } = useAppConfig();
   // @store
   const store$ = ref(initial);
-  const get = (path: any) => getPath(store$.value, path);
+  const get = (path: string) => getPath(store$.value, path);
   const put = (vars: TStoreMain) => {
     each(vars, (value, path) => {
       set(store$.value, path, value);
@@ -22,7 +22,7 @@ export const useStoreMain = defineStore("main", () => {
   };
 
   return {
-    data: store$,
+    store: store$,
     get,
     put,
     drop,

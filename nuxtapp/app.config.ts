@@ -2,6 +2,9 @@ import type { TStoreMain, TStoreFlags, IConfigDocs } from "@/types";
 import { assign } from "@/utils";
 import { PRODUCTION$ } from "@/config";
 
+const themeDark = "dark";
+const themeLight = "light2";
+
 export default defineAppConfig({
   ADMIN_EMAIL: "admin@nikolav.rs",
   DEBUG: true !== PRODUCTION$,
@@ -59,8 +62,9 @@ export default defineAppConfig({
     IOEVENT_DOC_CHANGE_prefix: "change://doc@",
   },
   theme: {
-    DARK: "dark",
-    LIGHT: "light2",
+    DEFAULT: themeLight,
+    DARK: themeDark,
+    LIGHT: themeLight,
   },
   layout: {
     appBarHeight: 82,
