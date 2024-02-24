@@ -5,3 +5,5 @@ export { default as IconDotsVertical } from "./IconDotsVertical.vue";
 export { default as IconChatBubbleOutline } from "./IconChatBubbleOutline.vue";
 export { default as IconTodoOutline } from "./IconTodoOutline.vue";
 export { default as IconJournalOutline } from "./IconJournalOutline.vue";
+export { default as IconKey } from "./IconKey.vue";
+export { default as IconLockOpenOutline } from "./IconLockOpenOutline.vue";

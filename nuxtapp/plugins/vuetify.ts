@@ -17,6 +17,8 @@ import {
   IconChatBubbleOutline,
   IconTodoOutline,
   IconJournalOutline,
+  IconKey,
+  IconLockOpenOutline,
 } from "@/components/icons";
 
 // # --default-light-theme
@@ -119,6 +121,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         iconChat: IconChatBubbleOutline,
         iconTodo: IconTodoOutline,
         iconJournal: IconJournalOutline,
+        iconKey: IconKey,
+        iconLock: IconLockOpenOutline,
       },
       sets: {
         mdi,

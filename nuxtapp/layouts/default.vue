@@ -11,6 +11,10 @@ const links = [
     title: "home",
     href: "/",
   },
+  {
+    title: "auth",
+    href: "/auth",
+  },
 ];
 const btnVariant = (href: string) =>
   href == useRoute().name ? "text" : "plain";
@@ -23,8 +27,8 @@ const sidebarWindow$ = ref("chat");
 <template>
   <section id="layout-default" class="ma-0 pa-0">
     <VAppBar name="appbar-main" :height="appBarHeight" elevation="2">
-      <VAppBarTitle class="text-disabled text-body-1">
-        <pre>uni.nikolav.rs</pre>
+      <VAppBarTitle class="text-disabled text-h5 ps-2 ps-sm-4">
+        <pre class="italic">uni.nikolav.rs</pre>
       </VAppBarTitle>
       <template #append>
         <template v-for="link in links" :key="link.href">
@@ -37,8 +41,8 @@ const sidebarWindow$ = ref("chat");
               >{{ link.title }}</VBtn
             >
           </NuxtLink>
-          <VAppBarNavIcon class="ms-2 ms-md-3" color="primary-darken-1" />
         </template>
+        <VAppBarNavIcon class="ms-2 ms-md-3" color="primary-darken-1" />
       </template>
     </VAppBar>
 
@@ -49,16 +53,16 @@ const sidebarWindow$ = ref("chat");
     </VMain>
 
     <VNavigationDrawer
-      elevation="1"
+      elevation="2"
       class="*bg-red"
       location="end"
       permanent
-      :width="320"
+      :width="372"
     >
-      <div class="pa-1 pa-sm-2">
+      <div class="pa-1 pa-sm-2 text-[88%]">
         <VWindow v-model="sidebarWindow$">
           <VFadeTransition leave-absolute>
-            <VWindowItem value="chat">@chat</VWindowItem>
+            <VWindowItem value="chat">@chat: </VWindowItem>
           </VFadeTransition>
           <VFadeTransition leave-absolute>
             <VWindowItem value="tasks">@tasks</VWindowItem>
@@ -74,33 +78,15 @@ const sidebarWindow$ = ref("chat");
         v-model="sidebarWindow$"
         elevation="1"
       >
-        <VBtn
-          size="small"
-          color="accent1-lighten-2"
-          value="chat"
-          class="flex-1"
-          stacked
-        >
+        <VBtn size="small" color="primary" value="chat" class="flex-1" stacked>
           <VIcon :size="18" icon="$iconChat" />
-          <span>ćackanje</span>
+          <span>ćaskanje</span>
         </VBtn>
-        <VBtn
-          size="small"
-          color="accent1-lighten-2"
-          value="tasks"
-          class="flex-1"
-          stacked
-        >
+        <VBtn size="small" color="primary" value="tasks" class="flex-1" stacked>
           <VIcon :size="18" icon="$iconTodo" />
           <span>zadaci</span>
         </VBtn>
-        <VBtn
-          size="small"
-          color="accent1-lighten-2"
-          value="log"
-          class="flex-1"
-          stacked
-        >
+        <VBtn size="small" color="primary" value="log" class="flex-1" stacked>
           <VIcon :size="18" icon="$iconJournal" class="mb-px" />
           <span>dnevnik</span>
         </VBtn>
@@ -111,12 +97,12 @@ const sidebarWindow$ = ref("chat");
       location="start"
       permanent
       :width="64"
-      elevation="1"
+      color="secondary"
     >
       <VList>
         <VListItem v-for="n in 3" title="foo" :key="n" link />
       </VList>
     </VNavigationDrawer>
-    <VFooter color="accent1-lighten-2" app height="35">foo</VFooter>
+    <VFooter class="opacity-95" color="primary-darken-1" app height="35">foo</VFooter>
   </section>
 </template>

@@ -36,7 +36,7 @@ useHead({
 
 <template>
   <VApp :theme="theme" id="app-main" class="**text-indigo-800">
-    <VSystemBar height="16" class="px-2">
+    <VSystemBar color="primary-darken-2" height="16" class="px-2">
       <VSpacer />
       <VIcon size="12" icon="$complete" />
     </VSystemBar>

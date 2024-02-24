@@ -30,7 +30,7 @@ const toggle = useToggleFlag();
 </script>
 
 <template>
-  <section id="page-demo" class="pa-2">
+  <section id="page-demo" class="pa-2 pa-md-4">
     <VBtn @click="toggle">ok</VBtn>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
@@ -617,6 +617,7 @@ const toggle = useToggleFlag();
           @click="toggle.off"
         />
         <VideoPlayer
+          autoplay
           fluid
           src="/dummy.mp4"
           controls
