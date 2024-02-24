@@ -6,7 +6,6 @@
 // });
 import { SpinnerAppProcessing } from "@/components/ui";
 
-
 const auth = useStoreApiAuth();
 onMounted(() => {
   watchEffect(() => console.log({ auth: auth.isAuth$ }));
@@ -27,7 +26,7 @@ const htmlAttrs$ = computed(() => ({
 useHead({
   titleTemplate: (ttl) => `[${ttl}]`,
   bodyAttrs: {
-    class: "dark:selection:bg-white/20",
+    class: "dark:selection:bg-white/20 scrollbar-thin-light",
   },
   htmlAttrs: htmlAttrs$,
 });
@@ -46,7 +45,6 @@ useHead({
     </NuxtLayout>
     <NuxtLoadingIndicator color="red" />
     <SpinnerAppProcessing />
-    <VFooter app height="35">foo</VFooter>
   </VApp>
 </template>
 

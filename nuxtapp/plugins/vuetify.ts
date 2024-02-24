@@ -14,6 +14,9 @@ import {
   IconRedEye,
   IconMenu,
   IconDotsVertical,
+  IconChatBubbleOutline,
+  IconTodoOutline,
+  IconJournalOutline,
 } from "@/components/icons";
 
 // # --default-light-theme
@@ -113,6 +116,9 @@ export default defineNuxtPlugin((nuxtApp) => {
         iconDial: IconDial,
         iconRedEye: IconRedEye,
         iconDotsV: IconDotsVertical,
+        iconChat: IconChatBubbleOutline,
+        iconTodo: IconTodoOutline,
+        iconJournal: IconJournalOutline,
       },
       sets: {
         mdi,

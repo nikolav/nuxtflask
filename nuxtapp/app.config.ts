@@ -69,7 +69,7 @@ export default defineAppConfig({
   layout: {
     appBarHeight: 82,
     // additional @VMain/padding-top
-    offsetTop: "1rem",
+    offsetTop: "1.22rem",
   },
   effect: {
     default: "headShake",
