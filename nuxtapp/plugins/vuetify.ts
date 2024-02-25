@@ -13,6 +13,7 @@ import {
   IconChatBubbleOutline,
   IconDial,
   IconDotsVertical,
+  IconHomeFilled,
   IconJournalOutline,
   IconKey,
   IconLockOpenOutline,
@@ -21,6 +22,8 @@ import {
   IconRedEye,
   IconTodoOutline,
   IconUserShield,
+  IconTrashFill,
+  IconPaperPlaeOutline,
 } from "@/components/icons";
 
 // # --default-light-theme
@@ -120,6 +123,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         iconChat: IconChatBubbleOutline,
         iconDial: IconDial,
         iconDotsV: IconDotsVertical,
+        iconHome: IconHomeFilled,
         iconJournal: IconJournalOutline,
         iconKey: IconKey,
         iconLock: IconLockOpenOutline,
@@ -127,6 +131,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         iconRedEye: IconRedEye,
         iconTodo: IconTodoOutline,
         iconUserShield: IconUserShield,
+        iconTrash: IconTrashFill,
+        iconPaperPlane: IconPaperPlaeOutline,
       },
       sets: {
         mdi,

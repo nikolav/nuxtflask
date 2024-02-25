@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { isNumeric } from "@/utils";
+import { WindowChat, WindowTasks, WindowJournal } from "@/components/ui";
 
 const auth = useStoreApiAuth();
 
@@ -16,12 +17,14 @@ const logoutHard = async () => {
     path: "/",
   });
 };
+
+const page$ = computed(() => useRoute().name);
 // # eos
 </script>
 
 <template>
   <section id="layout-default" class="ma-0 pa-0">
-    <VAppBar name="appbar-main" :height="appBarHeight" elevation="2">
+    <VAppBar name="app-appbar" :height="appBarHeight" elevation="2">
       <VAppBarTitle class="text-disabled text-h5 ps-2 ps-sm-4">
         <pre class="italic">uni.nikolav.rs</pre>
       </VAppBarTitle>
@@ -58,16 +61,16 @@ const logoutHard = async () => {
       permanent
       :width="372"
     >
-      <div class="pa-1 pa-sm-2 text-[88%]">
+      <div class="text-[88%]">
         <VWindow v-model="sidebarWindow$">
           <VFadeTransition leave-absolute>
-            <VWindowItem value="chat">@chat: </VWindowItem>
+            <VWindowItem value="chat"><WindowChat /></VWindowItem>
           </VFadeTransition>
           <VFadeTransition leave-absolute>
-            <VWindowItem value="tasks">@tasks</VWindowItem>
+            <VWindowItem value="tasks"><WindowTasks /></VWindowItem>
           </VFadeTransition>
           <VFadeTransition leave-absolute>
-            <VWindowItem value="log">@dnevnik</VWindowItem>
+            <VWindowItem value="log"><WindowJournal /></VWindowItem>
           </VFadeTransition>
         </VWindow>
       </div>
@@ -116,9 +119,19 @@ const logoutHard = async () => {
         <VListItem v-for="n in 3" title="foo" :key="n" link />
       </VList>
     </VNavigationDrawer>
-    <VFooter class="opacity-95" color="primary-darken-1" app height="35"
-      >foo</VFooter
+    <VFooter
+      app
+      class="text-sm px-1 opacity-95"
+      color="primary-darken-1"
+      height="35"
     >
+      <template v-if="'index' === page$"
+        ><VIcon icon="$iconHome" start
+      /></template>
+      <template v-else>
+        <em class="text-secondary"> @{{ page$ }} </em>
+      </template>
+    </VFooter>
   </section>
 </template>
 

@@ -99,3 +99,9 @@ export type TChartDataBar<TData = Record<string, any>[]> = ChartData<
   "bar",
   TData
 >;
+
+export interface IDocDataChat {
+  name: string;
+  comment: string;
+}
+

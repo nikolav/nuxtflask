@@ -43,7 +43,7 @@ useHead({
 
 <template>
   <VApp :theme="theme" id="app-main">
-    <VSystemBar color="primary-darken-2" height="18" class="px-2">
+    <VSystemBar name="app-systembar" color="primary-darken-2" height="18" class="px-2">
       <VSpacer />
       <VIcon v-if="auth.isAdmin$" start size="14" icon="$iconUserShield" />
       <VIcon v-if="auth.isAuth$" start size="14" icon="$complete" />

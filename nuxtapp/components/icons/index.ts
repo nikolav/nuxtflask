@@ -9,3 +9,6 @@ export { default as IconKey } from "./IconKey.vue";
 export { default as IconLockOpenOutline } from "./IconLockOpenOutline.vue";
 export { default as IconPowerOff } from "./IconPowerOff.vue";
 export { default as IconUserShield } from "./IconUserShield.vue";
+export { default as IconHomeFilled } from "./IconHomeFilled.vue";
+export { default as IconTrashFill } from "./IconTrashFill.vue";
+export { default as IconPaperPlaeOutline } from "./IconPaperPlaeOutline.vue";

@@ -50,11 +50,11 @@ const toggleAuthSnackbar = useToggleFlag();
 // #eos
 </script>
 <template>
-  <section class="page-auth d-flex justify-center pt-24 md:pt-32">
+  <section class="page-auth d-flex justify-center pt-16 md:pt-24">
     <VForm autocomplete="off" @submit.prevent="submited_" class="flex-1">
-      <h5 class="mb-1 mx-auto max-w-96 opacity-50 text-center">
+      <h1 class="mb-1 mx-auto max-w-96 opacity-50 text-center">
         Administrator
-      </h5>
+      </h1>
       <VTextField
         class="mx-auto max-w-96 space-x-0"
         variant="solo-inverted"

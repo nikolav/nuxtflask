@@ -54,4 +54,5 @@ export { idGen } from "./id-gen";
 export { setBatch as batchSet } from "./set-batch";
 export { typeCore } from "./type-core";
 export { isNumeric } from "./is-numeric";
+export { docsSortedDesc } from "./docs-sorted-desc";
 export * from "./re";

@@ -26,6 +26,7 @@ export default defineAppConfig({
   //
   api: {
     TAG_STORAGE: "@storage:",
+    DOCS_CHAT_ALL: "@chat:all",
   },
   //
   graphql: {
