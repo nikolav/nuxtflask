@@ -6,8 +6,9 @@ useHead({
 });
 
 const auth = useStoreApiAuth();
-const { AUTH_CREDS } = useAppConfig().key;
+const { AUTH_CREDS, APP_PROCESSING } = useAppConfig().key;
 const main$ = useStoreMain();
+const flags = useStoreFlags();
 const password$ = ref("");
 
 watch(
@@ -16,6 +17,7 @@ watch(
     if (isAdmin) {
       await navigateTo("/");
       main$.put({ [AUTH_CREDS]: null });
+      flags.off(APP_PROCESSING);
     }
   }
 );
@@ -30,6 +32,7 @@ watch(
 const submited_ = async () => {
   // admin@nikolav.rs::122
   try {
+    flags.on(APP_PROCESSING);
     const [email, password] = password$.value.split("::");
     const authCreds = schemaAuthCredentials.parse({ email, password });
     main$.put({
@@ -39,6 +42,7 @@ const submited_ = async () => {
   } catch (error) {
     toggleAuthSnackbar.delay.off(3456);
     toggleAuthSnackbar.on();
+    flags.off(APP_PROCESSING);
   }
 };
 
@@ -59,6 +63,7 @@ const toggleAuthSnackbar = useToggleFlag();
         rounded="s-pill"
         autocomplete="off"
         v-model="password$"
+        clearable
       >
         <template #prepend-inner>
           <VIcon class="ps-1 !opacity-40" start :size="32" icon="$iconKey" />
@@ -93,8 +98,17 @@ const toggleAuthSnackbar = useToggleFlag();
       color="error"
       location="top"
       v-model="toggleAuthSnackbar.isActive.value"
-      text="Pokušajte ponovo."
-    />
+    >
+      <em>Pokušajte ponovo.</em>
+      <template #actions>
+        <VBtn
+          size="small"
+          icon="$close"
+          variant="plain"
+          @click="toggleAuthSnackbar.off"
+        />
+      </template>
+    </VSnackbar>
   </section>
 </template>
 <style lang="scss" scoped>
