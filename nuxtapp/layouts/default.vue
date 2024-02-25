@@ -13,9 +13,7 @@ const sidebarWindow$ = ref("chat");
 
 const logoutHard = async () => {
   await auth.logout();
-  reloadNuxtApp({
-    path: "/",
-  });
+  reloadNuxtApp({ force: true });
 };
 
 const page$ = computed(() => useRoute().name);
@@ -63,13 +61,13 @@ const page$ = computed(() => useRoute().name);
     >
       <div class="text-[88%]">
         <VWindow v-model="sidebarWindow$">
-          <VFadeTransition leave-absolute>
+          <VFadeTransition mode="in-out" leave-absolute>
             <VWindowItem value="chat"><WindowChat /></VWindowItem>
           </VFadeTransition>
-          <VFadeTransition leave-absolute>
+          <VFadeTransition mode="in-out" leave-absolute>
             <VWindowItem value="tasks"><WindowTasks /></VWindowItem>
           </VFadeTransition>
-          <VFadeTransition leave-absolute>
+          <VFadeTransition mode="in-out" leave-absolute>
             <VWindowItem value="log"><WindowJournal /></VWindowItem>
           </VFadeTransition>
         </VWindow>

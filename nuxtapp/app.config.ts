@@ -9,6 +9,10 @@ const AUTH_LOCKED = "eq1hiOTCPNCfo20Y";
 export default defineAppConfig({
   ADMIN_EMAIL: "admin@nikolav.rs",
   DEBUG: true !== PRODUCTION$,
+  APP_USER_DEFAULT: {
+    email: "user@nikolav.rs",
+    password: "user@nikolav.rs",
+  },
   //
   key: {
     APP_MOUNTED: "Zkcmk4BnXHU",

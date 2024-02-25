@@ -5,21 +5,24 @@
 //   colorMode: "light",
 // });
 import { SpinnerAppProcessing } from "@/components/ui";
-import { authUser } from "@/config";
 
+const { APP_USER_DEFAULT } = useAppConfig();
+
+const appMounted$ = useAppMounted();
 onUnmounted(() => {
-  useAppMounted().value = false;
+  appMounted$.value = false;
 });
 
 const auth = useStoreApiAuth();
 
-const { runSetup: onceDefaultUserLogin } = useRunSetupOnce(
-  async () => await auth.login(authUser)
-);
-onMounted(() => {
-  watchEffect(() => {
-    if (auth.initialized$ && !auth.isAuth$) onceDefaultUserLogin();
-  });
+const { runSetup: onceDefaultUserLogin } = useRunSetupOnce(async () => {
+  console.log(`@login:once`);
+  console.log({ APP_USER_DEFAULT });
+  await auth.login(APP_USER_DEFAULT);
+});
+watchEffect(() => {
+  if (appMounted$.value && auth.initialized$ && !auth.isAuth$)
+    onceDefaultUserLogin();
 });
 
 // theme
@@ -43,7 +46,12 @@ useHead({
 
 <template>
   <VApp :theme="theme" id="app-main">
-    <VSystemBar name="app-systembar" color="primary-darken-2" height="18" class="px-2">
+    <VSystemBar
+      name="app-systembar"
+      color="primary-darken-2"
+      height="18"
+      class="px-2"
+    >
       <VSpacer />
       <VIcon v-if="auth.isAdmin$" start size="14" icon="$iconUserShield" />
       <VIcon v-if="auth.isAuth$" start size="14" icon="$complete" />

@@ -15,7 +15,7 @@ watch(
   () => auth.isAdmin$,
   async (isAdmin) => {
     if (isAdmin) {
-      await navigateTo("/");
+      await navigateTo({ name: "index" });
       main$.put({ [AUTH_CREDS]: null });
       flags.off(APP_PROCESSING);
     }
@@ -31,6 +31,7 @@ watch(
 
 const submited_ = async () => {
   // admin@nikolav.rs::122
+  // user@nikolav.rs::user@nikolav.rs
   try {
     flags.on(APP_PROCESSING);
     const [email, password] = password$.value.split("::");
