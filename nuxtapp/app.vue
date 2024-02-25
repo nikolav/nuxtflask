@@ -5,14 +5,21 @@
 //   colorMode: "light",
 // });
 import { SpinnerAppProcessing } from "@/components/ui";
-
-const auth = useStoreApiAuth();
-onMounted(() => {
-  watchEffect(() => console.log({ auth: auth.isAuth$ }));
-});
+import { authUser } from "@/config";
 
 onUnmounted(() => {
   useAppMounted().value = false;
+});
+
+const auth = useStoreApiAuth();
+
+const { runSetup: onceDefaultUserLogin } = useRunSetupOnce(
+  async () => await auth.login(authUser)
+);
+onMounted(() => {
+  watchEffect(() => {
+    if (auth.initialized$ && !auth.isAuth$) onceDefaultUserLogin();
+  });
 });
 
 // theme
@@ -35,10 +42,11 @@ useHead({
 </script>
 
 <template>
-  <VApp :theme="theme" id="app-main" class="**text-indigo-800">
-    <VSystemBar color="primary-darken-2" height="16" class="px-2">
+  <VApp :theme="theme" id="app-main">
+    <VSystemBar color="primary-darken-2" height="18" class="px-2">
       <VSpacer />
-      <VIcon size="12" icon="$complete" />
+      <VIcon v-if="auth.isAdmin$" start size="14" icon="$iconUserShield" />
+      <VIcon v-if="auth.isAuth$" start size="14" icon="$complete" />
     </VSystemBar>
     <NuxtLayout>
       <NuxtPage />

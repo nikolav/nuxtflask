@@ -1,26 +1,21 @@
 <script setup lang="ts">
 import { isNumeric } from "@/utils";
 
+const auth = useStoreApiAuth();
+
 const { appBarHeight, offsetTop } = useAppConfig().layout;
 const paddingTop = `calc(${
   isNumeric(appBarHeight) ? appBarHeight + "px" : appBarHeight
 } + ${isNumeric(offsetTop) ? offsetTop + "px" : offsetTop}) !important`;
 
-const links = [
-  {
-    title: "home",
-    href: "/",
-  },
-  {
-    title: "auth",
-    href: "/auth",
-  },
-];
-const btnVariant = (href: string) =>
-  href == useRoute().name ? "text" : "plain";
-
 const sidebarWindow$ = ref("chat");
 
+const logoutHard = async () => {
+  await auth.logout();
+  reloadNuxtApp({
+    path: "/",
+  });
+};
 // # eos
 </script>
 
@@ -31,17 +26,21 @@ const sidebarWindow$ = ref("chat");
         <pre class="italic">uni.nikolav.rs</pre>
       </VAppBarTitle>
       <template #append>
-        <template v-for="link in links" :key="link.href">
-          <NuxtLink :to="link.href">
-            <VBtn
-              :variant="btnVariant(link.href)"
-              class="text-none !text-sm"
-              slim
-              rounded="pill"
-              >{{ link.title }}</VBtn
-            >
-          </NuxtLink>
-        </template>
+        <VBtn
+          @click="logoutHard"
+          v-if="auth.isAdmin$"
+          icon
+          variant="text"
+          size="small"
+        >
+          <VIcon icon="$iconPowerOff" />
+          <VTooltip
+            open-delay="122"
+            location="bottom"
+            activator="parent"
+            text="Kraj"
+          />
+        </VBtn>
         <VAppBarNavIcon class="ms-2 ms-md-3" color="primary-darken-1" />
       </template>
     </VAppBar>
@@ -82,11 +81,25 @@ const sidebarWindow$ = ref("chat");
           <VIcon :size="18" icon="$iconChat" />
           <span>ćaskanje</span>
         </VBtn>
-        <VBtn size="small" color="primary" value="tasks" class="flex-1" stacked>
+        <VBtn
+          :disabled="!auth.isAdmin$"
+          size="small"
+          color="primary"
+          value="tasks"
+          class="flex-1"
+          stacked
+        >
           <VIcon :size="18" icon="$iconTodo" />
           <span>zadaci</span>
         </VBtn>
-        <VBtn size="small" color="primary" value="log" class="flex-1" stacked>
+        <VBtn
+          :disabled="!auth.isAdmin$"
+          size="small"
+          color="primary"
+          value="log"
+          class="flex-1"
+          stacked
+        >
           <VIcon :size="18" icon="$iconJournal" class="mb-px" />
           <span>dnevnik</span>
         </VBtn>
@@ -99,10 +112,15 @@ const sidebarWindow$ = ref("chat");
       :width="64"
       color="secondary"
     >
-      <VList>
+      <VList :disabled="!auth.isAdmin$">
         <VListItem v-for="n in 3" title="foo" :key="n" link />
       </VList>
     </VNavigationDrawer>
-    <VFooter class="opacity-95" color="primary-darken-1" app height="35">foo</VFooter>
+    <VFooter class="opacity-95" color="primary-darken-1" app height="35"
+      >foo</VFooter
+    >
   </section>
 </template>
+
+<style lang="scss" scoped>
+</style>

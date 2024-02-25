@@ -4,6 +4,7 @@ import { PRODUCTION$ } from "@/config";
 
 const themeDark = "dark";
 const themeLight = "light2";
+const AUTH_LOCKED = "eq1hiOTCPNCfo20Y";
 
 export default defineAppConfig({
   ADMIN_EMAIL: "admin@nikolav.rs",
@@ -15,6 +16,8 @@ export default defineAppConfig({
     INJECT_AUTHAPI: "WYvEK29UZIP",
     INJECT_THEME: "Aasnvy2eaxE",
     THEME: "0Fgky53B2UbA1fG3lKcV",
+    AUTH_LOCKED,
+    AUTH_CREDS: "pafer98hf",
   },
   //
   FIELDS_OMIT_STORAGE_META: ["id", "created_at", "updated_at", "__typename"],
@@ -36,7 +39,9 @@ export default defineAppConfig({
       },
     },
     flags: {
-      initial: <TStoreFlags>{},
+      initial: <TStoreFlags>{
+        [AUTH_LOCKED]: false,
+      },
     },
     auth: {
       KEY_ACCESS_TOKEN: ":sEe5xYuTL4q",

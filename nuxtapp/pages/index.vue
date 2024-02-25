@@ -3,26 +3,13 @@
 // https://github.com/surmon-china/videojs-player
 import { VideoPlayer } from "@videojs-player/vue";
 
+definePageMeta({
+  middleware: "authorized",
+});
+
 useHead({
   title: "--home",
 });
-
-// const auth = useStoreApiAuth();
-
-// const credsAdmin = {
-//   email: "admin@nikolav.rs",
-//   password: "122",
-// };
-// const credsRand = () => {
-//   return {
-//     email: faker.internet.email(),
-//     password: faker.internet.password({ length: 5, memorable: true }),
-//   };
-// };
-// const loginAdmin = async () => await auth.login(credsAdmin);
-// const registerUser = async () => await auth.register(credsRand());
-
-// const { data } = useDocs("@vars");
 
 const toggle = useToggleFlag();
 

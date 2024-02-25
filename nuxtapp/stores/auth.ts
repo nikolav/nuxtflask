@@ -12,7 +12,12 @@ import {
   URL_AUTH_logout,
   URL_API_who,
 } from "@/config";
-import { schemaAuthData, schemaAuthCredentials, schemaJwt } from "@/schemas";
+import {
+  schemaAuthCredentials,
+  schemaAuthData,
+  schemaAuthDataAdmin,
+  schemaJwt,
+} from "@/schemas";
 
 export const useStoreApiAuth = defineStore("auth", () => {
   const {
@@ -43,12 +48,29 @@ export const useStoreApiAuth = defineStore("auth", () => {
     },
   });
 
-  onMounted(authDataReload);
+  // handle auth:enabled flag manually
+  // const enabled$ = ref(true);
+
+  const initialized$ = ref(false);
+  onMounted(async () => {
+    await authDataReload();
+    initialized$.value = true;
+  });
 
   // `logged in` .flag
   const isAuth$ = computed(() => {
     try {
       return true === schemaAuthData.safeParse(user$.value).success;
+    } catch (error_) {
+      // pass
+    }
+    return false;
+  });
+
+  // `admin logged in` .flag
+  const isAdmin$ = computed(() => {
+    try {
+      return true === schemaAuthDataAdmin.safeParse(user$.value).success;
     } catch (error_) {
       // pass
     }
@@ -128,12 +150,27 @@ export const useStoreApiAuth = defineStore("auth", () => {
     status.done();
   };
 
+  const callack$ = ref();
+  watchEffect(() => {
+    const callack = callack$.value;
+    if (callack) callack(isAuth$.value, isAdmin$.value);
+  });
+  const onAuthStatusChange = (
+    callack: (isAuth: boolean, isAdmin: boolean) => void
+  ) => {
+    callack$.value = callack;
+  };
+
   // #api
   return {
     // @auth/data
     token$,
     user$,
     isAuth$,
+    isAdmin$,
+    onAuthStatusChange,
+    initialized$,
+    // enabled$,
 
     // @auth/crud
     register,

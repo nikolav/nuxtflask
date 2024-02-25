@@ -7,3 +7,5 @@ export { default as IconTodoOutline } from "./IconTodoOutline.vue";
 export { default as IconJournalOutline } from "./IconJournalOutline.vue";
 export { default as IconKey } from "./IconKey.vue";
 export { default as IconLockOpenOutline } from "./IconLockOpenOutline.vue";
+export { default as IconPowerOff } from "./IconPowerOff.vue";
+export { default as IconUserShield } from "./IconUserShield.vue";

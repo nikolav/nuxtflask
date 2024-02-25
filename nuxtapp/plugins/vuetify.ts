@@ -10,15 +10,17 @@ import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 import { light2, dark } from "@/assets/themes";
 
 import {
-  IconDial,
-  IconRedEye,
-  IconMenu,
-  IconDotsVertical,
   IconChatBubbleOutline,
-  IconTodoOutline,
+  IconDial,
+  IconDotsVertical,
   IconJournalOutline,
   IconKey,
   IconLockOpenOutline,
+  IconMenu,
+  IconPowerOff,
+  IconRedEye,
+  IconTodoOutline,
+  IconUserShield,
 } from "@/components/icons";
 
 // # --default-light-theme
@@ -115,14 +117,16 @@ export default defineNuxtPlugin((nuxtApp) => {
         // # override
         menu: IconMenu,
         // # add: <VIcon icon="$other">
-        iconDial: IconDial,
-        iconRedEye: IconRedEye,
-        iconDotsV: IconDotsVertical,
         iconChat: IconChatBubbleOutline,
-        iconTodo: IconTodoOutline,
+        iconDial: IconDial,
+        iconDotsV: IconDotsVertical,
         iconJournal: IconJournalOutline,
         iconKey: IconKey,
         iconLock: IconLockOpenOutline,
+        iconPowerOff: IconPowerOff,
+        iconRedEye: IconRedEye,
+        iconTodo: IconTodoOutline,
+        iconUserShield: IconUserShield,
       },
       sets: {
         mdi,

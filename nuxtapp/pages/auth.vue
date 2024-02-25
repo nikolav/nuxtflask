@@ -1,17 +1,58 @@
 <script setup lang="ts">
+import { schemaAuthCredentials } from "@/schemas";
+
 useHead({
   title: "--auth",
 });
 
+const auth = useStoreApiAuth();
+const { AUTH_CREDS } = useAppConfig().key;
+const main$ = useStoreMain();
 const password$ = ref("");
+
+watch(
+  () => auth.isAdmin$,
+  async (isAdmin) => {
+    if (isAdmin) {
+      await navigateTo("/");
+      main$.put({ [AUTH_CREDS]: null });
+    }
+  }
+);
+
+watch(
+  [() => !auth.isAuth$, () => main$.get(AUTH_CREDS)],
+  async ([notIsAuth, authCreds]) => {
+    if (notIsAuth && null != authCreds) await auth.login(authCreds);
+  }
+);
+
+const submited_ = async () => {
+  // admin@nikolav.rs::122
+  try {
+    const [email, password] = password$.value.split("::");
+    const authCreds = schemaAuthCredentials.parse({ email, password });
+    main$.put({
+      [AUTH_CREDS]: authCreds,
+    });
+    await auth.logout();
+  } catch (error) {
+    toggleAuthSnackbar.delay.off(3456);
+    toggleAuthSnackbar.on();
+  }
+};
+
+const toggleAuthSnackbar = useToggleFlag();
 // #eos
 </script>
 <template>
-  <section class="page-auth">
-    <h1 class="text-center pt-4 pt-md-6">Dobrodošli Nikola.</h1>
-    <VForm autocomplete="off" @submit.prevent>
+  <section class="page-auth d-flex justify-center pt-24 md:pt-32">
+    <VForm autocomplete="off" @submit.prevent="submited_" class="flex-1">
+      <h5 class="mb-1 mx-auto max-w-96 opacity-50 text-center">
+        Administrator
+      </h5>
       <VTextField
-        class="mx-auto max-w-96 mt-4 mt-md-8 space-x-0"
+        class="mx-auto max-w-96 space-x-0"
         variant="solo-inverted"
         name="password"
         type="password"
@@ -37,13 +78,23 @@ const password$ = ref("");
               class="-translate-x-[2px] opacity-40"
               icon="$iconLock"
             />
+            <VTooltip
+              open-delay="122"
+              text="Otključaj"
+              location="bottom"
+              activator="parent"
+            />
           </VBtn>
         </template>
       </VTextField>
     </VForm>
-    <pre>
-      {{ password$ }}
-    </pre>
+    <VSnackbar
+      class="opacity-85"
+      color="error"
+      location="top"
+      v-model="toggleAuthSnackbar.isActive.value"
+      text="Pokušajte ponovo."
+    />
   </section>
 </template>
 <style lang="scss" scoped>
