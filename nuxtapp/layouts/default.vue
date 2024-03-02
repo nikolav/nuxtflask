@@ -52,6 +52,7 @@ const page$ = computed(() => useRoute().name);
       </slot>
     </VMain>
 
+    <!-- sidebar -->
     <VNavigationDrawer
       elevation="2"
       class="*bg-red"
@@ -60,7 +61,7 @@ const page$ = computed(() => useRoute().name);
       :width="372"
     >
       <div class="text-[88%]">
-        <VWindow v-model="sidebarWindow$">
+        <VWindow v-model="sidebarWindow$" :touch="false">
           <VFadeTransition mode="in-out" leave-absolute>
             <VWindowItem value="chat"><WindowChat /></VWindowItem>
           </VFadeTransition>
@@ -72,6 +73,8 @@ const page$ = computed(() => useRoute().name);
           </VFadeTransition>
         </VWindow>
       </div>
+
+      <!-- sidebar/controls -->
       <VBtnToggle
         class="absolute w-[88%] bottom-3 start-1/2 -translate-x-[50%] opacity-95"
         mandatory
@@ -106,6 +109,8 @@ const page$ = computed(() => useRoute().name);
         </VBtn>
       </VBtnToggle>
     </VNavigationDrawer>
+
+    <!-- sidebar menu :left -->
     <VNavigationDrawer
       :order="1"
       location="start"
@@ -117,6 +122,7 @@ const page$ = computed(() => useRoute().name);
         <VListItem v-for="n in 3" title="foo" :key="n" link />
       </VList>
     </VNavigationDrawer>
+
     <VFooter
       app
       class="text-sm px-1 opacity-95"

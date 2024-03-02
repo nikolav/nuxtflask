@@ -105,3 +105,6 @@ export interface IDocDataChat {
   comment: string;
 }
 
+export interface IAppData<T = any> {
+  [key: string]: T;
+}

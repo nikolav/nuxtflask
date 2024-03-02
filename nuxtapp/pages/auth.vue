@@ -33,17 +33,17 @@ const submited_ = async () => {
   // admin@nikolav.rs::122
   // user@nikolav.rs::user@nikolav.rs
   try {
-    flags.on(APP_PROCESSING);
     const [email, password] = password$.value.split("::");
     const authCreds = schemaAuthCredentials.parse({ email, password });
     main$.put({
       [AUTH_CREDS]: authCreds,
     });
+    flags.on(APP_PROCESSING);
     await auth.logout();
   } catch (error) {
+    flags.off(APP_PROCESSING);
     toggleAuthSnackbar.delay.off(3456);
     toggleAuthSnackbar.on();
-    flags.off(APP_PROCESSING);
   }
 };
 
@@ -54,7 +54,7 @@ const toggleAuthSnackbar = useToggleFlag();
   <section class="page-auth d-flex justify-center pt-16 md:pt-24">
     <VForm autocomplete="off" @submit.prevent="submited_" class="flex-1">
       <h1 class="mb-1 mx-auto max-w-96 opacity-50 text-center">
-        Administrator
+        Dobrodošli
       </h1>
       <VTextField
         class="mx-auto max-w-96 space-x-0"

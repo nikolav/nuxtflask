@@ -39,7 +39,9 @@ export const useApiStorage = (initialEnabled = true) => {
       pollInterval: STORAGE_QUERY_POLL_INTERVAL,
     }
   );
-  const files$ = computed(() => result.value?.storageList || []);
+  const files$ = computed(() =>
+    enabled$.value ? result.value?.storageList || [] : []
+  );
   const reloadFiles = async () => await refetch();
 
   const { runSetup: queryStart } = useRunSetupOnce(loadStorage);

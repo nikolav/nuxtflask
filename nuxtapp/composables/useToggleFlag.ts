@@ -1,5 +1,6 @@
 import { assign } from "@/utils";
 //
+const DEFAULT_TIMEOUT = 1000;
 export const useToggleFlag = (initial = false) => {
   const isActive$ = ref(initial);
   const toggle = () => {
@@ -14,15 +15,15 @@ export const useToggleFlag = (initial = false) => {
   // @delayed
   const timeout_ = ref<ReturnType<typeof setTimeout>>();
   const delayCancel = () => clearTimeout(timeout_.value);
-  const delayToggle = (msTimeout = 1000) => {
+  const delayToggle = (msTimeout = DEFAULT_TIMEOUT) => {
     delayCancel();
     timeout_.value = setTimeout(toggle, msTimeout);
   };
-  const delayOn = (msTimeout = 1000) => {
+  const delayOn = (msTimeout = DEFAULT_TIMEOUT) => {
     delayCancel();
     timeout_.value = setTimeout(on, msTimeout);
   };
-  const delayOff = (msTimeout = 1000) => {
+  const delayOff = (msTimeout = DEFAULT_TIMEOUT) => {
     delayCancel();
     timeout_.value = setTimeout(off, msTimeout);
   };

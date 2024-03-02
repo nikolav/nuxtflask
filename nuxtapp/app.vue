@@ -8,9 +8,8 @@ import { SpinnerAppProcessing } from "@/components/ui";
 
 const { APP_USER_DEFAULT } = useAppConfig();
 
-const appMounted$ = useAppMounted();
 onUnmounted(() => {
-  appMounted$.value = false;
+  useAppMounted().value = false;
 });
 
 const auth = useStoreApiAuth();
@@ -21,8 +20,7 @@ const { runSetup: onceDefaultUserLogin } = useRunSetupOnce(async () => {
   await auth.login(APP_USER_DEFAULT);
 });
 watchEffect(() => {
-  if (appMounted$.value && auth.initialized$ && !auth.isAuth$)
-    onceDefaultUserLogin();
+  if (auth.initialized$ && !auth.isAuth$) onceDefaultUserLogin();
 });
 
 // theme
@@ -30,15 +28,12 @@ watchEffect(() => {
 const { theme } = useNuxtApp().$theme;
 
 const { DARK, LIGHT } = useAppConfig().theme;
-const htmlAttrs$ = computed(() => ({
+const htmlAttrs = computed(() => ({
   class: DARK === theme.value ? "dark" : LIGHT,
 }));
 useHead({
-  titleTemplate: (ttl) => `[${ttl}]`,
-  bodyAttrs: {
-    class: "dark:selection:bg-white/20 scrollbar-thin-light",
-  },
-  htmlAttrs: htmlAttrs$,
+  titleTemplate: (ttl) => (!ttl ? ".NuxtApp" : `[${ttl}] | NuxtApp`),
+  htmlAttrs,
 });
 
 // eos
@@ -67,7 +62,7 @@ useHead({
 <style>
 .BLUR-enter-active,
 .BLUR-leave-active {
-  transition: all 0.24s;
+  transition: all 0.2s;
 }
 
 .BLUR-leave-active {

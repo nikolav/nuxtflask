@@ -1,4 +1,7 @@
-import { get } from "@/utils";
+import {
+  get,
+  // once,
+} from "@/utils";
 import type {
   OrNoValue,
   IAuthCreds,
@@ -26,6 +29,7 @@ export const useStoreApiAuth = defineStore("auth", () => {
     initial: initialStorage,
     authHeaders,
   } = useAppConfig().stores.auth;
+
   const token$ = useLocalStorage(KEY_ACCESS_TOKEN, initialStorage, {
     initOnMounted: true,
   });
@@ -46,10 +50,9 @@ export const useStoreApiAuth = defineStore("auth", () => {
       }
       return null;
     },
+    // immediate: false,
+    // onResponse: onceInit,
   });
-
-  // handle auth:enabled flag manually
-  // const enabled$ = ref(true);
 
   const initialized$ = ref(false);
   onMounted(async () => {
@@ -150,17 +153,6 @@ export const useStoreApiAuth = defineStore("auth", () => {
     status.done();
   };
 
-  const callack$ = ref();
-  watchEffect(() => {
-    const callack = callack$.value;
-    if (callack) callack(isAuth$.value, isAdmin$.value);
-  });
-  const onAuthStatusChange = (
-    callack: (isAuth: boolean, isAdmin: boolean) => void
-  ) => {
-    callack$.value = callack;
-  };
-
   // #api
   return {
     // @auth/data
@@ -168,9 +160,7 @@ export const useStoreApiAuth = defineStore("auth", () => {
     user$,
     isAuth$,
     isAdmin$,
-    onAuthStatusChange,
     initialized$,
-    // enabled$,
 
     // @auth/crud
     register,

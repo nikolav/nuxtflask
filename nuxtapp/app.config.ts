@@ -1,4 +1,4 @@
-import type { TStoreMain, TStoreFlags, IConfigDocs } from "@/types";
+import type { TStoreMain, TStoreFlags, IConfigDocs, IAppData } from "@/types";
 import { assign } from "@/utils";
 import { PRODUCTION$ } from "@/config";
 
@@ -17,16 +17,22 @@ export default defineAppConfig({
   key: {
     APP_MOUNTED: "Zkcmk4BnXHU",
     APP_PROCESSING: "FlaelfhZddK",
+    AUTH_CREDS: "pafer98hf",
+    AUTH_LOCKED,
     INJECT_AUTHAPI: "WYvEK29UZIP",
     INJECT_THEME: "Aasnvy2eaxE",
+    PROVIDE_APP_DATA: "Ud8dHoadmBgSr55P6gJ",
     THEME: "0Fgky53B2UbA1fG3lKcV",
-    AUTH_LOCKED,
-    AUTH_CREDS: "pafer98hf",
   },
   //
   FIELDS_OMIT_STORAGE_META: ["id", "created_at", "updated_at", "__typename"],
   //
   DEFAULT_CONFIG_useApiDocs: <IConfigDocs>{ autoReload: true },
+  defaults: {
+    appData: <IAppData>{
+      "admin:email": "admin@nikolav.rs",
+    },
+  },
   //
   api: {
     TAG_STORAGE: "@storage:",
