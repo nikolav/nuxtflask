@@ -10,6 +10,9 @@ import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 import { light2, dark } from "@/assets/themes";
 
 import {
+  IconHelpSquareFilled,
+  IconStore,
+  IconPeopleFilled,
   IconChatBubbleOutline,
   IconDial,
   IconDotsVertical,
@@ -133,6 +136,9 @@ export default defineNuxtPlugin((nuxtApp) => {
         iconUserShield: IconUserShield,
         iconTrash: IconTrashFill,
         iconPaperPlane: IconPaperPlaeOutline,
+        iconPeople: IconPeopleFilled,
+        iconStore: IconStore,
+        iconHelp: IconHelpSquareFilled,
       },
       sets: {
         mdi,

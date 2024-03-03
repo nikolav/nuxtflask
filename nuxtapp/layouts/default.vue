@@ -13,15 +13,51 @@ const sidebarWindow$ = ref("chat");
 
 const logoutHard = async () => {
   await auth.logout();
-  reloadNuxtApp({ force: true });
+  reloadNuxtApp();
 };
 
-const page$ = computed(() => useRoute().name);
+const pageNamesLocal: Record<string, string> = {
+  help: "pomoć",
+};
+const route = useRoute();
+const page$ = computed(() =>
+  route.name
+    ? route.name in pageNamesLocal
+      ? pageNamesLocal[String(route.name)]
+      : route.name
+    : undefined
+);
+
+const sidebarLeftLinks = [
+  {
+    title: "home",
+    route: "/",
+    icon: "$iconHome",
+  },
+  {
+    title: "radnja",
+    route: "radnja",
+    icon: "$iconStore",
+  },
+  {
+    title: "tim",
+    icon: "$iconPeople",
+    route: "tim",
+    size: 22,
+  },
+  {
+    title: "pomoć",
+    icon: "$iconHelp",
+    route: "help",
+    size: 22,
+  },
+];
 // # eos
 </script>
 
 <template>
   <section id="layout-default" class="ma-0 pa-0">
+    <!-- @appbar -->
     <VAppBar name="app-appbar" :height="appBarHeight" elevation="2">
       <VAppBarTitle class="text-disabled text-h5 ps-2 ps-sm-4">
         <pre class="italic">uni.nikolav.rs</pre>
@@ -42,17 +78,18 @@ const page$ = computed(() => useRoute().name);
             text="Kraj"
           />
         </VBtn>
-        <VAppBarNavIcon class="ms-2 ms-md-3" color="primary-darken-1" />
+        <!-- <VAppBarNavIcon class="ms-2 ms-md-3" color="primary-darken-1" /> -->
       </template>
     </VAppBar>
 
+    <!-- @page/main -->
     <VMain :style="{ paddingTop }">
       <slot>
         <p>Lorem!</p>
       </slot>
     </VMain>
 
-    <!-- sidebar -->
+    <!-- @sidebar -->
     <VNavigationDrawer
       elevation="2"
       class="*bg-red"
@@ -74,7 +111,7 @@ const page$ = computed(() => useRoute().name);
         </VWindow>
       </div>
 
-      <!-- sidebar/controls -->
+      <!-- @sidebar/controls -->
       <VBtnToggle
         class="absolute w-[88%] bottom-3 start-1/2 -translate-x-[50%] opacity-95"
         mandatory
@@ -110,19 +147,32 @@ const page$ = computed(() => useRoute().name);
       </VBtnToggle>
     </VNavigationDrawer>
 
-    <!-- sidebar menu :left -->
+    <!-- @sidebarLeft -->
     <VNavigationDrawer
       :order="1"
       location="start"
       permanent
-      :width="64"
+      width="52"
       color="secondary"
     >
-      <VList :disabled="!auth.isAdmin$">
-        <VListItem v-for="n in 3" title="foo" :key="n" link />
+      <VList class="pt-0">
+        <template v-for="link in sidebarLeftLinks" :key="link.title">
+          <NuxtLink :to="link.route">
+            <VListItem :link="!!link.route" class="d-flex justify-center px-0">
+              <VIcon
+                color="primary-lighten-1"
+                v-if="link.icon"
+                :icon="link.icon"
+                :size="link.size"
+              />
+              <VListItemTitle v-else>{{ link.title }}</VListItemTitle>
+            </VListItem>
+          </NuxtLink>
+        </template>
       </VList>
     </VNavigationDrawer>
 
+    <!-- @footer -->
     <VFooter
       app
       class="text-sm px-1 opacity-95"

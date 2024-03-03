@@ -13,6 +13,9 @@ export default defineAppConfig({
     email: "user@nikolav.rs",
     password: "user@nikolav.rs",
   },
+  docs: {
+    TAG_USERS: "@users",
+  },
   //
   key: {
     APP_MOUNTED: "Zkcmk4BnXHU",

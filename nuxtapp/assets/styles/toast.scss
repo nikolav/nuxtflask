@@ -1,0 +1,12 @@
+
+// Override the variables or import a file that overrides them
+$vt-color-default: #37474F;
+
+// Import the regular Vue Toastification stylesheets (or create your own)
+@import "../../node_modules/vue-toastification/src/scss/_variables";
+@import "../../node_modules/vue-toastification/src/scss/_toastContainer";
+@import "../../node_modules/vue-toastification/src/scss/_toast";
+@import "../../node_modules/vue-toastification/src/scss/_closeButton";
+@import "../../node_modules/vue-toastification/src/scss/_progressBar";
+@import "../../node_modules/vue-toastification/src/scss/_icon";
+@import "../../node_modules/vue-toastification/src/scss/animations/_bounce";

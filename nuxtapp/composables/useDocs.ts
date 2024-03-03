@@ -1,5 +1,13 @@
-import { Q_docsByTopic, M_docsUpsert, M_docsRm } from "@/graphql";
+import {
+  Q_docsByTopic,
+  M_docsUpsert,
+  M_docsRm,
+  M_docsUsersAdd,
+  M_docsUsersRemove,
+} from "@/graphql";
 import type { OrNull, IDoc, TDocData } from "@/types";
+import { schemaAuthCredentials } from "@/schemas";
+import { isNumeric } from "@/utils";
 
 // .useDocs
 export const useDocs = <TData = TDocData>(
@@ -31,8 +39,8 @@ export const useDocs = <TData = TDocData>(
     }
   );
 
-  const data$ = computed(() =>
-    enabled$.value ? result.value?.docsByTopic || [] : []
+  const data$ = computed(
+    () => (enabled$.value ? result.value?.docsByTopic : undefined) || []
   );
   const reload = async () => await refetch();
 
@@ -64,6 +72,30 @@ export const useDocs = <TData = TDocData>(
     useIOEvent(ioEvent$.value, reload);
   });
 
+  const { mutate: mutateDocsUsersAdd } = useMutation(M_docsUsersAdd);
+  const { mutate: mutateDocsUsersRemove } = useMutation(M_docsUsersRemove);
+
+  const { TAG_USERS } = useAppConfig().docs;
+  const usersAdd = async (email: string, password: string) => {
+    let authData;
+    try {
+      if (TAG_USERS !== topic$.value) throw `--topic:${TAG_USERS}--`;
+      authData = schemaAuthCredentials.parse({ email, password });
+      return await mutateDocsUsersAdd(authData);
+    } catch (error) {
+      // pass
+    }
+  };
+  const usersRemove = async (id: any) => {
+    try {
+      if (TAG_USERS !== topic$.value) throw `--topic:${TAG_USERS}--`;
+      if (!isNumeric(id)) throw `--id:number--`;
+      return await mutateDocsUsersRemove({ id: Number(id) });
+    } catch (error) {
+      // pass
+    }
+  };
+
   return {
     // # data by topic
     topic$,
@@ -84,5 +116,9 @@ export const useDocs = <TData = TDocData>(
 
     // on/off
     toggleEnabled,
+
+    // users
+    usersAdd,
+    usersRemove,
   };
 };

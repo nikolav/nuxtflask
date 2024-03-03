@@ -33,6 +33,17 @@ export const M_docUpsert = gql`
   }
 `;
 
+export const M_docsUsersAdd = gql`
+  mutation m_docsUsersAdd($email: String!, $password: String!) {
+    docsUsersAdd(email: $email, password: $password)
+  }
+`;
+
+export const M_docsUsersRemove = gql`
+  mutation m_docsUsersRemove($id: ID!) {
+    docsUsersRemove(id: $id)
+  }
+`;
 
 // schema {
 //   query: Query
@@ -108,4 +119,8 @@ export const M_docUpsert = gql`
 //   # docs
 //   docsUpsert(topic: String!, data: JsonData!, id: ID): JsonData!
 //   docsRm(topic: String!, id: ID!): JsonData
+//   
+//   # users
+//   docsUsersAdd(email: String!, password: String!): ID
+//   docsUsersRemove(id: ID!): ID
 // }

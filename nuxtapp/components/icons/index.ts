@@ -12,3 +12,6 @@ export { default as IconRedEye } from "./IconRedEye.vue";
 export { default as IconTodoOutline } from "./IconTodoOutline.vue";
 export { default as IconTrashFill } from "./IconTrashFill.vue";
 export { default as IconUserShield } from "./IconUserShield.vue";
+export { default as IconPeopleFilled } from "./IconPeopleFilled.vue";
+export { default as IconStore } from "./IconStore.vue";
+export { default as IconHelpSquareFilled } from "./IconHelpSquareFilled.vue";
