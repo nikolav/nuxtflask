@@ -1,5 +1,6 @@
 import {
   get,
+  // isEmpty,
   // once,
 } from "@/utils";
 import type {
@@ -35,9 +36,11 @@ export const useStoreApiAuth = defineStore("auth", () => {
     initOnMounted: true,
   });
   const headers$ = computed(() => authHeaders(token$.value));
-  const { data: user$, refresh: authDataReload } = useFetch<
-    OrNoValue<IAuthWhoResponse>
-  >(URL_API_who, {
+  const {
+    data: user$,
+    refresh: authDataReload,
+    execute: authDataStart,
+  } = useFetch<OrNoValue<IAuthWhoResponse>>(URL_API_who, {
     key: KEY_USEFETCH_AUTHDATA,
     method: "GET",
     headers: headers$,
@@ -51,15 +54,20 @@ export const useStoreApiAuth = defineStore("auth", () => {
       }
       return null;
     },
-    // immediate: false,
+    immediate: false,
     // onResponse: onceInit,
   });
 
+  // query.start@app.mount
   const initialized$ = ref(false);
-  onMounted(async () => {
-    await authDataReload();
-    initialized$.value = true;
-  });
+  watch(
+    () => useAppMounted().value,
+    async (appMounted) => {
+      if (true !== appMounted) return;
+      await authDataStart();
+      initialized$.value = true;
+    }
+  );
 
   // `logged in` .flag
   const isAuth$ = computed(() => {

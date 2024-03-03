@@ -20,7 +20,7 @@ const sidebarWindow$ = ref("chat");
 
 const logoutHard = async () => {
   await auth.logout();
-  reloadNuxtApp();
+  reloadNuxtApp({ force: true, persistState: false });
 };
 
 const pageNamesLocal: Record<string, string> = {

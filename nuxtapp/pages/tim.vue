@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useDisplay } from "vuetify";
+import { SpinnerBeat } from "@/components/spinners";
 import type { IDocDataUsers, IDoc, OrNoValue } from "@/types";
 import { schemaUsersNotReserved } from "@/schemas";
-import { get } from "@/utils";
+import { get, isEmpty } from "@/utils";
 
 definePageMeta({
   middleware: "authorized-admin",
@@ -146,7 +147,16 @@ const isUserNotReserved = (user: any) =>
       </VCardItem>
       <VCardText class="pt-2">
         <!-- @users/table -->
-        <VTable class="max-h-[389px]" hover fixed-header density="comfortable">
+        <p v-if="isEmpty(users$)" class="text-center mt-4">
+          <SpinnerBeat size="16" />
+        </p>
+        <VTable
+          v-else
+          class="max-h-[389px]"
+          hover
+          fixed-header
+          density="comfortable"
+        >
           <thead class="text-disabled">
             <tr>
               <th class="!w-24" scope="col"><strong>#</strong></th>
@@ -194,18 +204,20 @@ const isUserNotReserved = (user: any) =>
       class="d-flex justify-center items-center"
       v-click-outside="toggleUserActive.off"
     >
-      <VCard elevation="4" color="error" variant="tonal" class="pa-2">
-        <VCardTitle class="text-center">
-          Obriši <strong>#{{ userAction$?.id }}</strong>
-        </VCardTitle>
-        <VCardSubtitle class="text-center">
-          {{ userAction$?.data["email"] }}</VCardSubtitle
-        >
-        <VCardActions class="justify-between mt-6 mt-sm-8">
+      <VCard elevation="4" color="error" variant="tonal">
+        <VCardItem class="pa-sm-4">
+          <VCardTitle class="text-center">
+            Obriši <strong>#{{ userAction$?.id }}</strong>
+          </VCardTitle>
+          <VCardSubtitle class="text-center">
+            {{ userAction$?.data["email"] }}</VCardSubtitle
+          >
+        </VCardItem>
+        <VCardActions class="justify-between mt-6 mt-sm-8 bg-red-500/20 pa-3">
           <VBtn variant="tonal" color="primary" @click="toggleUserActive.off"
             >Odustani</VBtn
           >
-          <VBtn variant="plain" color="error" @click="usersRm">
+          <VBtn class="text-none" variant="plain" color="error" @click="usersRm">
             <VIcon icon="$iconTrash" start />
             <strong>Obriši</strong>
           </VBtn>

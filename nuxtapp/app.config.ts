@@ -1,6 +1,6 @@
 import type { TStoreMain, TStoreFlags, IConfigDocs, IAppData } from "@/types";
 import { assign } from "@/utils";
-import { PRODUCTION$ } from "@/config";
+import { PRODUCTION$, URL_APP_PUBLIC } from "@/config";
 
 const themeDark = "dark";
 const themeLight = "light2";
@@ -93,5 +93,8 @@ export default defineAppConfig({
   effect: {
     default: "headShake",
     duration: 890,
+  },
+  urls: {
+    appPublic: URL_APP_PUBLIC,
   },
 });
