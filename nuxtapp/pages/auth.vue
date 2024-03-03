@@ -12,9 +12,9 @@ const flags = useStoreFlags();
 const password$ = ref("");
 
 watch(
-  () => auth.isAdmin$,
-  async (isAdmin) => {
-    if (isAdmin) {
+  () => auth.isAdmin$ || auth.isUser$,
+  async (isAdminOrUser) => {
+    if (isAdminOrUser) {
       await navigateTo({ name: "index" });
       main$.put({ [AUTH_CREDS]: null });
       flags.off(APP_PROCESSING);
@@ -32,6 +32,7 @@ watch(
 const submited_ = async () => {
   // admin@nikolav.rs::122
   // user@nikolav.rs::user@nikolav.rs
+  // # user.122@email.com::122
   try {
     const [email, password] = password$.value.split("::");
     const authCreds = schemaAuthCredentials.parse({ email, password });
@@ -53,9 +54,7 @@ const toggleAuthSnackbar = useToggleFlag();
 <template>
   <section class="page-auth d-flex justify-center pt-16 md:pt-24">
     <VForm autocomplete="off" @submit.prevent="submited_" class="flex-1">
-      <h1 class="mb-1 mx-auto max-w-96 opacity-50 text-center">
-        Dobrodošli
-      </h1>
+      <h1 class="mb-1 mx-auto max-w-96 opacity-50 text-center">Dobrodošli</h1>
       <VTextField
         class="mx-auto max-w-96 space-x-0"
         variant="solo-inverted"

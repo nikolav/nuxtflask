@@ -39,12 +39,6 @@ export const M_docsUsersAdd = gql`
   }
 `;
 
-export const M_docsUsersRemove = gql`
-  mutation m_docsUsersRemove($id: ID!) {
-    docsUsersRemove(id: $id)
-  }
-`;
-
 // schema {
 //   query: Query
 //   mutation: Mutation
@@ -122,5 +116,4 @@ export const M_docsUsersRemove = gql`
 //   
 //   # users
 //   docsUsersAdd(email: String!, password: String!): ID
-//   docsUsersRemove(id: ID!): ID
 // }

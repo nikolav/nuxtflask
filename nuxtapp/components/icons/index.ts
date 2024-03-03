@@ -15,3 +15,6 @@ export { default as IconUserShield } from "./IconUserShield.vue";
 export { default as IconPeopleFilled } from "./IconPeopleFilled.vue";
 export { default as IconStore } from "./IconStore.vue";
 export { default as IconHelpSquareFilled } from "./IconHelpSquareFilled.vue";
+export { default as IconPersonAddOutline } from "./IconPersonAddOutline.vue";
+export { default as IconPersonRemoveOutline } from "./IconPersonRemoveOutline.vue";
+export { default as IconSaveFilled } from "./IconSaveFilled.vue";

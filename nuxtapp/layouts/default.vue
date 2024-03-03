@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { isNumeric } from "@/utils";
+import { emojify } from "node-emoji";
+import {
+  isNumeric,
+  matchEmailStart,
+  capitalize,
+  // get,
+} from "@/utils";
 import { WindowChat, WindowTasks, WindowJournal } from "@/components/ui";
 
 const auth = useStoreApiAuth();
+const isAdminOrUser$ = computed(() => auth.isAdmin$ || auth.isUser$);
 
 const { appBarHeight, offsetTop } = useAppConfig().layout;
 const paddingTop = `calc(${
@@ -63,9 +70,16 @@ const sidebarLeftLinks = [
         <pre class="italic">uni.nikolav.rs</pre>
       </VAppBarTitle>
       <template #append>
+        <em class="text-disabled text-sm me-4 me-sm-8" v-if="isAdminOrUser$">
+          <pre
+            >{{ emojify(":wave:") }} {{
+              capitalize(matchEmailStart(get(auth.user$, "email")))
+            }}</pre
+          >
+        </em>
         <VBtn
           @click="logoutHard"
-          v-if="auth.isAdmin$"
+          v-if="isAdminOrUser$"
           icon
           variant="text"
           size="small"
@@ -158,7 +172,7 @@ const sidebarLeftLinks = [
       <VList class="pt-0">
         <template v-for="link in sidebarLeftLinks" :key="link.title">
           <NuxtLink :to="link.route">
-            <VListItem :link="!!link.route" class="d-flex justify-center px-0">
+            <VListItem link class="d-flex justify-center px-0">
               <VIcon
                 color="primary-lighten-1"
                 v-if="link.icon"

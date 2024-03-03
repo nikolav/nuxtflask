@@ -20,6 +20,7 @@ import {
   schemaAuthData,
   schemaAuthDataAdmin,
   schemaJwt,
+  schemaUsersNotReserved,
 } from "@/schemas";
 
 export const useStoreApiAuth = defineStore("auth", () => {
@@ -66,6 +67,21 @@ export const useStoreApiAuth = defineStore("auth", () => {
       return true === schemaAuthData.safeParse(user$.value).success;
     } catch (error_) {
       // pass
+    }
+    return false;
+  });
+
+  // `trusted user logged in` .flag
+  const isUser$ = computed(() => {
+    if (true === isAuth$.value) {
+      try {
+        return (
+          true ===
+          schemaUsersNotReserved.safeParse(get(user$.value, "id")).success
+        );
+      } catch (error_) {
+        // pass
+      }
     }
     return false;
   });
@@ -159,6 +175,7 @@ export const useStoreApiAuth = defineStore("auth", () => {
     token$,
     user$,
     isAuth$,
+    isUser$,
     isAdmin$,
     initialized$,
 
