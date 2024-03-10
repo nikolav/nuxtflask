@@ -1,3 +1,12 @@
+
+# links
+
+## api
+  https://github.com/nikolav/nuxtflask--heroku-api
+
+## nuxtapp
+  https://github.com/nikolav/nuxtflask/tree/main/nuxtapp
+
 # deploy setup
 
 ## pre.git-push
