@@ -42,10 +42,10 @@ const submitTaskEdit = async () => {
 // #eos
 </script>
 <template>
-  <VCard variant="flat" max-width="550" class="mx-auto mt-6 mt-sm-12">
+  <VCard variant="flat" max-width="550" class="mx-auto mt-10 mt-sm-16">
     <!-- @dialog:tasks-add/toolbar -->
     <VToolbar class="bg-transparent">
-      <em class="text-h5 grow text-center text-disabled">
+      <em class="text-h5 grow text-center sm:translate-x-12 text-disabled">
         <VIcon icon="$iconTaskEdit" class="opacity-30" start />
         Uredi zadatak
       </em>
@@ -61,7 +61,7 @@ const submitTaskEdit = async () => {
           variant="underlined"
         >
           <template #prepend>
-            <VIcon start icon="$iconTag" class="text-disabled" size="small" />
+            <VIcon start icon="$iconTag" class="text-disabled" />
           </template>
         </VTextField>
         <VTextField
@@ -72,12 +72,7 @@ const submitTaskEdit = async () => {
           variant="underlined"
         >
           <template #prepend>
-            <VIcon
-              start
-              icon="$iconAttach"
-              size="small"
-              class="text-disabled"
-            />
+            <VIcon start icon="$iconAttach" class="text-disabled" />
           </template>
         </VTextField>
         <VTextarea
@@ -88,12 +83,7 @@ const submitTaskEdit = async () => {
           variant="underlined"
         >
           <template #prepend>
-            <VIcon
-              start
-              icon="$iconDescription"
-              size="small"
-              class="text-disabled"
-            />
+            <VIcon start icon="$iconDescription" class="text-disabled" />
           </template>
         </VTextarea>
       </VCardText>
@@ -101,23 +91,25 @@ const submitTaskEdit = async () => {
       <!-- @dialog:tasks-add/controlls -->
       <VCardActions class="*bg-red justify-around">
         <VBtn
-          class="px-4 px-sm-6"
           @click="clearTaskEdit"
+          size="large"
+          class="px-4 px-sm-6"
           min-width="122"
           rounded="pill"
           variant="tonal"
-          color="primary"
+          color="accent2"
           >odustani</VBtn
         >
         <VBtn
+          size="large"
           class="px-4 px-sm-6"
           min-width="122"
           rounded="pill"
           type="submit"
-          color="success"
+          color="accent2"
           variant="text"
         >
-          <VIcon class="opacity-80" icon="$iconSave" start size="x-large" />
+          <VIcon class="opacity-60" icon="$iconSave" start size="x-large" />
           <strong>sačuvaj</strong>
         </VBtn>
       </VCardActions>

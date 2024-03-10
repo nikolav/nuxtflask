@@ -6,7 +6,10 @@
 // });
 import { SpinnerAppProcessing } from "@/components/ui";
 
-const { APP_USER_DEFAULT } = useAppConfig();
+const {
+  APP_USER_DEFAULT,
+  urls: { github: LINK_GITHUB },
+} = useAppConfig();
 
 onUnmounted(() => {
   useAppMounted().value = false;
@@ -49,8 +52,15 @@ useHead({
       name="app-systembar"
       color="primary-darken-2"
       height="18"
-      class="px-2"
+      class="px-2 *overflow-visible"
     >
+      <a
+        :href="LINK_GITHUB"
+        target="_blank"
+        class="opacity-50 hover:opacity-100 hover:scale-125 transition"
+      >
+        <VIcon icon="$iconGithub" size="14" />
+      </a>
       <VSpacer />
       <VIcon v-if="auth.isAdmin$" start size="14" icon="$iconUserShield" />
       <VIcon v-if="auth.isAuth$" start size="14" icon="$complete" />

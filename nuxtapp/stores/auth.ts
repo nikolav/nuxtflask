@@ -1,3 +1,4 @@
+import { PRODUCTION$ } from "@/config";
 import {
   get,
   // isEmpty,
@@ -67,7 +68,7 @@ export const useStoreApiAuth = defineStore("auth", () => {
 
   // query.start@app.mount
   const initialized$ = ref(false);
-  const mounted$ = useAppMounted();
+  const mounted$ = PRODUCTION$ ? useAppMounted() : useMounted();
   watch(mounted$, async (mounted) => {
     if (true !== mounted) return;
     await authDataStart();

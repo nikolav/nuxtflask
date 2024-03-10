@@ -29,3 +29,4 @@ export { default as IconTodoOutline } from "./IconTodoOutline.vue";
 export { default as IconTrashFill } from "./IconTrashFill.vue";
 export { default as IconUserShield } from "./IconUserShield.vue";
 export { default as IconTaskEditOutlined } from "./IconTaskEditOutlined.vue";
+export { default as IconGithubOutlined } from "./IconGithubOutlined.vue";

@@ -108,5 +108,6 @@ export default defineAppConfig({
   },
   urls: {
     appPublic: URL_APP_PUBLIC,
+    github: "https://github.com/nikolav/nuxtflask",
   },
 });

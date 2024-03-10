@@ -10,6 +10,7 @@ import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 import { light2, dark } from "@/assets/themes";
 
 import {
+  IconGithubOutlined,
   IconTaskEditOutlined,
   IconCheck,
   IconEditNoteOutlined,
@@ -137,6 +138,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         // # override
         menu: IconMenu,
         // # add: <VIcon icon="$other">
+        iconGithub: IconGithubOutlined,
         iconTaskEdit: IconTaskEditOutlined,
         iconAttach: IconAttach,
         iconChat: IconChatBubbleOutline,

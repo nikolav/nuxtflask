@@ -1,3 +1,11 @@
+
+# api
+  https://github.com/nikolav/nuxtflask--heroku-api
+
+# nuxtapp
+  https://github.com/nikolav/nuxtflask/tree/main/nuxtapp
+  
+
 # Nuxt 3 Minimal Starter
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.

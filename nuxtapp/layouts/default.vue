@@ -91,7 +91,7 @@ const dialogTaskEditModelUpdated = (val: boolean) => {
 
 <template>
   <section id="layout-default" class="ma-0 pa-0">
-    <!-- @dialog/edit-chat -->
+    <!-- @dialog/edit-task -->
     <VDialog
       fullscreen
       persistent
@@ -103,7 +103,7 @@ const dialogTaskEditModelUpdated = (val: boolean) => {
       <VSheet elevation="0" rounded="0">
         <VBtn
           @click="clearTaskEditActive"
-          color="accent2-darken-1"
+          color="accent2"
           icon
           size="large"
           variant="plain"
