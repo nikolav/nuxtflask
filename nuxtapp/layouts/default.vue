@@ -207,7 +207,7 @@ const dialogTaskEditModelUpdated = (val: boolean) => {
           <span>ćaskanje</span>
         </VBtn>
         <VBtn
-          :disabled="!auth.isAdmin$"
+          :disabled="!(auth.isAdmin$ || auth.isUser$)"
           size="small"
           color="primary"
           value="tasks"
@@ -218,7 +218,7 @@ const dialogTaskEditModelUpdated = (val: boolean) => {
           <span>zadaci</span>
         </VBtn>
         <VBtn
-          :disabled="!auth.isAdmin$"
+          :disabled="!(auth.isAdmin$ || auth.isUser$)"
           size="small"
           color="primary"
           value="log"

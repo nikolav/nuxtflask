@@ -4,6 +4,7 @@ import { schemaTask } from "@/schemas";
 import { isEmpty, get, find, pull } from "@/utils";
 import { M_docsRmById } from "@/graphql";
 
+const auth = useStoreApiAuth();
 const { CHAT_ACTIVE, CHAT_ACTIVE_title, TASK_EDIT_active } =
   useAppConfig().stores.main;
 const main$ = useStoreMain();
@@ -71,7 +72,6 @@ const setChatActive = (itemRaw: any) => {
   chatActiveTitle$.value = get(itemRaw, "data.title");
 };
 
-// @@
 const setTaskEditActive = (node: any) => {
   // console.log(`setTaskEditActive`);
   // console.log({ TASK_EDIT_active });
@@ -98,7 +98,7 @@ const setTaskEditActive = (node: any) => {
             />
           </VToolbarTitle>
           <VSpacer />
-          <VBtn icon :disabled="!someTasksSelected_">
+          <VBtn icon :disabled="!someTasksSelected_" v-if="auth.isAdmin$">
             <VIcon icon="$iconShare" class="opacity-85" />
             <VTooltip
               class="opacity-95"
@@ -108,7 +108,8 @@ const setTaskEditActive = (node: any) => {
               location="bottom"
             />
           </VBtn>
-          <VBtn icon>
+          <!-- @@ -->
+          <VBtn icon v-if="auth.isAdmin$">
             <VIcon icon="$iconTasksAdd" />
             <VTooltip
               class="opacity-95"
@@ -278,8 +279,8 @@ const setTaskEditActive = (node: any) => {
                                   >
                                     <VIcon icon="$iconChatDots" size="x-large" class="opacity-50" />
                                   </VBtn>
-                                  <!-- @@ -->
                                   <VBtn 
+                                    v-if="auth.isAdmin$"
                                     icon 
                                     @click.stop="setTaskEditActive(item.raw)"
                                     variant="text" 
@@ -301,7 +302,15 @@ const setTaskEditActive = (node: any) => {
                                       class="opacity-50" 
                                     />
                                   </VBtn>
-                                  <VBtn icon @click.stop="taskToDeleteId$ = item.raw.id" variant="text" :color="isSelected ? undefined : 'accent2'" size="x-small" class="*ms-2">
+                                  <VBtn
+                                    v-if="auth.isAdmin$"
+                                    icon 
+                                    @click.stop="taskToDeleteId$ = item.raw.id" 
+                                    variant="text" 
+                                    :color="isSelected ? undefined : 'accent2'" 
+                                    size="x-small" 
+                                    class="*ms-2"
+                                  >
                                     <VIcon icon="$iconTrash" size="large" class="opacity-40" />
                                   </VBtn>
                                 </div>

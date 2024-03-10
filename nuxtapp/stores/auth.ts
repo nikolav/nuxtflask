@@ -65,9 +65,9 @@ export const useStoreApiAuth = defineStore("auth", () => {
     // onResponse: onceInit,
   });
 
-  // query.start@mount
+  // query.start@app.mount
   const initialized$ = ref(false);
-  const mounted$ = useMounted();
+  const mounted$ = useAppMounted();
   watch(mounted$, async (mounted) => {
     if (true !== mounted) return;
     await authDataStart();
