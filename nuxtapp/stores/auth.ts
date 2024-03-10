@@ -85,7 +85,7 @@ export const useStoreApiAuth = defineStore("auth", () => {
     return false;
   });
 
-  // `trusted user logged in` .flag
+  // `trusted user/!admin logged in` .flag
   const isUser$ = computed(() => {
     if (true === isAuth$.value) {
       try {

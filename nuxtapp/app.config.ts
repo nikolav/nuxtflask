@@ -20,6 +20,7 @@ export default defineAppConfig({
     prefix_TAG_USERS_DOCS: "pH82VKaHwf3RLfZlR:",
     prefix_CHAT_ACTIVE: "KFrbiAW5Zm3:",
     TASKS_ALL: "@tasks:all",
+    TASKS_USER_prefix: "Njvrw1gYEXd3yv:",
   },
   //
   key: {
@@ -32,6 +33,7 @@ export default defineAppConfig({
     INJECT_THEME: "Aasnvy2eaxE",
     PROVIDE_APP_DATA: "Ud8dHoadmBgSr55P6gJ",
     THEME: "0Fgky53B2UbA1fG3lKcV",
+    TASKS_SELECTED_IDS: "f6sSDP",
   },
   //
   FIELDS_OMIT_STORAGE_META: ["id", "created_at", "updated_at", "__typename"],

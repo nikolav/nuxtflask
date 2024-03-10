@@ -3,7 +3,9 @@ import { get, assign } from "@/utils";
 import { schemaTask } from "@/schemas";
 import type { IDocDataTask } from "@/types";
 
-const { upsert: upsertTaskEdit } = useDocs<IDocDataTask>("@tasks:all");
+const { upsert: upsertTaskEdit } = useDocs<IDocDataTask>(
+  useAppConfig().docs.TASKS_ALL
+);
 
 const { TASK_EDIT_active } = useAppConfig().stores.main;
 const main$ = useStoreMain();

@@ -4,3 +4,4 @@ export { default as WindowJournal } from "./WindowJournal.vue";
 export { default as ChatItem } from "./ChatItem.vue";
 export { default as TaskChat } from "./TaskChat.vue";
 export { default as TaskEdit } from "./TaskEdit.vue";
+export { default as TaskShare } from "./TaskShare.vue";

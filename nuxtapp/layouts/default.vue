@@ -12,6 +12,7 @@ import {
   WindowChat,
   WindowJournal,
   WindowTasks,
+  TaskShare,
 } from "@/components/app";
 import type { IDoc, IDocDataChat, OrNoValue } from "@/types";
 
@@ -67,8 +68,7 @@ const sidebarLeftLinks = [
   },
 ];
 
-const { CHAT_ACTIVE, TASK_EDIT_active } =
-  useAppConfig().stores.main;
+const { CHAT_ACTIVE, TASK_EDIT_active } = useAppConfig().stores.main;
 const main$ = useStoreMain();
 
 const taskEditActive$ = computed({
@@ -86,19 +86,59 @@ const clearTaskEditActive = () => {
 const dialogTaskEditModelUpdated = (val: boolean) => {
   if (!val) clearTaskEditActive();
 };
+
+const { TASKS_SELECTED_IDS } = useAppConfig().key;
+const tasksSelectedIds$ = computed({
+  get: () => main$.get(TASKS_SELECTED_IDS),
+  set: (val) => {
+    main$.put({
+      [TASKS_SELECTED_IDS]: val,
+    });
+  },
+});
+const cleatTasksSelectedIds = () => {
+  tasksSelectedIds$.value = null;
+};
+const updatedTasksSelectedIds = (val: boolean) => {
+  if (!val) cleatTasksSelectedIds();
+};
+
 // # eos
 </script>
 
 <template>
   <section id="layout-default" class="ma-0 pa-0">
-    <!-- @dialog/edit-task -->
+    <!-- @dialog/assign:share-tasks -->
     <VDialog
       fullscreen
       persistent
+      no-click-animation
+      transition="slide-y-reverse-transition"
+      :model-value="null != tasksSelectedIds$"
+      @update:model-value="updatedTasksSelectedIds"
+    >
+      <VSheet>
+        <VBtn
+          @click="cleatTasksSelectedIds"
+          color="accent2"
+          icon
+          size="large"
+          variant="plain"
+          class="position-absolute top-2 start-2 z-10 text-high-emphasis"
+        >
+          <VIcon icon="$close" size="large" />
+        </VBtn>
+        <TaskShare />
+      </VSheet>
+    </VDialog>
+    <!-- @dialog/edit-task -->
+    <VDialog
+      fullscreen
       :model-value="null != taskEditActive$"
       @update:model-value="dialogTaskEditModelUpdated"
-      transition="slide-y-reverse-transition"
+      persistent
       no-click-animation
+      transition="slide-y-reverse-transition"
     >
       <VSheet elevation="0" rounded="0">
         <VBtn

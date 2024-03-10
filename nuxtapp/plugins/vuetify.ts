@@ -10,6 +10,8 @@ import { aliases, mdi } from "vuetify/iconsets/mdi-svg";
 import { light2, dark } from "@/assets/themes";
 
 import {
+  IconShareOffFilled,
+  IconTaskShareOutlined,
   IconGithubOutlined,
   IconTaskEditOutlined,
   IconCheck,
@@ -138,8 +140,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         // # override
         menu: IconMenu,
         // # add: <VIcon icon="$other">
-        iconGithub: IconGithubOutlined,
-        iconTaskEdit: IconTaskEditOutlined,
+        iconShareOff: IconShareOffFilled,
         iconAttach: IconAttach,
         iconChat: IconChatBubbleOutline,
         iconChatDots: IconChatDotsOutlined,
@@ -149,6 +150,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         iconDotsV: IconDotsVertical,
         iconEditNote: IconEditNoteOutlined,
         iconEnvelope: IconEnvelopeOutlined,
+        iconGithub: IconGithubOutlined,
         iconHelp: IconHelpSquareFilled,
         iconHome: IconHomeFilled,
         iconJournal: IconJournalOutline,
@@ -165,7 +167,9 @@ export default defineNuxtPlugin((nuxtApp) => {
         iconShare: IconShareFilled,
         iconStore: IconStore,
         iconTag: IconTagOutlined,
+        iconTaskEdit: IconTaskEditOutlined,
         iconTasksAdd: IconTaskAddOutline,
+        iconTaskShare: IconTaskShareOutlined,
         iconTodo: IconTodoOutline,
         iconTrash: IconTrashFill,
         iconUserShield: IconUserShield,

@@ -28,8 +28,6 @@ const taskToDeleteId$ = ref<OrNoValue<number>>(null);
 const updatedTaskToDeleteId = (value: boolean) => {
   if (!value) taskToDeleteId$.value = null;
 };
-const tasksSelected$ = ref([]);
-const someTasksSelected_ = computed(() => !isEmpty(tasksSelected$.value));
 const page$ = ref(1);
 const addTaskTitle$ = ref("");
 const addTaskHref$ = ref("");
@@ -43,12 +41,17 @@ const itemHasInfo = (itemRaw: any) =>
   !isEmpty(get(itemRaw, "data.href")) ||
   !isEmpty(get(itemRaw, "data.description"));
 
+const { TASKS_ALL, TASKS_USER_prefix } = useAppConfig().docs;
 const {
+  // topic$,
   data: docsTasks$,
   // tags: taskTags,
   upsert: tasksUpsert,
   // remove: tasksRemove,
-} = useDocs<IDocDataTask>(useAppConfig().docs.TASKS_ALL);
+  // } = useDocs<IDocDataTask>(TASKS_ALL);
+} = useDocs<IDocDataTask>(
+  auth.isAdmin$ ? TASKS_ALL : `${TASKS_USER_prefix}${get(auth.user$, "id")}`
+);
 const { mutate: mutateTasksRemoveByID } = useMutation(M_docsRmById);
 const tasksRemove = async (id: number) => await mutateTasksRemoveByID({ id });
 
@@ -80,6 +83,17 @@ const setTaskEditActive = (node: any) => {
   });
 };
 
+// manage selected tasks
+// contains selected tasks ids
+const { TASKS_SELECTED_IDS } = useAppConfig().key;
+const tasksSelectedIds$ = ref([]);
+const someTasksSelected_ = computed(() => !isEmpty(tasksSelectedIds$.value));
+const cacheSelectedTags = () => {
+  main$.put({
+    [TASKS_SELECTED_IDS]: [...tasksSelectedIds$.value],
+  });
+};
+
 // #eos
 </script>
 <template>
@@ -98,7 +112,12 @@ const setTaskEditActive = (node: any) => {
             />
           </VToolbarTitle>
           <VSpacer />
-          <VBtn icon :disabled="!someTasksSelected_" v-if="auth.isAdmin$">
+          <VBtn
+            v-if="auth.isAdmin$"
+            :disabled="!someTasksSelected_" 
+            @click="cacheSelectedTags"
+            icon 
+          >
             <VIcon icon="$iconShare" class="opacity-85" />
             <VTooltip
               class="opacity-95"
@@ -247,7 +266,7 @@ const setTaskEditActive = (node: any) => {
           :items-per-page="10"
         >
           <template #default="{ items }">
-            <VItemGroup v-model="tasksSelected$" multiple>
+            <VItemGroup v-model="tasksSelectedIds$" multiple>
               <section class="space-y-px mt-2 mt-sm-4">
                 <template v-for="item in items" :key="item.raw.id">
                   <VItem :value="item.raw.id">
@@ -368,7 +387,7 @@ const setTaskEditActive = (node: any) => {
             <VBtn @click="taskToDeleteId$ = null" variant="tonal">odustani</VBtn>
             <VBtn @click="async () => {
               await tasksRemove(Number(taskToDeleteId$));
-              pull(tasksSelected$, taskToDeleteId$);
+              pull(tasksSelectedIds$, taskToDeleteId$);
               taskToDeleteId$ = null;
             }" variant="plain">
               <VIcon start size="large" icon="$iconTrash" />

@@ -9,7 +9,7 @@ import type { OrNull, IDoc, TDocData } from "@/types";
 import { schemaAuthCredentials, schemaUsersNotReserved } from "@/schemas";
 import {
   // get,
-  assign,
+  // assign,
   isEmpty,
 } from "@/utils";
 
@@ -94,10 +94,8 @@ export const useDocs = <TData = TDocData>(
   };
 
   const { mutate: mutateDocTags } = useMutation(M_docsTags);
-  const tags = async (doc: IDoc<TData>, argsTags: Record<string, boolean>) =>
-    null == doc.id || isEmpty(argsTags)
-      ? {}
-      : await mutateDocTags({ id: doc.id, tags: argsTags });
+  const tags = async (id: number, argsTags: Record<string, boolean>) =>
+    isEmpty(argsTags) ? undefined : await mutateDocTags({ id, tags: argsTags });
 
   // @io/listen
   watchEffect(() => useIOEvent(ioEvent$.value, reload));

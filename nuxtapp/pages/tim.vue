@@ -79,26 +79,25 @@ const isUserNotReserved = (user: any) =>
             <VDialog activator="parent">
               <template #default="{ isActive }">
                 <VCard
-                  :min-width="smAndUp ? 480 : `100%`"
-                  class="mx-auto pa-2 *position-relative *overflow-visible"
+                  :min-width="smAndUp ? 550 : `100%`"
+                  class="mx-auto pa-2 pt-5 *position-relative *overflow-visible"
                 >
                   <VBtn
-                    @click="isActive.value = false"
-                    color="complement"
-                    density="comfortable"
-                    variant="plain"
                     icon
-                    class="position-absolute top-1 end-2"
-                    ><VIcon icon="$close"
+                    @click="isActive.value = false"
+                    color="complement-darken-2"
+                    variant="plain"
+                    class="position-absolute top-2 end-2"
+                    ><VIcon icon="$close" size="large"
                   /></VBtn>
-                  <VCardTitle class="ms-3">
+                  <VCardTitle class="mb-4 ms-3 items-center d-flex">
                     <VIcon
                       start
-                      icon="$plus"
-                      size="x-small"
-                      class="opacity-40"
+                      icon="$iconPersonAdd"
+                      size="small"
+                      class="opacity-40 -translate-y-px"
                     />
-                    <span class="ms-2">Novi član tima</span>
+                    <span class="ms-4 text-xl">Dodaj novog člana tima</span>
                   </VCardTitle>
                   <VCardText>
                     <VForm
@@ -111,30 +110,59 @@ const isUserNotReserved = (user: any) =>
                     >
                       <VTextField
                         type="email"
+                        name="userEmail"
                         label="Email"
                         variant="underlined"
                         v-model="newUserEmail$"
                         clearable
-                      />
+                      >
+                        <template #prepend>
+                          <VIcon
+                            icon="$iconEnvelope"
+                            size="large"
+                            class="!opacity-30 !-rotate-2"
+                            start
+                          />
+                        </template>
+                      </VTextField>
                       <VTextField
-                        autocomplete="off"
+                        name="userPassword"
                         type="password"
+                        autocomplete="off"
                         label="Lozinka"
                         variant="underlined"
                         v-model.lazy="newUserPassword$"
                         clearable
-                      />
-                      <VBtnGroup
-                        variant="text"
-                        rounded="pill"
-                        class="d-flex justify-center"
                       >
-                        <VBtn class="grow" @click="isActive.value = false"
+                        <template #prepend>
+                          <VIcon
+                            icon="$iconKey"
+                            start
+                            size="large"
+                            class="!opacity-40"
+                          />
+                        </template>
+                      </VTextField>
+                      <VBtnGroup
+                        rounded="pill"
+                        class="d-flex justify-center mt-4 mt-sm-6 mb-1"
+                      >
+                        <VBtn
+                          size="large"
+                          variant="tonal"
+                          class="grow"
+                          @click="isActive.value = false"
                           >odustani</VBtn
                         >
-                        <VBtn type="submit" class="grow" color="success">
+                        <VBtn
+                          variant="text"
+                          type="submit"
+                          class="grow"
+                          color="accent2"
+                          size="large"
+                        >
                           <VIcon icon="$iconSave" start size="large" />
-                          <strong>Sačuvaj</strong>
+                          <strong class="ms-1">OK</strong>
                         </VBtn>
                       </VBtnGroup>
                     </VForm>
@@ -217,7 +245,12 @@ const isUserNotReserved = (user: any) =>
           <VBtn variant="tonal" color="primary" @click="toggleUserActive.off"
             >Odustani</VBtn
           >
-          <VBtn class="text-none" variant="plain" color="error" @click="usersRm">
+          <VBtn
+            class="text-none"
+            variant="plain"
+            color="error"
+            @click="usersRm"
+          >
             <VIcon icon="$iconTrash" start />
             <strong>Obriši</strong>
           </VBtn>
