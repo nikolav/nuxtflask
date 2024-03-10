@@ -61,7 +61,7 @@ const isUserNotReserved = (user: any) =>
             ><strong>Tim</strong>
             <VBadge
               color="complement"
-              class="d-inline-block ms-1 -translate-y-[2px] cursor-default"
+              class="d-inline-block ms-1 -translate-y-[2px] cursor-default !font-mono"
               :content="users$.length"
               inline
             />

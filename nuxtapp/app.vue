@@ -19,9 +19,13 @@ const { runSetup: onceDefaultUserLogin } = useRunSetupOnce(async () => {
   console.log({ APP_USER_DEFAULT });
   await auth.login(APP_USER_DEFAULT);
 });
-watchEffect(() => {
-  if (auth.initialized$ && !auth.isAuth$) onceDefaultUserLogin();
-});
+watch(
+  () => auth.initialized$,
+  (authInitialized) => {
+    if (true !== authInitialized) return;
+    if (!auth.isAuth$) onceDefaultUserLogin();
+  }
+);
 
 // theme
 // import { type IThemeToggle } from "@/types";

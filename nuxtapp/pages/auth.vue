@@ -29,10 +29,8 @@ watch(
   }
 );
 
+const toggleAuthSnackbar = useToggleFlag();
 const submited_ = async () => {
-  // admin@nikolav.rs::122
-  // user@nikolav.rs::user@nikolav.rs
-  // # user.122@email.com::122
   try {
     const [email, password] = password$.value.split("::");
     const authCreds = schemaAuthCredentials.parse({ email, password });
@@ -48,7 +46,6 @@ const submited_ = async () => {
   }
 };
 
-const toggleAuthSnackbar = useToggleFlag();
 // #eos
 </script>
 <template>

@@ -39,6 +39,18 @@ export const M_docsUsersAdd = gql`
   }
 `;
 
+export const M_docsTags = gql`
+  mutation m_docsTags($id: ID!, $tags: JsonDocsTags!) {
+    docsTags(id: $id, tags: $tags)
+  }
+`;
+
+export const M_docsRmById = gql`
+  mutation m_docsRmById($id: ID!) {
+    docsRmById(id: $id)
+  }
+`;
+
 // schema {
 //   query: Query
 //   mutation: Mutation
@@ -113,6 +125,10 @@ export const M_docsUsersAdd = gql`
 //   # docs
 //   docsUpsert(topic: String!, data: JsonData!, id: ID): JsonData!
 //   docsRm(topic: String!, id: ID!): JsonData
+//   docsRmById(id: ID!): JsonData
+// 
+//   # manage docs/tags: (id, { "@tag/foo": true, "@tag/bar": false })
+//   docsTags(id: ID!, tags: JsonDocsTags!): JsonDocsTags!
 //   
 //   # users
 //   docsUsersAdd(email: String!, password: String!): ID

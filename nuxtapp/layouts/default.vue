@@ -6,7 +6,14 @@ import {
   capitalize,
   // get,
 } from "@/utils";
-import { WindowChat, WindowTasks, WindowJournal } from "@/components/ui";
+import {
+  TaskChat,
+  TaskEdit,
+  WindowChat,
+  WindowJournal,
+  WindowTasks,
+} from "@/components/app";
+import type { IDoc, IDocDataChat, OrNoValue } from "@/types";
 
 const auth = useStoreApiAuth();
 const isAdminOrUser$ = computed(() => auth.isAdmin$ || auth.isUser$);
@@ -59,11 +66,74 @@ const sidebarLeftLinks = [
     size: 22,
   },
 ];
+
+const { CHAT_ACTIVE, TASK_EDIT_active } =
+  useAppConfig().stores.main;
+const main$ = useStoreMain();
+
+const taskEditActive$ = computed({
+  get: () => main$.get(TASK_EDIT_active),
+  set: (node: any) => {
+    main$.put({
+      [TASK_EDIT_active]: node,
+    });
+  },
+});
+
+const clearTaskEditActive = () => {
+  taskEditActive$.value = null;
+};
+const dialogTaskEditModelUpdated = (val: boolean) => {
+  if (!val) clearTaskEditActive();
+};
 // # eos
 </script>
 
 <template>
   <section id="layout-default" class="ma-0 pa-0">
+    <!-- @dialog/edit-chat -->
+    <VDialog
+      fullscreen
+      persistent
+      :model-value="null != taskEditActive$"
+      @update:model-value="dialogTaskEditModelUpdated"
+      transition="slide-y-reverse-transition"
+      no-click-animation
+    >
+      <VSheet elevation="0" rounded="0">
+        <VBtn
+          @click="clearTaskEditActive"
+          color="accent2-darken-1"
+          icon
+          size="large"
+          variant="plain"
+          class="position-absolute top-2 start-2 z-10 text-high-emphasis"
+        >
+          <VIcon icon="$close" size="large" />
+        </VBtn>
+
+        <TaskEdit />
+      </VSheet>
+    </VDialog>
+    <!-- @navigation-drawer/active-chat -->
+    <VNavigationDrawer
+      touchless
+      location="right"
+      temporary
+      :model-value="null != main$.get(CHAT_ACTIVE)"
+      width="345"
+      @update:model-value="
+        (val) => {
+          if (!val)
+            main$.put({
+              [CHAT_ACTIVE]: null,
+            });
+        }
+      "
+    >
+      <TaskChat />
+    </VNavigationDrawer>
+
     <!-- @appbar -->
     <VAppBar name="app-appbar" :height="appBarHeight" elevation="2">
       <VAppBarTitle class="text-disabled text-h5 ps-2 ps-sm-4">
@@ -190,7 +260,7 @@ const sidebarLeftLinks = [
     <VFooter
       app
       class="text-sm px-1 opacity-95"
-      color="primary-darken-1"
+      color="accent2-darken-2"
       height="35"
     >
       <template v-if="'index' === page$"

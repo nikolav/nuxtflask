@@ -3,9 +3,15 @@ import {
   M_docsUpsert,
   M_docsUsersAdd,
   Q_docsByTopic,
+  M_docsTags,
 } from "@/graphql";
 import type { OrNull, IDoc, TDocData } from "@/types";
 import { schemaAuthCredentials, schemaUsersNotReserved } from "@/schemas";
+import {
+  // get,
+  assign,
+  isEmpty,
+} from "@/utils";
 
 // .useDocs
 export const useDocs = <TData = TDocData>(
@@ -21,8 +27,8 @@ export const useDocs = <TData = TDocData>(
       !!(
         mounted$.value &&
         toggleEnabled.isActive.value &&
-        auth.token$ &&
-        topic$.value
+        topic$.value &&
+        auth.token$
       )
   );
 
@@ -87,10 +93,14 @@ export const useDocs = <TData = TDocData>(
     }
   };
 
+  const { mutate: mutateDocTags } = useMutation(M_docsTags);
+  const tags = async (doc: IDoc<TData>, argsTags: Record<string, boolean>) =>
+    null == doc.id || isEmpty(argsTags)
+      ? {}
+      : await mutateDocTags({ id: doc.id, tags: argsTags });
+
   // @io/listen
-  watchEffect(() => {
-    useIOEvent(ioEvent$.value, reload);
-  });
+  watchEffect(() => useIOEvent(ioEvent$.value, reload));
 
   return {
     // # data by topic
@@ -103,6 +113,9 @@ export const useDocs = <TData = TDocData>(
     upsert,
     remove,
     reload,
+
+    // # manage doc tags
+    tags,
 
     // # flags
     error,

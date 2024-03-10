@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useDisplay } from "vuetify";
-import { ChatItem } from "@/components/ui";
+import { ChatItem } from "@/components/app";
 import { docsSortedDesc } from "@/utils";
 import type { IDocDataChat } from "@/types";
 
@@ -11,7 +11,7 @@ const mh$ = computed(() => Math.max(122, useDisplay().height.value - 168));
 const { data, upsert, remove } = useDocs<IDocDataChat>(DOCS_CHAT_ALL);
 const dataSorted$ = computed(() => docsSortedDesc<IDocDataChat>(data.value));
 
-const chatName$ = useLocalStorage("chatName", () => "", {
+const chatName$ = useLocalStorage(useAppConfig().key.CHAT_NAME, () => "", {
   initOnMounted: true,
 });
 const chatComment$ = ref("");
@@ -33,7 +33,7 @@ const commentAdd = async () => {
       :close-on-content-click="false"
       location="top"
       :offset="[8, 6]"
-      transition="fade-transition"
+      transition="slide-y-reverse-transition"
     >
       <template #activator="{ props }">
         <VBtn
@@ -70,14 +70,14 @@ const commentAdd = async () => {
           >
             <VTextField
               v-model.trim="chatName$"
-              label="Ime"
+              label="Ime *"
               variant="underlined"
               name="name"
             />
             <VTextarea
               v-model.trim="chatComment$"
               variant="underlined"
-              label="Komentar"
+              label="Komentar *"
               name="komentar"
               clearable
             />

@@ -108,3 +108,12 @@ export interface IDocDataChat {
 export interface IAppData<T = any> {
   [key: string]: T;
 }
+
+export type TVoid = () => void;
+
+export interface IDocDataTask {
+  title: string;
+  completedAt: OrNull<Date>;
+  href?: string | undefined;
+  description?: string | undefined;
+}

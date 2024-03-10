@@ -10,7 +10,7 @@ export const useDoc = <TDoc = Record<string, any>>(
   const toggleEnabled = useToggleFlag(initialEnabled);
   const mounted$ = useMounted();
   const enabled$ = computed(
-    () => !!(mounted$.value && toggleEnabled.isActive.value && auth?.token$)
+    () => !!(mounted$.value && toggleEnabled.isActive.value && auth.token$)
   );
   const { result, refetch, load, loading, error } = useLazyQuery<{
     docByDocId: IDoc<TDoc>;
@@ -33,15 +33,6 @@ export const useDoc = <TDoc = Record<string, any>>(
     if (enabled$.value) queryStart();
   });
 
-  const ioEvent$ = computed(() =>
-    enabled$.value
-      ? `${useAppConfig().io.IOEVENT_DOC_CHANGE_prefix}${doc_id}`
-      : ""
-  );
-  watchEffect(() => {
-    useIOEvent(ioEvent$.value, reload);
-  });
-
   const { mutate: mutateDocUpsert } = useMutation<IDoc<TDoc>>(M_docUpsert);
 
   const put = async (putData: Record<string, any>) => {
@@ -50,6 +41,15 @@ export const useDoc = <TDoc = Record<string, any>>(
     const newData_ = batchSet(get(data$.value, "data"), putData);
     await mutateDocUpsert({ data: newData_, doc_id });
   };
+
+  const ioEvent$ = computed(() =>
+    enabled$.value
+      ? `${useAppConfig().io.IOEVENT_DOC_CHANGE_prefix}${doc_id}`
+      : ""
+  );
+  watchEffect(() => {
+    useIOEvent(ioEvent$.value, reload);
+  });
 
   return {
     // #crud

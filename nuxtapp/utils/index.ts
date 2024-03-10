@@ -1,6 +1,7 @@
 // @lodash
 import lodash from "lodash";
 const {
+  pull,
   isEmpty,
   capitalize,
   once,
@@ -51,6 +52,7 @@ export {
   capitalize,
   uniqueId,
   isEmpty,
+  pull,
 };
 
 export * from "./re";

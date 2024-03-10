@@ -11,16 +11,12 @@ useHead({
   title: "--home",
 });
 
-const toggle = useToggleFlag();
-
-
 // #eos
 </script>
 
 <template>
   <section id="page-demo" class="pa-2 pa-md-4">
-    <VBtn @click="toggle">ok</VBtn>
-    <template v-for="n in 10" :key="n">
+    <template v-for="n in 12" :key="n">
       <p class="mb-4 indent-4">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
         temporibus quos nesciunt at quod voluptates obcaecati doloribus magnam
@@ -31,5 +27,5 @@ const toggle = useToggleFlag();
   </section>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 </style>

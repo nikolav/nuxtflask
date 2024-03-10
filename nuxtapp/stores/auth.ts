@@ -2,6 +2,7 @@ import {
   get,
   // isEmpty,
   // once,
+  matchEmailStart,
 } from "@/utils";
 import type {
   OrNoValue,
@@ -32,6 +33,12 @@ export const useStoreApiAuth = defineStore("auth", () => {
     authHeaders,
   } = useAppConfig().stores.auth;
 
+  // .new
+  // init chat name @login
+  const chatName$ = useLocalStorage(useAppConfig().key.CHAT_NAME, () => "", {
+    initOnMounted: true,
+  });
+  //
   const token$ = useLocalStorage(KEY_ACCESS_TOKEN, initialStorage, {
     initOnMounted: true,
   });
@@ -58,16 +65,14 @@ export const useStoreApiAuth = defineStore("auth", () => {
     // onResponse: onceInit,
   });
 
-  // query.start@app.mount
+  // query.start@mount
   const initialized$ = ref(false);
-  watch(
-    () => useAppMounted().value,
-    async (appMounted) => {
-      if (true !== appMounted) return;
-      await authDataStart();
-      initialized$.value = true;
-    }
-  );
+  const mounted$ = useMounted();
+  watch(mounted$, async (mounted) => {
+    if (true !== mounted) return;
+    await authDataStart();
+    initialized$.value = true;
+  });
 
   // `logged in` .flag
   const isAuth$ = computed(() => {
@@ -116,8 +121,21 @@ export const useStoreApiAuth = defineStore("auth", () => {
   // sync apollo:auth
   watch(isAuth$, async (isAuth) => {
     if (isAuth) {
+      // cache auto `chatName`
+      if (chatName$.value) return;
+      const chatName = matchEmailStart(get(user$.value, "email"));
+      const chatNameDefault = matchEmailStart(
+        useAppConfig().APP_USER_DEFAULT.email
+      );
+      if (chatNameDefault === chatName) return;
+      chatName$.value = chatName;
+
+      // cache apollo token
       await onLoginApollo(token$.value);
     } else {
+      // clear auto `chatName`
+      chatName$.value = "";
+
       // signal logout to apollo
       // await onLogoutApollo(undefined, true);
       await onLogoutApollo();
