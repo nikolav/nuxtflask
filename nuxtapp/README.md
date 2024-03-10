@@ -1,8 +1,8 @@
 
-# api
-  https://github.com/nikolav/nuxtflask--heroku-api
+## api
+  https://github.com/nikolav/uni.nikolav.rs---be
 
-# nuxtapp
+## nuxtapp
   https://github.com/nikolav/nuxtflask/tree/main/nuxtapp
   
 
