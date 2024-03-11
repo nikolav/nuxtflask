@@ -3,6 +3,7 @@
 // # by setting the colorMode property, nuxt3 only
 // definePageMeta({
 //   colorMode: "light",
+// 
 // });
 import { SpinnerAppProcessing } from "@/components/ui";
 
@@ -11,8 +12,9 @@ const {
   urls: { github: LINK_GITHUB },
 } = useAppConfig();
 
+const appMounted$ = useAppMounted();
 onUnmounted(() => {
-  useAppMounted().value = false;
+  appMounted$.value = false;
 });
 
 const auth = useStoreApiAuth();
@@ -57,7 +59,7 @@ useHead({
       <a
         :href="LINK_GITHUB"
         target="_blank"
-        class="opacity-50 hover:opacity-100 hover:scale-125 transition"
+        class="opacity-50 hover:opacity-100 hover:scale-125 transition -rotate-12 hover:rotate-0"
       >
         <VIcon icon="$iconGithub" size="14" />
       </a>

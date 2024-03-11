@@ -216,10 +216,6 @@ const isUserNotReserved = (user: any) =>
                 </template>
               </VHover>
             </template>
-            <!-- <tr v-for="user in users$" :key="user.id" class="position-relative">
-              <td>{{ user.id }}</td>
-              <td>{{ user.data["email"] }}</td>
-            </tr> -->
           </tbody>
         </VTable>
       </VCardText>

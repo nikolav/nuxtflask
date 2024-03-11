@@ -14,7 +14,7 @@ import {
   WindowTasks,
   TaskShare,
 } from "@/components/app";
-import type { IDoc, IDocDataChat, OrNoValue } from "@/types";
+// import type { IDoc, IDocDataChat, OrNoValue } from "@/types";
 
 const auth = useStoreApiAuth();
 const isAdminOrUser$ = computed(() => auth.isAdmin$ || auth.isUser$);
@@ -202,14 +202,16 @@ const updatedTasksSelectedIds = (val: boolean) => {
             text="Kraj"
           />
         </VBtn>
-        <!-- <VAppBarNavIcon class="ms-2 ms-md-3" color="primary-darken-1" /> -->
       </template>
     </VAppBar>
 
     <!-- @page/main -->
     <VMain :style="{ paddingTop }">
       <slot>
-        <p>Lorem!</p>
+        <p>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit
+          aspernatur ab dolores!
+        </p>
       </slot>
     </VMain>
 
